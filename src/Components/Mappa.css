@@ -1,0 +1,85 @@
+.dashboard {
+    width: 100%;
+    height: 100%;
+    padding: var(--n-h) 0 0 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    z-index: 10;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    border-radius: 6px;
+
+    margin: calc(var(--spa) / 2);
+
+    width: 200px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    color: var(--c-b);
+    font-weight: 400;
+    background-color: var(--c-1);
+}
+
+.sidebar-component {
+    padding: calc(var(--spa) / 4);
+    margin: calc(var(--spa) / 4);
+}
+.sidebar-component > .title {
+    font-weight: 500;
+
+    font-size: 1em;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+
+    border-bottom: 1px solid var(--c-b);
+}
+
+.sidebar-component > .textField {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.sidebar-component > .textField:nth-last-child(1) {
+    margin-bottom: 0;
+}
+
+.sidebar-component > .textField > span:nth-child(1) {
+    font-size: .75em;
+    text-transform: uppercase;
+}
+.sidebar-component > .textField > span:nth-child(2) {
+    font-size: 1em;
+}
+
+.mapContainer {
+    width: 100%;
+    height: calc(100vh - var(--n-h));
+}
+
+.mapboxgl-popup-content {
+    pointer-events: none;
+    color: var(--c-d);
+    max-width: 256px;
+}
+
+.popup-row {
+    display: grid;
+    grid-template-columns: 3fr 8fr;
+    grid-gap: 6px;
+    font-size: 1.1em;
+}
+
+.popup-row > span:nth-child(1) {
+    font-size: .9em;
+}

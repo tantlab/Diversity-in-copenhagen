@@ -1,0 +1,6 @@
+.cta-btn {
+    color: var(--c-b);
+    background-color: var(--c-2);
+    padding: 14px 19px;
+    border-radius: 32px;
+}

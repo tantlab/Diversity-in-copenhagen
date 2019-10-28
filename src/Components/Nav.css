@@ -1,0 +1,33 @@
+#nav {
+    position: fixed;
+    z-index: 999;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    min-width: 100%;
+    width: 100%;
+    min-height: var(--n-h);
+
+    color: white;
+}
+
+.nav-sect {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.left {
+    padding: 0px 0px 0px 32px;
+    justify-content: flex-start;
+}
+
+.center {
+    justify-content: flex-end;
+}
+
+.nav-el {
+    word-wrap: none;
+    padding: 0px 18px;
+}
