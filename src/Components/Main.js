@@ -5,6 +5,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 // list of pages
 import Home from './Home'
 import Mappa from './Mappa'
+import Nav from './Nav'
 
 import './Main.css'
 
@@ -12,6 +13,7 @@ const Main = () => {
     return (
         <Route render={({ location }) => (
             <TransitionGroup>
+                <Nav />
                 <CSSTransition key={location.key}
                     timeout={300}
                     classNames="fade">

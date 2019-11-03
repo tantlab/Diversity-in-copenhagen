@@ -4,9 +4,6 @@ import carto from '@carto/carto-vl'
 
 import 'mapbox-gl/src/css/mapbox-gl.css'
 
-import Nav from './Nav'
-
-
 import './Mappa.css'
 
 export default class Mappa extends React.Component {
@@ -37,22 +34,15 @@ export default class Mappa extends React.Component {
             apiKey: '5a4fe9e4fe02bb120fdbf141a733e261167cd40f'
         })
     
-        const source = new carto.source.Dataset('carto_clean')
+        const source = new carto.source.Dataset('redux_data')
     
         const viz = new carto.Viz(`
-            // @place:         $place_name_clean_
-            // @event:         $event_name
-            // @attendance:    $event_crowd
-
-            @diversity:     $div_score_3x75_
-            @viewportAvg:   viewportAvg(@diversity)
+            @viewportAvg:   viewportAvg($div_score)
 
             filter: (zoom() > 12.8)
             
-            // width: ramp($event_crowd,[7,60])
-            // width: ramp(zoomrange([12,18]),[1,16])
             width: 7
-            color: ramp(@diversity,sunset)
+            color: ramp($div_score, sunset)
             strokeWidth: 0.25
             strokeColor: white
             resolution: 32
@@ -148,7 +138,6 @@ export default class Mappa extends React.Component {
         let widget  = this.state.widget
         return (         
             <div className="page">
-                <Nav cta="false" />
                 <div className='dashboard'>
                     <div className="sidebar">
                         {isNaN(widget) || widget === 0 ? '' : (

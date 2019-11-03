@@ -1,9 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { observable, computed } from 'mobx'
+import { observer } from 'mobx-react'
 
 import './Nav.css'
 
-class Nav extends React.Component {
+@observer class Nav extends React.Component {
+
+    // figure out how to use MobX to set state
+    // @observable show = false
+    // @computed set show(parameter) {
+    //     return this.show = parameter
+    // }
+
     render () {
         return (
             <div id="nav">
@@ -13,7 +22,8 @@ class Nav extends React.Component {
 
                 <div className="nav-sect center">
                     <div className="nav-el">
-                        { this.props.cta === "true" ? <Link to="/map">Explore the Map</Link> : '' }
+                        <Link to="/map">Explore the Map</Link>
+                        {/* { this.props.cta === "true" ? <Link to="/map">Explore the Map</Link> : '' } */}
                     </div>
                 </div>
             </div>

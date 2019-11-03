@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Nav from './Nav'
 import CTAButton from './CTAButton'
 import './Home.css'
 
@@ -9,7 +8,6 @@ const Home = () => {
 
     return (
         <div className="page">
-            <Nav cta="true"/>
             <div>
                 <div className="section hero">
                     <h1>This is the Homepage's Hero Section</h1>
