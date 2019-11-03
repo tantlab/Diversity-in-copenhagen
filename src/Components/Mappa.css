@@ -16,6 +16,7 @@
     border-radius: 6px;
 
     margin: calc(var(--spa) / 2);
+    padding: calc(var(--spa) / 2) calc(var(--spa) / 2);
 
     width: 200px;
     height: auto;
@@ -24,14 +25,15 @@
     flex-direction: column;
     justify-content: flex-end;
 
-    color: var(--c-b);
+    color: var(--c-d);
     font-weight: 400;
-    background-color: var(--c-1);
+    background-color: var(--c-b);
+
+    box-shadow: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar-component {
-    padding: calc(var(--spa) / 4);
-    margin: calc(var(--spa) / 4);
+    padding: calc(var(--spa) / 4) 0;
 }
 .sidebar-component > .title {
     font-weight: 500;
@@ -40,26 +42,49 @@
     padding-bottom: 6px;
     margin-bottom: 12px;
 
-    border-bottom: 1px solid var(--c-b);
+    border-bottom: 1px solid var(--c-d);
 }
 
-.sidebar-component > .textField {
+.sidebar-component > .component-field {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
     margin-bottom: 6px;
 }
-.sidebar-component > .textField:nth-last-child(1) {
+.sidebar-component > .component-field:nth-last-child(1) {
     margin-bottom: 0;
 }
 
-.sidebar-component > .textField > span:nth-child(1) {
+.sidebar-component > .component-field > span:nth-child(1) {
     font-size: .75em;
     text-transform: uppercase;
 }
-.sidebar-component > .textField > span:nth-child(2) {
+.sidebar-component > .component-field > span:nth-child(2) {
     font-size: 1em;
+}
+
+.sidebar-component > .component-field > .bar-container {
+    max-width: 100%;
+    height: 12px;
+}
+.bar-container .bar-component {
+    position: absolute;
+    height: 3px;
+}
+.bar-container .bar-rail {
+    width: 100%;
+    height: 3px;
+    border-radius: 6px;
+    background-color: var(--c-1);
+    opacity: 0.15;
+}
+.bar-container .bar-current {
+    width: 0%;
+    height: 3px;
+    border-radius: 6px;
+    background-color: var(--c-2);
 }
 
 .mapContainer {
