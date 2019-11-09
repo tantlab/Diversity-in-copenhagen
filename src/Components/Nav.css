@@ -1,6 +1,6 @@
 #nav {
     position: fixed;
-    z-index: 999;
+    z-index: 99;
 
     display: grid;
     grid-template-columns: 1fr 2fr;

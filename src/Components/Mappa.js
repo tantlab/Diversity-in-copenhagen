@@ -1,9 +1,8 @@
 import React from 'react'
 import mapboxgl from 'mapbox-gl'
-import carto from '@carto/carto-vl'
-
 import 'mapbox-gl/src/css/mapbox-gl.css'
 
+import SidebarComponent from './SidebarComponent'
 import './Mappa.css'
 
 export default class Mappa extends React.Component {
@@ -11,163 +10,104 @@ export default class Mappa extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            lat:    55.675,
-            lng:    12.57,
-            zoom:   11,
+            lat: 55.675,     // coordinates of copenhagen's center (?)
+            lng: 12.57,
+            zoom: 11,
             widget: 0
         }
     }
 
+    getAvgValues = (data) => {
+        if (data.length > 0) {
+            let c = [[], [], []]
+            data.forEach(element => {
+                c[0].push(element.properties['Blue Percent']);
+                c[1].push(element.properties['Yellow Percent']);
+                c[2].push(element.properties['Red Percent']);
+            });
+            let avgs = c.map(faction => {
+                let sum = 0
+                faction.forEach(element => {
+                    sum += element
+                });
+                return parseFloat((sum / faction.length).toFixed(2))
+            })
+            return avgs
+        }
+        else return [0, 0, 0]
+    }
+
+    populateSidebar = () => {
+        if (this.state.zoom >= 12 && this.state.factions) {
+            if (this.state.factions.length > 0) {
+                return ( <SidebarComponent title="Factions" factions={this.state.factions} /> )
+            } else return ''
+        } else return ''
+    }
+
     componentDidMount() {
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpdmlud2FyZCIsImEiOiJjazI1N2lkbm4xMHg2M25tcWQ1anprM3Y0In0.sxw7MdBqOuUsi3LDjHqhoA'
 
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: carto.basemaps.voyager,
+            style: 'mapbox://styles/drivinward/ck2rkn9853jak1co95id5hozb/draft',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom,
             minZoom: 11,
-            maxBounds: [12.3,55.55, 12.85,55.8]
+            maxBounds: [12.3, 55.55, 12.85, 55.8]
         })
 
-        carto.setDefaultAuth({
-            username: 'drivinward',
-            apiKey: '5a4fe9e4fe02bb120fdbf141a733e261167cd40f'
-        })
-    
-        const source = new carto.source.Dataset('redux_data')
-    
-        const viz = new carto.Viz(`
-            @viewportAvg:   viewportAvg($div_score)
-
-            filter: (zoom() > 12.8)
-            
-            width: 7
-            color: ramp($div_score, sunset)
-            strokeWidth: 0.25
-            strokeColor: white
-            resolution: 32
-        `);
-
-        const layer = new carto.Layer('Diversity', source, viz)
-        layer.addTo(map)
-        
-        map.addControl(new mapboxgl.NavigationControl({showCompass: false}), 'top-left')
+        // let's make sure the default center is properly set
+        map.setCenter([this.state.lng, this.state.lat]);
 
         map.on('move', () => {
             this.setState({
                 lng: map.getCenter().lng.toFixed(4),
                 lat: map.getCenter().lat.toFixed(4),
-                zoom: map.getZoom().toFixed(2),
+                zoom: map.getZoom(),
             })
+
         })
 
-        layer.on('updated', () => {
-            const widgetData = viz.variables.viewportAvg.value;
-            this.setState({
-                widget: widgetData
-            })
+        // write function to handle events on zoom levels
+        map.on('moveend', () => {
+            const viewportData = map.queryRenderedFeatures({ layers: ['venues'] })
+            if (this.state.zoom >= 12) {
+                this.setState({
+                    factions: this.getAvgValues(viewportData)
+                })
+            }
         })
 
-        // const interactivity = new carto.Interactivity(layer)
-        
-        // const popup = new mapboxgl.Popup({
-        //     closeButton: false,
-        //     closeOnClick: false
-        // })
-        
-        // const showPopup = (event) => {
-        //     function text_truncate(str, length, ending) {
-        //         if (length == null) {
-        //           length = 100
-        //         }
-        //         if (ending == null) {
-        //           ending = '...'
-        //         }
-        //         if (str.length > length) {
-        //           return str.substring(0, length - ending.length) + ending;
-        //         } else {
-        //           return str
-        //         }
-        //     }
-
-        //     if (event.features.length > 0 && map.getZoom().toFixed(2) > 12) {
-        //         let vars = event.features[0].variables
-        //         // popup.setHTML(`
-        //         //     <div class="popup-row">
-        //         //         <span>Diversity: </span><span>${Math.floor(vars.diversity.value)}</span>
-        //         //     </div>
-        //         // `)
-        //         popup.setHTML(`
-        //             <div class="popup-row">
-        //                 <span>Place: </span><span>
-        //                     ${vars.place.value === undefined ? '' : text_truncate(vars.place.value, 18)}
-        //                 </span>
-        //             </div>
-        //             <div class="popup-row">
-        //                 <span>Event: </span><span>
-        //                     ${vars.event.value === undefined ? '' : text_truncate(vars.event.value, 18)}
-        //                 </span>
-        //             </div>
-        //             <div class="popup-row">
-        //                 <span>People: </span><span>
-        //                     ${vars.attendance.value === undefined ? '' : vars.attendance.value}
-        //                 </span>
-        //             </div>
-        //             <div class="popup-row">
-        //                 <span>Diversity: </span><span>
-        //                     ${vars.diversity.value === undefined ? '' : Math.floor(vars.diversity.value)}
-        //                 </span>
-        //             </div>
-        //         `)
-        //         popup.setLngLat([event.coordinates.lng, event.coordinates.lat]);
-        //         if (!popup.isOpen()) {
-        //             popup.addTo(map)
-        //         }
-        //     } else {
-        //         popup.remove()
-        //     }
-        // }
-        // interactivity.on('featureHover', showPopup)
-        
     }
 
     render() {
-        let lat     = this.state.lat.toString().split('.')
-        let lng     = this.state.lng.toString().split('.')
-        let zoom    = this.state.zoom
-        let widget  = this.state.widget
-        return (         
+        let lat = this.state.lat.toString().split('.')
+        let lng = this.state.lng.toString().split('.')
+        let zoom = Math.round(this.state.zoom)
+
+        return (
             <div className="page">
                 <div className='dashboard'>
                     <div className="sidebar">
-                        {isNaN(widget) || widget === 0 ? '' : (
-                            <div className="sidebar-component data-widget">
-                                <div className="title">Diversity</div>
-                                    <div className="component-field">
-                                        <span>Average</span> <span>{widget.toFixed(1)}</span>
-                                    </div>
-                                    <div className="component-field">
-                                        <div className="bar-container">
-                                            <div className="bar-component bar-rail"></div>
-                                            <div className="bar-component bar-current" style={{width: `${widget/2}%`}}></div>
-                                        </div>
-                                    </div>
-                            </div>
-                        )}
+
+                        {this.populateSidebar()}
+
                         <div className="sidebar-component">
-                            <div className="title">Zoom State</div>
-                            <div className="component-field">
-                                <span>Lat</span> <span>{lat[0]}' {lat[1]}''</span>
+                            <div className="title">Position</div>
+                            <div className="component-field parameter">
+                                <span>Lat</span> <span>{lat[0]}'&#9;{lat[1]}''</span>
                             </div>
-                            <div className="component-field">
-                                <span>Lon</span> <span>{lng[0]}' {lng[1]}''</span>
+                            <div className="component-field parameter">
+                                <span>Lon</span> <span>{lng[0]}'&#9;{lng[1]}''</span>
                             </div>
-                            <div className="component-field">
+                            <div className="component-field parameter">
                                 <span>Zoom</span> <span>{zoom}</span>
                             </div>
                         </div>
                     </div>
-                    <div ref={ el => this.mapContainer = el } className='mapContainer'></div>
+                    <div ref={el => this.mapContainer = el} className='mapContainer'></div>
                 </div>
             </div>
         )

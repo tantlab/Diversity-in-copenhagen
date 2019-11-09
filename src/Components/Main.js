@@ -7,24 +7,29 @@ import Home from './Home'
 import Mappa from './Mappa'
 import Nav from './Nav'
 
+// import Cursor from './Cursor'
 import './Main.css'
 
-const Main = () => {
-    return (
-        <Route render={({ location }) => (
-            <TransitionGroup>
-                <Nav />
-                <CSSTransition key={location.key}
-                    timeout={300}
-                    classNames="fade">
-                    <Switch location={location}>
-                        <Route exact path="/" component={Home}></Route>
-                        <Route path="/map" component={Mappa}></Route>
-                    </Switch>
-                </CSSTransition>
-            </TransitionGroup>
-        )}></Route>
-    )
-}
+export default class Main extends React.Component {
 
-export default Main
+    render() {
+        return (
+            <Route render={({ location }) => (
+                <TransitionGroup>
+
+                    {/* <Cursor /> */}
+
+                    <Nav />
+                    <CSSTransition key={location.key}
+                        timeout={300}
+                        classNames="fade">
+                        <Switch location={location}>
+                            <Route exact path="/" component={Home}></Route>
+                            <Route path="/map" component={Mappa}></Route>
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
+            )}></Route>
+        )    
+    }
+}
