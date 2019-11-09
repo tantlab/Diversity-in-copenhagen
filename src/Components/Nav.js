@@ -1,17 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { observable, computed } from 'mobx'
-import { observer } from 'mobx-react'
 
 import './Nav.css'
 
 class Nav extends React.Component {
-
-    // figure out how to use MobX to set state
-    // @observable show = false
-    // @computed set show(parameter) {
-    //     return this.show = parameter
-    // }
 
     constructor(props) {
         super(props)

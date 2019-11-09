@@ -5,8 +5,6 @@
   "dependencies": {
     "@carto/carto-vl": "^1.4.2",
     "mapbox-gl": "^1.5.0",
-    "mobx": "^5.14.2",
-    "mobx-react": "^6.1.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router": "^5.1.2",
