@@ -1,0 +1,95 @@
+.modal {
+    position: absolute;
+
+    left: 0; right: 0;
+    width: 100%; height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+}
+
+.modal.show {
+    pointer-events: all;
+}
+
+.overlay {
+    z-index: 99;
+    position: absolute;
+
+    left: 0; right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, .5);
+
+    opacity: 0;
+    transition: opacity var(--tra);
+}
+
+.modal.show .overlay {
+    opacity: 1;
+    transition: opacity var(--tra);
+}
+
+.reader {
+    position: relative;
+    overflow: hidden;
+    z-index: 100;
+    height: 100%;
+    max-width: 640px; max-height: 640px;
+    min-height: 320px;
+    background-color: var(--c-d);
+
+    transform: translateX(200%);
+    transition: transform var(--tra);
+}
+
+.modal.show .reader {
+    transform: translateX(0%);
+    transition: transform var(--tra);
+}
+
+.reader-toolbar {
+    padding: 0 calc(var(--spa) / 2);
+    height: calc(var(--n-h) / 1.5);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reader-toolbar .close {
+    cursor: pointer;
+
+    width: 24px; height: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.reader-toolbar .close .line {
+    position: absolute;
+    width: 24px; height: 2px;
+    border-radius: 3px;
+    background-color: var(--c-b);
+    overflow: hidden;
+}
+.reader-toolbar .close .line:nth-child(1) {
+    transform: rotate(45deg);
+}
+.reader-toolbar .close .line:nth-child(2) {
+    transform: rotate(-45deg);
+}
+
+.reader-content-area {
+    position: relative;
+    overflow: scroll;
+    height: calc(100% - (var(--n-h) / 1.5) - var(--spa));
+    margin: 0 var(--spa) var(--spa) var(--spa);
+    line-height: 1.5;
+}

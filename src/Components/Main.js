@@ -5,7 +5,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 // list of pages
 import Home from './Home'
 import Mappa from './Mappa'
-import Nav from './Nav'
+import Nav from './Globals/Nav'
 
 // import Cursor from './Cursor'
 import './Main.css'

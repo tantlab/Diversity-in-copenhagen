@@ -1,5 +1,6 @@
 .page {
     position: absolute;
+    height: 100%;
     left: 0; right: 0;
 
     background-color: var(--c-1);
@@ -12,7 +13,7 @@
 
 .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: opacity 300ms ease-in;
+    transition: opacity var(--tra);
 }
 
 .fade-leave {
@@ -22,5 +23,5 @@
 
 .fade-leave.fade-leave-active {
     opacity: 0;
-    transition: opacity 300ms ease-out;
+    transition: opacity var(--tra);
 }

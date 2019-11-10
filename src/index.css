@@ -5,6 +5,7 @@
   --c-2: #08c787;
   --c-b: white;
   --c-d: #282c34;
+  --tra: 350ms cubic-bezier(.6,0,.3,1);
 }
 
 body {

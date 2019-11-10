@@ -1,0 +1,16 @@
+.venue-bar {
+    margin-bottom: calc(var(--spa) / 2);
+    transform: translateX(0%);
+    transition: transform var(--tra);
+}
+
+.venue-details {
+    position: relative;
+    display: block;
+    height: 92px;
+}
+
+.venue-details .text-field {
+    display: block;
+    padding-bottom: calc(var(--spa) / 4);
+}

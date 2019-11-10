@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import CTAButton from './CTAButton'
+import CTAButton from './Globals/CTAButton'
 import './Home.css'
 
 const Home = () => {

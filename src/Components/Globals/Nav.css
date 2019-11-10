@@ -9,7 +9,8 @@
     width: 100%;
     min-height: var(--n-h);
 
-    color: white;
+    border-bottom: 1px solid #ffffff15;
+    background-color: var(--c-1);
 }
 
 .nav-sect {
