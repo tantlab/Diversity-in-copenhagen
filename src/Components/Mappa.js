@@ -103,7 +103,7 @@ export default class Mappa extends React.Component {
         })
         map.on('mouseleave', 'venues', (e) => {
             map.getCanvas().style.cursor = ''
-            // popup.remove()
+            popup.remove()
         })
         // if click on the map (not on place points) we close the info box
         map.on('click', () => {
