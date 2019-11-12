@@ -1,13 +1,3 @@
-.sidebar-component.chart.bubbles {
-    transform: translateX(-100%);
-    transition: var(--tra);
-}
-
-.sidebar-component.chart.bubbles.open {
-    transform: translateX(0%);
-    transition: transform var(--tra);
-}
-
 .chart-component.bubbles {
     width: 100%;
     display: grid;
@@ -29,7 +19,7 @@
     border: 1px solid var(--c-b);
     
     transform-origin: center;
-    transition: width var(--tra), height var(--tra);
+    transition: width var(--tra) var(--crv), height var(--tra) var(--crv);
 }
 .chart-component.bubbles.x-axis {
     width: 100%;

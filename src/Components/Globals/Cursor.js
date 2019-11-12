@@ -51,7 +51,7 @@ export default class Cursor extends React.Component {
         width: `${this.dimensions}px`,
         borderRadius: "100%",
         border: "2px solid white",
-        transition: "width var(--tra), height var(--tra)",
+        transition: "width var(--tra) var(--crv), height var(--tra) var(--crv)",
         pointerEvents: "none"
     }
     

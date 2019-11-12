@@ -1,22 +1,10 @@
-:root {
-    --b-h: 8px;
-    --bottom-bar-h: 102px;
-}
-
 .dashboard {
+    pointer-events: none;
     position: absolute;
     height: 100%;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-}
-
-.dashboard .sidebar-component, .dashboard .venue-bar {
-    padding: calc(var(--spa) / 2);
-    background-color: var(--c-d);
-    box-shadow: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
-    border-radius: 6px;
-    border: 1px solid #ffffff15;
 }
 
 .sidebar {
@@ -27,6 +15,10 @@
     position: relative;
     left: 0;
     bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     
     padding: calc(var(--spa) / 2);
 
@@ -37,74 +29,27 @@
     font-weight: 400;
 }
 
-.navigator {
-    z-index: 10;
-    position: absolute;
-
-    right: 0;
-    bottom: 0;
-    height: var(--bottom-bar-h);
-    margin: calc(var(--spa) / 2);
+.sidebar-component, .navigator {
     padding: calc(var(--spa) / 2);
-
+    margin-bottom: calc(var(--spa) / 2);
     background-color: var(--c-d);
+    box-shadow: var(--sha);
     border-radius: 6px;
-    
-    min-width: 156px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    box-shadow: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
-    
+    border: 1px solid #ffffff15;
 }
-.navigator .title {
-    font-size: 1em;
-    padding-bottom: calc(var(--spa) / 4);
-}
-.navigator-field.parameter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.navigator-field.parameter :nth-child(1) {
-    font-size: .7em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-
-.mapContainer {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.mapboxgl-popup {
-    pointer-events: none;
-}
-.mapboxgl-popup-content {
-    color: var(--c-d);
-    max-width: 256px;
-}
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
-    display: none;
-}
-
-.popup-row {
-    display: grid;
-    grid-template-columns: 3fr 8fr;
-    grid-gap: 6px;
-    font-size: 1.1em;
-}
-
-.popup-row > span:nth-child(1) {
-    font-size: .9em;
-}
-
 
 .sidebar-component {
+    pointer-events: none;
+    
+    transform: translateX(-100%);
+    transition: transform var(--tra) var(--crv);
+}
+.sidebar-component.open {
+    pointer-events: all;
+    transform: translateX(0%);
+    transition: transform var(--tra) var(--crv);
+}
+.sidebar-component:first-child {
     margin-bottom: calc(var(--spa) / 2);
 }
 .sidebar-component:nth-last-child(1) {
@@ -141,6 +86,84 @@
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
     font-weight: 500;
+}
+
+
+.navigator {
+    z-index: 10;
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    height: var(--bottom-bar-h);
+    margin: calc(var(--spa) / 2);
+    padding: calc(var(--spa) / 2);
+
+    background-color: var(--c-d);
+    border-radius: 6px;
+    
+    min-width: 156px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    box-shadow: var(--sha);
+    
+}
+.navigator .title {
+    font-size: 1em;
+    padding-bottom: calc(var(--spa) / 4);
+}
+.navigator-field.parameter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navigator-field.parameter :nth-child(1) {
+    font-size: .7em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+
+.mapContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.mapboxgl-popup {
+    pointer-events: none;
+}
+.mapboxgl-popup-content {
+    font-size: 1.35em;
+    pointer-events: none;
+    background-color: var(--c-d);
+    color: var(--c-b);
+    max-width: 256px;
+    border-radius: 6px;
+    border: 1px solid #ffffff15;
+    box-shadow: var(--sha);
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    border-top-color: var(--c-d);
+    box-shadow: var(--sha);
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+    display: none;
+}
+
+.popup-row {
+    display: grid;
+    grid-template-columns: 3fr 8fr;
+    grid-gap: 6px;
+    font-size: 1.1em;
+}
+
+.popup-row > span:nth-child(1) {
+    font-size: .9em;
 }
 
 

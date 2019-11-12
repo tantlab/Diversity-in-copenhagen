@@ -5,23 +5,3 @@
 
     background-color: var(--c-1);
 }
-
-.fade-enter {
-    opacity: 0;
-    z-index: 10;
-}
-
-.fade-enter.fade-enter-active {
-    opacity: 1;
-    transition: opacity var(--tra);
-}
-
-.fade-leave {
-    opacity: 1;
-    z-index: 0;
-}
-
-.fade-leave.fade-leave-active {
-    opacity: 0;
-    transition: opacity var(--tra);
-}

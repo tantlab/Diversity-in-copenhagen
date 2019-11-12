@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 
 import './Nav.css'
 
@@ -21,15 +21,14 @@ class Nav extends React.Component {
         return (
             <div id="nav">
                 <div className="nav-sect left">
-                    <Link to="/">L O G O</Link>
+                    <NavLink to="/">L O G O</NavLink>
                 </div>
 
                 <div className="nav-sect center">
-                    {this.checkPath() === false ? '' : (
-                        <div className="nav-el">
-                            <Link to="/map">Explore the Map</Link>
-                        </div>
-                    )}
+                        <NavLink to="/about" className="nav-el">About</NavLink>
+                    <Route exact path="/">
+                        <NavLink to="/map" className="nav-el">Explore the Map</NavLink>
+                    </Route>
                 </div>
             </div>
         )

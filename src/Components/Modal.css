@@ -27,12 +27,12 @@
     background-color: rgba(0, 0, 0, .5);
 
     opacity: 0;
-    transition: opacity var(--tra);
+    transition: opacity var(--tra) var(--crv);
 }
 
 .modal.show .overlay {
     opacity: 1;
-    transition: opacity var(--tra);
+    transition: opacity var(--tra) var(--crv);
 }
 
 .reader {
@@ -44,13 +44,13 @@
     min-height: 320px;
     background-color: var(--c-d);
 
-    transform: translateX(200%);
-    transition: transform var(--tra);
+    transform: translateY(200%);
+    transition: transform 750ms var(--crv);
 }
 
 .modal.show .reader {
-    transform: translateX(0%);
-    transition: transform var(--tra);
+    transform: translateY(0%);
+    transition: transform 750ms var(--crv);
 }
 
 .reader-toolbar {

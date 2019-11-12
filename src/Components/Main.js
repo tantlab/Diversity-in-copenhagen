@@ -1,6 +1,8 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
+// try using Pose library
+
 
 // list of pages
 import Home from './Home'
@@ -14,22 +16,17 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <Route render={({ location }) => (
-                <TransitionGroup>
-
-                    {/* <Cursor /> */}
+            <BrowserRouter>
+                <div className="App">
 
                     <Nav />
-                    <CSSTransition key={location.key}
-                        timeout={300}
-                        classNames="fade">
-                        <Switch location={location}>
-                            <Route exact path="/" component={Home}></Route>
-                            <Route path="/map" component={Mappa}></Route>
-                        </Switch>
-                    </CSSTransition>
-                </TransitionGroup>
-            )}></Route>
-        )    
+                    <Switch >
+                        <Route exact path="/" component={Home}></Route>
+                        <Route path="/map" component={Mappa}></Route>
+                    </Switch>
+
+                </div>
+            </BrowserRouter>
+        )
     }
 }

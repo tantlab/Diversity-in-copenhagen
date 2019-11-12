@@ -1,9 +1,3 @@
-.venue-bar {
-    margin-bottom: calc(var(--spa) / 2);
-    transform: translateX(0%);
-    transition: transform var(--tra);
-}
-
 .venue-details {
     position: relative;
     display: block;

@@ -1,11 +1,15 @@
 :root {
   --spa: 32px;
   --n-h: 64px;
+  --b-h: 8px;
+  --bottom-bar-h: 102px;
   --c-1: #282c34;
   --c-2: #08c787;
   --c-b: white;
   --c-d: #282c34;
-  --tra: 350ms cubic-bezier(.6,0,.3,1);
+  --tra: 350ms;
+  --crv: cubic-bezier(.6,0,.3,1);
+  --sha: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -21,4 +25,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#modal_root {
+  position: absolute;
+  top: 0;
+  width: 100%; height: 100%;
+  color: var(--c-b);
+
+  pointer-events: none;
+  overflow: hidden;
 }
