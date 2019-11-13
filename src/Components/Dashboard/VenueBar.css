@@ -1,10 +1,31 @@
 .venue-details {
     position: relative;
     display: block;
-    height: 92px;
+    padding-bottom: calc(var(--spa) / 8);
+    margin-bottom: calc(var(--spa) / 4);
+}
+.venue-details:last-child {
+    padding: 0; margin: 0;
+}
+
+.venue-details.data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .venue-details .text-field {
     display: block;
     padding-bottom: calc(var(--spa) / 4);
+}
+
+.venue-details .text-field span {
+    display: block;
+}
+.venue-details .text-field span:nth-child(1) {
+    padding-bottom: calc(var(--spa) / 8);
+    font-size: .7em;
+    text-transform: uppercase;
+}
+.venue-details .text-field span:nth-child(2) {
+    font-size: 1.5em;
 }

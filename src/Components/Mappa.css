@@ -60,8 +60,8 @@
     font-weight: 500;
 
     font-size: 1em;
-    padding-bottom: 6px;
-    margin-bottom: 12px;
+    padding-bottom: calc(var(--spa) / 8);
+    margin-bottom: calc(var(--spa) / 4);
 }
 
 .sidebar-component .component-field {

@@ -60,9 +60,9 @@ export default class SidebarComponentBubbles extends React.Component {
                     <span>Blue</span>
                 </div>
                 <div className="component-field grid multi-3">
-                    <span style={{ color: colors[0] }}>{this.getFactions(0)}%</span>
-                    <span style={{ color: colors[1] }}>{this.getFactions(1)}%</span>
-                    <span style={{ color: colors[2] }}>{this.getFactions(2)}%</span>
+                    <span /* style={{ color: colors[0] }} */>{this.getFactions(0)}%</span>
+                    <span /* style={{ color: colors[1] }} */>{this.getFactions(1)}%</span>
+                    <span /* style={{ color: colors[2] }} */>{this.getFactions(2)}%</span>
                 </div>
                 <div className="component-field">
                     <div className="chart-container">
