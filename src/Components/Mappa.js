@@ -17,11 +17,12 @@ export default class Mappa extends React.Component {
             // lng: 12.5562,            // Copenhagen's center
             lat: 55.675,                // coordinates of 
             lng: 12.57,                 // Copenhagen's center
-            zoom: 11,                   // initial zoom level
+            zoom: 17,                   // initial zoom level
             factions: [],               // 
             venueFocus: false,          // no selected place on load
             showModal: false,           // modal is closed by default
-            hoveredStateId: null        // controls the hover state on rodes layer
+            hoveredStateId: null,       // controls the hover state on rodes layer
+            placeHoveredStateId: null   // controls the hover state on placess layer 
         }
     }
 
@@ -97,6 +98,9 @@ export default class Mappa extends React.Component {
     }
 
     handleRodeEvents = (map) => {
+        map.on('click', 'rodes', (e) => {
+            this.openModal()
+        })
         map.on('mousemove', 'rodes', (e) => {
             if (e.features.length > 0) {
                 if (this.state.hoveredStateId) {
@@ -106,13 +110,24 @@ export default class Mappa extends React.Component {
                         id: this.state.hoveredStateId
                     }, { hover: false });
                 }
-                
-                if (this.state.hoveredStateId !== e.features[0].id) {
-                    console.log(e.features[0].id);
-                }
+
+                // if (this.state.hoveredStateId !== e.features[0].id) {
+                //     console.log(e.features[0].id);
+                // }
 
                 // setting hovered state id state
                 this.setState({ hoveredStateId: e.features[0].id })
+
+                let popupCoords =
+                    e.features[0].geometry.coordinates[0][0].length > 2 ?
+                        e.features[0].geometry.coordinates[0][0][0] :
+                        e.features[0].geometry.coordinates[0][0]
+
+                console.log(this.state.hoveredStateId, popupCoords);
+
+                this.state.mapPopup.setLngLat(popupCoords)
+                    .setHTML(`id: ${e.features[0].id}`)
+                    .addTo(map)
 
                 map.setFeatureState({
                     source: 'composite',
@@ -131,24 +146,43 @@ export default class Mappa extends React.Component {
                 }, { hover: false });
             }
             this.setState({ hoveredStateId: null })
+            this.state.mapPopup.remove()
         })
     }
 
     handleVenueEvents = (map) => {
-        const popup = new mapboxgl.Popup({
-            closeButton: false
-        })
-
         map.on('mouseenter', 'venues', (e) => {
             map.getCanvas().style.cursor = 'pointer'
             const data = e.features[0]
-            popup.setLngLat(data.geometry.coordinates.slice())
+
+            this.setState({ placeHoveredStateId: data.id })
+
+            console.log(data);
+            
+            console.log(this.state.placeHoveredStateId);
+
+            map.setFeatureState({
+                source: 'composite',
+                sourceLayer: 'placelayer_nov12-dworp9',
+                id: this.state.placeHoveredStateId
+            }, { hover: true })
+
+            this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
                 .setHTML(data.properties["Place"])
                 .addTo(map)
         })
-        map.on('mouseleave', 'venues', (e) => {
+        map.on('mouseleave', 'venues', () => {
+            // console.clear()
+
             map.getCanvas().style.cursor = ''
-            popup.remove()
+
+            map.setFeatureState({
+                source: 'composite',
+                sourceLayer: 'placelayer_nov12-dworp9',
+                id: this.state.placeHoveredStateId
+            }, { hover: false })
+
+            this.state.mapPopup.remove()
         })
         // if click on the map (not on place points) we close the info box
         map.on('click', () => {
@@ -182,6 +216,14 @@ export default class Mappa extends React.Component {
             maxBounds: [12.3, 55.55, 12.85, 55.8]
         })
 
+        const popup = new mapboxgl.Popup({
+            closeButton: false
+        })
+
+        this.setState({
+            mapPopup: popup
+        })
+
         // let's make sure the default center is properly set
         map.setCenter([this.state.lng, this.state.lat]);
 
@@ -199,7 +241,7 @@ export default class Mappa extends React.Component {
         let zoom = parseInt(this.state.zoom)
         let venueData = this.state.lastSelectedVenue ? this.state.lastSelectedVenue : ''
         let divScore = venueData["DIV SCORE PLACE"] ? parseInt(venueData["DIV SCORE PLACE"]) : 'n.a.'
-        let placeEff = venueData["Place_effect"] ? parseFloat(venueData["Place_effect"]).toFixed(2) : 'n.a.'
+        let placeEff = venueData["Place_effect"] ? parseFloat(venueData["Place_effect"]).toFixed(2) : 0
 
         return (
             <div className="page">
@@ -238,7 +280,7 @@ export default class Mappa extends React.Component {
                     </div>
                 </div>
 
-                <MapNavigator lat={lat} lng={lng} zoom={zoom} onClick={this.openModal} />
+                <MapNavigator lat={lat} lng={lng} zoom={zoom} />
 
                 <div ref={el => this.mapContainer = el} className="mapContainer"></div>
             </div>

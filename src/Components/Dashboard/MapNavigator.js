@@ -1,13 +1,10 @@
 import React from 'react'
 
-const MapNavigator = ({ lat, lng, zoom, onClick }) => {
+const MapNavigator = ({ lat, lng, zoom }) => {
 
     return (
         <div className="navigator">
-            <div className="navigator-field parameter" onClick={onClick}>
-                <span style={{ cursor: "pointer" }}>Open Modal</span>
-            </div>
-            <div className="title">Navigator</div>
+            {/* <div className="title">Navigator</div> */}
             <div className="navigator-field parameter">
                 <span>Lat</span> <span>{lat[0]}'&#9;{lat[1]}''</span>
             </div>
