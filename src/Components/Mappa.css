@@ -35,7 +35,7 @@
     background-color: var(--c-d);
     box-shadow: var(--sha);
     border-radius: 6px;
-    border: 1px solid #ffffff15;
+    border: 1px solid var(--border);
 }
 
 .sidebar-component {
@@ -56,13 +56,17 @@
     margin-bottom: 0px;
 }
 
-.sidebar-component .title {
-    font-weight: 500;
 
-    font-size: 1em;
+.sidebar-component .title {
     padding-bottom: calc(var(--spa) / 8);
     margin-bottom: calc(var(--spa) / 4);
 }
+.sidebar-component .caption {
+    font-size: var(--fs-s);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 
 .sidebar-component .component-field {
     position: relative;
@@ -77,7 +81,7 @@
 }
 
 .component-field.parameter > span:nth-child(1) {
-    font-size: .75em;
+    font-size: var(--fs-s);
     text-transform: uppercase;
 }
 
@@ -88,43 +92,6 @@
     font-weight: 500;
 }
 
-
-.navigator {
-    z-index: 10;
-    position: absolute;
-
-    right: 0;
-    bottom: 0;
-    height: var(--bottom-bar-h);
-    margin: calc(var(--spa) / 2);
-    padding: calc(var(--spa) / 2);
-
-    background-color: var(--c-d);
-    border-radius: 6px;
-    
-    min-width: 156px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    box-shadow: var(--sha);
-    
-}
-.navigator .title {
-    font-size: 1em;
-    padding-bottom: calc(var(--spa) / 4);
-}
-.navigator-field.parameter {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.navigator-field.parameter :nth-child(1) {
-    font-size: .7em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
 
 
 .mapContainer {
@@ -137,7 +104,7 @@
     pointer-events: none;
 }
 .mapboxgl-popup-content {
-    font-size: 1.35em;
+    font-size: var(--fs-l);
     pointer-events: none;
     background-color: var(--c-d);
     color: var(--c-b);
@@ -146,8 +113,20 @@
     border: 1px solid #ffffff15;
     box-shadow: var(--sha);
 }
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    border-bottom-color: var(--c-d);
+    box-shadow: var(--sha);
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: var(--c-d);
+    box-shadow: var(--sha);
+}
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
     border-top-color: var(--c-d);
+    box-shadow: var(--sha);
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: var(--c-d);
     box-shadow: var(--sha);
 }
 
@@ -159,44 +138,11 @@
     display: grid;
     grid-template-columns: 3fr 8fr;
     grid-gap: 6px;
-    font-size: 1.1em;
+    font-size: var(--fs-l);
 }
 
 .popup-row > span:nth-child(1) {
-    font-size: .9em;
-}
-
-
-.bar-container {
-    overflow: hidden;
-    height: var(--b-h);
-    border-radius: var(--b-h);
-    max-width: 100%;
-    height: 12px;
-}
-.bar-container .bar-component {
-    position: absolute;
-    height: var(--b-h);
-    border-radius: var(--b-h);
-}
-.bar-container .bar-rail {
-    width: 100%;
-    background-color: var(--c-1);
-    opacity: 0.15;
-}
-.bar-container .bar-current {
-    width: 0%;
-    border-radius: 6px;
-    background-color: var(--c-2);
-}
-
-.bar-container .bar-multi {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    transition: width 350ms ease-in-out;
-
-    overflow: hidden;
+    font-size: var(--fs-s);
 }
 
 

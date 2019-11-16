@@ -1,0 +1,36 @@
+.navigator {
+    z-index: 10;
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    height: var(--bottom-bar-h);
+    margin: calc(var(--spa) / 2);
+    padding: calc(var(--spa) / 2);
+
+    background-color: var(--c-d);
+    border-radius: 6px;
+    
+    min-width: 156px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    box-shadow: var(--sha);
+    
+}
+.navigator .title {
+    font-size: var(--fs-m);
+    padding-bottom: calc(var(--spa) / 4);
+}
+.navigator-field.parameter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.navigator-field.parameter :nth-child(1) {
+    font-size: var(--fs-s);
+    font-weight: 500;
+    text-transform: uppercase;
+}

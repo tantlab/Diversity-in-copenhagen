@@ -18,6 +18,7 @@ export default class Overlay extends React.Component {
                     </div>
                     <div className="reader-content-area">
                         <div className="reader-content">
+                            <h1>Story id: {this.props.sid}</h1>
                             <p>Lorem Ispum is a choke artist. It chokes! You’re disgusting.</p>
                             <p>I think the only card she has is the Lorem card. Lorem Ipsum better hope that there are no "tapes" of our conversations before he starts leaking to the press!</p>
                             <p>Lorem Ispum is a choke artist. It chokes! The other thing with Lorem Ipsum is that you have to take out its family. You could see there was text coming out of her eyes, text coming out of her wherever.</p>

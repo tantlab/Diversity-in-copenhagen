@@ -9,7 +9,7 @@
     width: 100%;
     min-height: var(--n-h);
 
-    border-bottom: 1px solid #ffffff15;
+    border-bottom: 1px solid var(--border);
     background-color: var(--c-1);
 }
 

@@ -1,8 +1,24 @@
+.venue-title.caption {
+    white-space: nowrap;
+    font-size: var(--fs-m);
+    padding-bottom: calc(var(--spa) / 8);
+    margin-bottom: calc(var(--spa) / 1.35);
+}
+
+.venue-header-background {
+    z-index: -1;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 48px;
+    transition: background-color 150ms var(--crv);
+    border-radius: 5px 5px 0px 0px;
+}
+
 .venue-details {
     position: relative;
     display: block;
     padding-bottom: calc(var(--spa) / 8);
-    margin-bottom: calc(var(--spa) / 4);
+    margin-bottom: calc(var(--spa) / 2);
 }
 .venue-details:last-child {
     padding: 0; margin: 0;
@@ -10,7 +26,14 @@
 
 .venue-details.data {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
+}
+
+.venue-details.graph {
+    margin-bottom: calc(var(--spa) / 1);
+}
+.venue-details.graph > .text-field.content {
+    text-transform: capitalize;
 }
 
 .venue-details .text-field {
@@ -23,9 +46,9 @@
 }
 .venue-details .text-field span:nth-child(1) {
     padding-bottom: calc(var(--spa) / 8);
-    font-size: .7em;
+    font-size: var(--fs-s);
     text-transform: uppercase;
 }
 .venue-details .text-field span:nth-child(2) {
-    font-size: 1.5em;
+    font-size: var(--fs-l);
 }

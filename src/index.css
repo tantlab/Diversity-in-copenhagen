@@ -3,13 +3,36 @@
   --n-h: 64px;
   --b-h: 8px;
   --bottom-bar-h: 102px;
-  --c-1: #282c34;
-  --c-2: #08c787;
-  --c-b: white;
-  --c-d: #282c34;
+
+  --c-1: var(--c-d);
+  --c-2: var(--g);
+  --c-b: #282c34;
+  --c-d: white;
+  --border: #000000aa;
+
+  --r: #E63462;
+  --y: #EACB00;
+  --b: #00B1D9;
+  --g: #00FFAA;
+
+  --fs-x: 1.75em;
+  --fs-l: 1.35em;
+  --fs-m: 1em;
+  --fs-s: .75em;
+
   --tra: 350ms;
-  --crv: cubic-bezier(.6,0,.3,1);
+  --crv: cubic-bezier(.6, 0, .3, 1);
   --sha: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-1: #282c34;
+    --c-2: #08c787;
+    --c-b: white;
+    --c-d: #282c34;
+    --border: #ffffff15;
+  }
 }
 
 body {
@@ -20,7 +43,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--c-1);
+
+  box-sizing: border-box;
+
+  font-size: 16px;
 }
+
+/* @media (max-width: 1024px) {
+  body {
+    font-size: 14px;
+  }
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -30,7 +63,8 @@ code {
 #modal_root {
   position: absolute;
   top: 0;
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   color: var(--c-b);
 
   pointer-events: none;

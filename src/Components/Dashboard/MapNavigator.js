@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './MapNavigator.css'
+
 const MapNavigator = ({ lat, lng, zoom }) => {
 
     return (

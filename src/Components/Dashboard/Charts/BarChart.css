@@ -1,0 +1,91 @@
+.barchart {
+    margin-top: calc(var(--spa) / 4);
+}
+
+.barchart-ticks {
+    margin-top: calc(var(--spa) / 4);
+
+    font-size: var(--fs-s);
+    font-weight: 500;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    opacity: .5;
+}
+
+.barchart-labels {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: calc(var(--spa) / 4);
+}
+
+.barchart-label {
+    font-size: var(--fs-s);
+    font-weight: 500;
+    min-width: 0%;
+    text-align: center;
+    transition:
+        min-width var(--tra) ease-out,
+        opacity var(--tra) ease-out,
+        margin var(--tra) ease-out;
+}
+
+.barchart.minmax {
+    transition: width var(--tra) ease-out;
+}
+.barchart.minmax.barchart-label.min,
+.barchart.minmax.barchart-label.max {
+    font-size: var(--fs-s);
+}
+.barchart.minmax .barchart-label.current {
+    font-size: var(--fs-x);
+    font-weight: 400;
+    transition: width var(--tra) ease-out;
+}
+
+.bar-container {
+    overflow: hidden;
+    height: var(--b-h);
+    border-radius: var(--b-h);
+    max-width: 100%;
+}
+
+.bar-container .bar-component {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: var(--b-h);
+    border-radius: var(--b-h);
+}
+
+.bar-container .bar-rail {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: var(--c-b);
+    opacity: 0.15;
+}
+
+.bar-container .bar-current {
+    height: 100%;
+    width: 0%;
+    border-radius: 8px;
+    background-color: var(--c-2);
+    transition: width var(--tra) ease-out;
+}
+
+.bar-container.bar-multi {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    transition: width var(--tra) ease-out;
+
+    border-radius: 0px;
+
+    overflow: hidden;
+}
