@@ -10,35 +10,37 @@
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 48px;
-    transition: background-color 150ms var(--crv);
+    transition: background-color 250ms linear;
     border-radius: 5px 5px 0px 0px;
 }
 
 .venue-details {
     position: relative;
     display: block;
-    padding-bottom: calc(var(--spa) / 8);
+    padding-bottom: calc(var(--spa) / 2);
     margin-bottom: calc(var(--spa) / 2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.venue-details:last-child {
-    padding: 0; margin: 0;
+.venue-details:last-child.data,
+.venue-details:last-child.graph {
+    border: none;
+    padding-bottom: calc(var(--spa) / 0);
+    margin-bottom: calc(var(--spa) / 2);
 }
 
 .venue-details.data {
     display: grid;
-    /* grid-template-columns: 1fr 1fr; */
+}
+.venue-details.graph {
+    padding-bottom: calc(var(--spa) / 1);
+    margin-bottom: calc(var(--spa) / 2);
 }
 
-.venue-details.graph {
-    margin-bottom: calc(var(--spa) / 1);
+.venue-details .text-field.caption {
+    margin-bottom: calc(var(--spa) / 4);
 }
 .venue-details.graph > .text-field.content {
     text-transform: capitalize;
-}
-
-.venue-details .text-field {
-    display: block;
-    padding-bottom: calc(var(--spa) / 4);
 }
 
 .venue-details .text-field span {

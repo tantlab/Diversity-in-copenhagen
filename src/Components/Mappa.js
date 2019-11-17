@@ -1,5 +1,7 @@
 import React from 'react'
-import { Route } from 'react-router'
+import {
+    Route
+} from 'react-router'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/src/css/mapbox-gl.css'
@@ -8,8 +10,8 @@ import 'mapbox-gl/src/css/mapbox-gl.css'
 // import { ResponsiveLine } from '@nivo/line'
 
 import './Mappa.css'
-import MapNavigator from './Dashboard/MapNavigator'
-import SidebarComponentBubbles from './Dashboard/SidebarComponentBubbles'
+// import MapNavigator from './Dashboard/MapNavigator'
+import SidebarComponentBubbles from './Dashboard/Charts/SidebarComponentBubbles'
 import VenueBar from './Dashboard/VenueBar'
 import Modal from './Modal'
 
@@ -18,12 +20,12 @@ export default class Mappa extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            lat: 55.675,             // coordinates of 
-            lng: 12.57,              // Copenhagen's center
-            zoom: 11,                   // initial zoom level
-            factions: [],               // 
+            lat: 55.675, // coordinates of 
+            lng: 12.57, // Copenhagen's center
+            zoom: 11, // initial zoom level
+            factions: [], // 
             lastSelectedVenue: null,
-            venueFocus: false,          // no selected place on load
+            venueFocus: false, // no selected place on load
             venueGraphData: {
                 least: [0, 0, 0],
                 most: [0, 0, 0]
@@ -31,19 +33,19 @@ export default class Mappa extends React.Component {
 
 
             modal: {
-                el: null,               // state for modal element
-                transitionTiming: 750,  // timing of modal transition
-                showModal: false,       // modal is closed by default
-                sid: null               // story id
+                el: null, // state for modal element
+                transitionTiming: 750, // timing of modal transition
+                showModal: false, // modal is closed by default
+                sid: null // story id
             },
 
             rode: {
                 name: null,
                 diversity: null,
-                hoveredStateId: null,       // controls the hover state on rodes layer
+                hoveredStateId: null, // controls the hover state on rodes layer
             },
 
-            placeHoveredStateId: null   // controls the hover state on placess layer 
+            placeHoveredStateId: null // controls the hover state on placess layer 
         }
     }
 
@@ -58,11 +60,11 @@ export default class Mappa extends React.Component {
             minZoom: 11,
             maxBounds: [12.3, 55.55, 12.85, 55.8]
         })
-        const popup = new mapboxgl.Popup({
-            closeButton: false
-        })
+        // map.addControl(new mapboxgl.NavigationControl());
         // let's make sure the default center is properly set
         map.setCenter([this.state.lng, this.state.lat]);
+
+        const popup = new mapboxgl.Popup({ closeButton: false })
 
         // let modal = document.querySelector('.modal .reader')
         // initializing state for important elements
@@ -80,21 +82,19 @@ export default class Mappa extends React.Component {
 
     // TO-DO: always checks if story id is valid
     openModal = (e) => {
-        // // s is going to be story's id
-        // console.log(e, s);
-        let s = e.point.x
-        this.setState(prevState => ({
-            modal: {
-                ...prevState.modal,
-                showModal: true,
-                sid: s
-            }
-        }))
-
+        let s = e.features[0].properties["Neighborhood"]
+        this.props.history.push(`/map/story?s=${s}`)
         setTimeout(() => {
-            this.props.history.push(`/map/story?s=${s}`)
-        }, this.state.modal.transitionTiming);
+            this.setState(prevState => ({
+                modal: {
+                    ...prevState.modal,
+                    showModal: true,
+                    sid: s
+                }
+            }))
+        }, 0);
     }
+
     closeModal = () => {
         this.setState(prevState => ({
             modal: {
@@ -116,7 +116,11 @@ export default class Mappa extends React.Component {
 
     getCurrentGroupsDataInView = (data) => {
         if (data.length > 0) {
-            let c = [[], [], []]
+            let c = [
+                [],
+                [],
+                []
+            ]
             let tot = []
             data.forEach(place => {
                 c[0].push(place.properties['Total Red']);
@@ -129,13 +133,12 @@ export default class Mappa extends React.Component {
                 let aggregates = 0
                 let tots = 0
                 tot.map((placeTot, t) => {
-                    return [aggregates += (/* placeTot *  */faction[t]), tots += placeTot]
+                    return [aggregates += ( /* placeTot *  */ faction[t]), tots += placeTot]
                 })
                 return aggregates / tots * 100
             })
             return avgs
-        }
-        else return [0, 0, 0]
+        } else return [0, 0, 0]
     }
 
     computePlaceGraphData(array) {
@@ -155,8 +158,12 @@ export default class Mappa extends React.Component {
     updateMapData = (map) => {
         // update average values of bubblechart
         if (this.checkZoom()) {
-            const viewportData = map.queryRenderedFeatures({ layers: ['venues'] })
-            this.setState({ factions: this.getCurrentGroupsDataInView(viewportData) })
+            const viewportData = map.queryRenderedFeatures({
+                layers: ['venues']
+            })
+            this.setState({
+                factions: this.getCurrentGroupsDataInView(viewportData)
+            })
             return viewportData
         } else return false
     }
@@ -177,7 +184,9 @@ export default class Mappa extends React.Component {
             })
             // if we zoom out, close also place info box
             if (this.checkZoom() === false) {
-                this.setState({ venueFocus: false })
+                this.setState({
+                    venueFocus: false
+                })
             }
 
         })
@@ -205,15 +214,18 @@ export default class Mappa extends React.Component {
                 // ray-casting algorithm based on
                 // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 
-                var x = point[0], y = point[1];
+                var x = point[0],
+                    y = point[1];
 
                 var inside = false;
                 for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-                    var xi = vs[i][0], yi = vs[i][1];
-                    var xj = vs[j][0], yj = vs[j][1];
+                    var xi = vs[i][0],
+                        yi = vs[i][1];
+                    var xj = vs[j][0],
+                        yj = vs[j][1];
 
-                    var intersect = ((yi > y) !== (yj > y))
-                        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                    var intersect = ((yi > y) !== (yj > y)) &&
+                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
                     if (intersect) inside = !inside;
                 }
 
@@ -266,8 +278,8 @@ export default class Mappa extends React.Component {
 
                     this.state.mapPopup.setLngLat(popupCoords)
                         .setHTML(`
-                        id: ${e.features[0].id},</br>
-                        ${e.features[0].properties["Rode"]}
+                        ${e.features[0].properties["Rode"]}</br>
+                        ${e.features[0].properties["Neighborhood"]}
                     `)
                         .addTo(map)
 
@@ -275,7 +287,9 @@ export default class Mappa extends React.Component {
                         source: 'composite',
                         sourceLayer: 'Rode_layer_nov12-462huj',
                         id: this.state.rode.hoveredStateId
-                    }, { hover: true });
+                    }, {
+                        hover: true
+                    });
                 }
 
             }
@@ -289,7 +303,9 @@ export default class Mappa extends React.Component {
                     source: 'composite',
                     sourceLayer: 'Rode_layer_nov12-462huj',
                     id: this.state.rode.hoveredStateId
-                }, { hover: false });
+                }, {
+                    hover: false
+                });
             }
             this.setState(prevState => ({
                 rode: {
@@ -335,7 +351,9 @@ export default class Mappa extends React.Component {
             let data = e.features[0]
             let venueProps = data.properties
 
-            this.setState({ placeHoveredStateId: data.id })
+            this.setState({
+                placeHoveredStateId: data.id
+            })
             this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
                 .setHTML(data.properties["Place"])
                 .addTo(map)
@@ -363,49 +381,45 @@ export default class Mappa extends React.Component {
     }
 
     render() {
-        let lat = this.state.lat.toString().split('.')
-        let lng = this.state.lng.toString().split('.')
-        let zoom = parseInt(this.state.zoom)
+        // let lat = this.state.lat.toString().split('.')
+        // let lng = this.state.lng.toString().split('.')
+        // let zoom = parseInt(this.state.zoom)
 
         return (
-            <div className="page">
+            <div className="page" >
 
-                <Route exact path="/map">
-                    <Modal
-                        show={this.state.modal.showModal}
+                
+                {/* <Route exact path="/map">
+                    <Modal show={this.state.modal.showModal} 
+                    onCloseBtn={this.closeModal} 
+                    sid={this.state.modal.sid} />
+                </Route>  */}
+
+                <Route path="/map/story" >
+                    <Modal show={this.state.modal.showModal}
                         onCloseBtn={this.closeModal}
-                        sid={this.state.modal.sid}
-                    />
-                </Route>
-                <Route path="/map/story">
-                    <Modal
-                        show={this.state.modal.showModal}
-                        onCloseBtn={this.closeModal}
-                        sid={this.state.modal.sid}
-                    />
+                        sid={this.state.modal.sid} />
                 </Route>
 
-                <div className="dashboard">
-                    <div className="sidebar">
+                <div className="dashboard" >
+                    <div className="sidebar" >
                         <VenueBar
                             show={this.state.venueFocus}
                             data={this.state.lastSelectedVenue}
                             graphData={this.state.venueGraphData}
-                        />
+                            componentDidMount={this.scrollTop = this.scrollHeight} />
                         <SidebarComponentBubbles
                             zoom={this.state.zoom}
                             factions={this.state.factions}
                             rode={this.state.rode}
-                            show={this.checkZoom()}
-                        />
+                            show={this.checkZoom()} />
                     </div>
                 </div>
 
-                <MapNavigator lat={lat} lng={lng} zoom={zoom} />
-
-                <div ref={el => this.mapContainer = el} className="mapContainer"></div>
+                {/* <MapNavigator lat={lat} lng={lng} zoom={zoom} /> */}
+                
+                <div ref={el => this.mapContainer = el} className="mapContainer" > </div>
             </div>
         )
     }
-
 }

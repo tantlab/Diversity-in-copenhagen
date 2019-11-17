@@ -1,6 +1,9 @@
 .barchart {
     margin-top: calc(var(--spa) / 4);
 }
+.barchart.multi {
+    margin-top: calc(var(--spa) / 2);
+}
 
 .barchart-ticks {
     margin-top: calc(var(--spa) / 4);

@@ -4,12 +4,34 @@ import BarChartMulti from './Charts/BarChartMulti'
 import BarChart from './Charts/BarChart'
 
 import './VenueBar.css'
+import LocalizedStrings from 'react-localization'
+
+let strings = new LocalizedStrings({
+    en: {
+        venue: {
+            graph: {
+                title: "Diversity Score"
+            },
+            events: {
+                least: "Least diverse event",
+                most: "Most diverse event"
+            }
+        }
+    },
+    it: {
+        venue: {
+            graph: {
+                title: "Punteggio diversità"
+            },
+            events: {
+                least: "Evento più diverso",
+                most: "Evento meno diverso"
+            }
+        }
+    }
+})
 
 export default class VenueBar extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {}
-    }
 
     checkProps() {
         if (this.props.data) {
@@ -46,16 +68,16 @@ export default class VenueBar extends React.Component {
     render() {
 
         let data = this.props.data ? this.props.data : ""
-        let placeName = data ? this.trimString(data["Place"]) : ""
-        let placeType = data ? this.placeTypeColor(data["Place Type"]) : ""
-        let mapsLink = data ? data["Maps Link"] : ""
+        let placeName = data ? this.trimString(data["Place"]) : "lorem"
+        let placeType = data ? this.placeTypeColor(data["Place Type"]) : "lorem"
+        let mapsLink = data ? data["Maps Link"] : "lorem"
         // let placeEff = data ? parseFloat(data["Place_effect"]).toFixed(2) : 0
         let divScore = data ? (Math.abs(data["DIV SCORE PLACE"] - 200) / 200 * 10).toFixed(1) : 'n.a.'
-        let leastDiverseEvent = data ? this.trimString(data["Least Diverse Event"]) : ''
-        let mostDiverseEvent = data ? this.trimString(data["Most Diverse Event"]) : ''
+        let leastDiverseEvent = data ? this.trimString(data["Least Diverse Event"]) : "lorem"
+        let mostDiverseEvent = data ? this.trimString(data["Most Diverse Event"]) : "lorem"
 
         return (
-            <div className={`sidebar-component venue ${this.props.show ? 'open' : ''}`}>
+            <div className={`sidebar-component venue ${this.props.show ? "open" : ""}`}>
                 <div className="text-field venue-title caption" style={{color: this.colorFromHeader(placeType)}}>
                     <a href={mapsLink} style={{color: "inherit"}} rel="noopener noreferrer" target="_blank">{placeName} ↗</a>
                 </div>
@@ -63,7 +85,7 @@ export default class VenueBar extends React.Component {
                 style={{ backgroundColor: this.props.show ? placeType : 'transparent' }}></div>
                 <div className="venue-details data">
                     <div className="text-field value">
-                        <span>Diversity score</span>
+                        <span>{strings.venue.graph.title}</span>
                         <BarChart data={divScore} />
                     </div>
                     {/* <div className="text-field value">
@@ -72,13 +94,13 @@ export default class VenueBar extends React.Component {
                     </div> */}
                 </div>
                 <div className="venue-details graph">
-                    <div className="text-field caption">Least Diverse Event</div>
+                    <div className="text-field caption">{strings.venue.events.least}</div>
                     <div className="text-field content">{leastDiverseEvent}</div>
                     <BarChartMulti data={this.props.graphData.least} />
                 </div>
 
                 <div className="venue-details graph">
-                    <div className="text-field caption">Most Diverse Event</div>
+                    <div className="text-field caption">{strings.venue.events.most}</div>
                     <div className="text-field content">{mostDiverseEvent}</div>
                     <BarChartMulti data={this.props.graphData.most} />
                 </div>

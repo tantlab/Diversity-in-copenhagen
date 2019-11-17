@@ -12,21 +12,20 @@ import Nav from './Globals/Nav'
 // import Cursor from './Cursor'
 import './Main.css'
 
-export default class Main extends React.Component {
+const Main = () => {
+    return (
+        <BrowserRouter>
+            <div className="App">
 
-    render() {
-        return (
-            <BrowserRouter>
-                <div className="App">
+                <Nav />
+                <Switch >
+                    <Route exact path="/" component={Home}></Route>
+                    <Route path="/map" component={Mappa}></Route>
+                </Switch>
 
-                    <Nav />
-                    <Switch >
-                        <Route exact path="/" component={Home}></Route>
-                        <Route path="/map" component={Mappa}></Route>
-                    </Switch>
-
-                </div>
-            </BrowserRouter>
-        )
-    }
+            </div>
+        </BrowserRouter>
+    )
 }
+
+export default Main

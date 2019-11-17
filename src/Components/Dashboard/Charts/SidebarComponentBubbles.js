@@ -1,6 +1,28 @@
 import React from 'react'
 
 import './SidebarComponentBubbles.css'
+import LocalizedStrings from 'react-localization'
+
+let strings = new LocalizedStrings({
+    en: {
+        area: "Area",
+        diversity: "Avg diversity",
+        colors: {
+            r: "Red",
+            y: "Yellow",
+            b: "Blue"
+        }
+    },
+    it: {
+        area: "Zona",
+        diversity: "Diversità",
+        colors: {
+            r: "Rosso",
+            y: "Giallo",
+            b: "Blu"
+        }
+    }
+})
 
 export default class SidebarComponentBubbles extends React.Component {
     constructor(props) {
@@ -21,15 +43,25 @@ export default class SidebarComponentBubbles extends React.Component {
     render() {
         return (
             <div className={`sidebar-component bubbles chart ${this.props.show ? 'open' : ''}`}>
-                <div className="component-field">
-                <div>Current Area</div>
-                    <span>{this.props.rode.name}</span>
+                <div className="component-field area-info">
+                    <div className="component-field current-area">
+                        <div className="text-field caption">
+                            <div>{strings.area}</div>
+                        </div>
+                        <span>{this.props.rode.name ? this.props.rode.name : 'area'}</span>
+                    </div>
+                    <div className="component-field current-area-diversity">
+                        <div className="text-field caption">
+                            <div>{strings.diversity}</div>
+                        </div>
+                        <span>{this.props.rode.diversity ? this.props.rode.diversity : 0}</span>
+                    </div>
                 </div>
-                <div className="title">Factions Presence</div>
+                {/* <div className="title">Factions Presence</div> */}
                 <div className="component-field grid multi-3">
-                    <span>Red</span>
-                    <span>Yellow</span>
-                    <span>Blue</span>
+                    <span>{strings.colors.r}</span>
+                    <span>{strings.colors.y}</span>
+                    <span>{strings.colors.b}</span>
                 </div>
                 <div className="component-field grid multi-3">
                     <span /* style={{ color: colors[0] }} */>{this.getFactions(0)}%</span>

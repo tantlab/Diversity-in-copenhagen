@@ -1,22 +1,26 @@
 import React from 'react'
 import { Route, NavLink } from 'react-router-dom'
 
+import LocalizedStrings from 'react-localization'
+
 import './Nav.css'
 
-class Nav extends React.Component {
-
-    constructor(props) {
-        super(props)
-        this.state = ({
-            cta: false
-        })
+let strings = new LocalizedStrings({
+    en: {
+        about: "About",
+        map: "Explore the Map"
+    },
+    it: {
+        about: "Sul progetto",
+        map: "Esplora la mappa"
+    },
+    da: {
+        about: "About",
+        map: "Explore the Map"
     }
+})
 
-    checkPath() {
-        const path = window.location.pathname !== "/map" ? true : false
-        return path
-    }
-
+export default class Nav extends React.Component {
     render() {
         return (
             <div id="nav">
@@ -25,14 +29,12 @@ class Nav extends React.Component {
                 </div>
 
                 <div className="nav-sect center">
-                        <NavLink to="/about" className="nav-el">About</NavLink>
+                    <NavLink to="/about" className="nav-el">{strings.about}</NavLink>
                     <Route exact path="/">
-                        <NavLink to="/map" className="nav-el">Explore the Map</NavLink>
+                        <NavLink to="/map" className="nav-el">{strings.map}</NavLink>
                     </Route>
                 </div>
             </div>
         )
     }
 }
-
-export default Nav
