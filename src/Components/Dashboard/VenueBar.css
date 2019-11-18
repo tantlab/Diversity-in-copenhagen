@@ -24,7 +24,7 @@
 .venue-details:last-child.data,
 .venue-details:last-child.graph {
     border: none;
-    padding-bottom: calc(var(--spa) / 0);
+    padding-bottom: 0;
     margin-bottom: calc(var(--spa) / 2);
 }
 
