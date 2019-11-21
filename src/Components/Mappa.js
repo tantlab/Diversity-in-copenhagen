@@ -91,10 +91,6 @@ export default class Mappa extends React.Component {
                 sid: s
             }
         }))
-<<<<<<< HEAD
-=======
-
->>>>>>> 84c611b285883d9b39dfaf552285b388d63e1045
         setTimeout(() => {
             this.props.history.push(`/map/story?s=${s}`)
         }, this.state.modal.transitionTiming);
