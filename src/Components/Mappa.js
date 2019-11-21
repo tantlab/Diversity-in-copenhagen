@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-    Route
-} from 'react-router'
+import { Route } from 'react-router'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/src/css/mapbox-gl.css'
@@ -10,10 +8,14 @@ import 'mapbox-gl/src/css/mapbox-gl.css'
 // import { ResponsiveLine } from '@nivo/line'
 
 import './Mappa.css'
-// import MapNavigator from './Dashboard/MapNavigator'
-import SidebarComponentBubbles from './Dashboard/Charts/SidebarComponentBubbles'
-import VenueBar from './Dashboard/VenueBar'
+
 import Modal from './Modal'
+import Sidebar from './Dashboard/Sidebar'
+import SidebarEventInfo from './Dashboard/SidebarEventInfo'
+
+// import MapNavigator from './Dashboard/MapNavigator'
+// import SidebarComponentBubbles from './Dashboard/Charts/SidebarComponentBubbles'
+// import VenueBar from './Dashboard/VenueBar'
 
 export default class Mappa extends React.Component {
 
@@ -30,7 +32,6 @@ export default class Mappa extends React.Component {
                 least: [0, 0, 0],
                 most: [0, 0, 0]
             },
-
 
             modal: {
                 el: null, // state for modal element
@@ -83,16 +84,16 @@ export default class Mappa extends React.Component {
     // TO-DO: always checks if story id is valid
     openModal = (e) => {
         let s = e.features[0].properties["Neighborhood"]
-        this.props.history.push(`/map/story?s=${s}`)
+        this.setState(prevState => ({
+            modal: {
+                ...prevState.modal,
+                showModal: true,
+                sid: s
+            }
+        }))
         setTimeout(() => {
-            this.setState(prevState => ({
-                modal: {
-                    ...prevState.modal,
-                    showModal: true,
-                    sid: s
-                }
-            }))
-        }, 0);
+            this.props.history.push(`/map/story?s=${s}`)
+        }, this.state.modal.transitionTiming);
     }
 
     closeModal = () => {
@@ -388,12 +389,12 @@ export default class Mappa extends React.Component {
         return (
             <div className="page" >
 
-                
-                {/* <Route exact path="/map">
+
+                <Route exact path="/map">
                     <Modal show={this.state.modal.showModal} 
                     onCloseBtn={this.closeModal} 
                     sid={this.state.modal.sid} />
-                </Route>  */}
+                </Route> 
 
                 <Route path="/map/story" >
                     <Modal show={this.state.modal.showModal}
@@ -403,21 +404,40 @@ export default class Mappa extends React.Component {
 
                 <div className="dashboard" >
                     <div className="sidebar" >
-                        <VenueBar
+                        <Sidebar
+                            data={this.state.lastSelectedVenue}
+                            graphData={this.state.venueGraphData} >
+
+                            <SidebarEventInfo
+                                data={this.state.lastSelectedVenue}
+                                graphData={this.state.venueGraphData} />
+
+                            <div className="sidebar-section crowd-info">
+                                ciao1
+                            </div>
+                            <div className="sidebar-section scores">
+                                ciao2
+                            </div>
+                            <div className="sidebar-section time">
+                                ciao3
+                            </div>
+                        </Sidebar>
+
+                        {/* <VenueBar
                             show={this.state.venueFocus}
                             data={this.state.lastSelectedVenue}
                             graphData={this.state.venueGraphData}
-                            componentDidMount={this.scrollTop = this.scrollHeight} />
-                        <SidebarComponentBubbles
+                            componentDidMount={this.scrollTop = this.scrollHeight} /> */}
+                        {/* <SidebarComponentBubbles
                             zoom={this.state.zoom}
                             factions={this.state.factions}
                             rode={this.state.rode}
-                            show={this.checkZoom()} />
+                            show={this.checkZoom()} /> */}
                     </div>
                 </div>
 
                 {/* <MapNavigator lat={lat} lng={lng} zoom={zoom} /> */}
-                
+
                 <div ref={el => this.mapContainer = el} className="mapContainer" > </div>
             </div>
         )

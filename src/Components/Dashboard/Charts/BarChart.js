@@ -1,18 +1,6 @@
 import React from 'react'
 
 import './BarChart.css'
-import LocalizedStrings from 'react-localization'
-
-let strings = new LocalizedStrings({
-    en: {
-        less: "Less diverse",
-        more: "More diverse"
-    },
-    it: {
-        less: "Più diverso",
-        more: "Meno diverso"
-    }
-})
 
 export default class BarChartMulti extends React.Component {
     constructor(props) {
@@ -59,8 +47,8 @@ export default class BarChartMulti extends React.Component {
                 </div>
 
                 <div className="barchart-ticks">
-                    <div className="barchart-label">{strings.less}</div>
-                    <div className="barchart-label">{strings.more}</div>
+                    <div className="barchart-label">Less diverse</div>
+                    <div className="barchart-label">More diverse</div>
                 </div>
 
             </div>

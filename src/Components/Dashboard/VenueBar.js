@@ -4,32 +4,6 @@ import BarChartMulti from './Charts/BarChartMulti'
 import BarChart from './Charts/BarChart'
 
 import './VenueBar.css'
-import LocalizedStrings from 'react-localization'
-
-let strings = new LocalizedStrings({
-    en: {
-        venue: {
-            graph: {
-                title: "Diversity Score"
-            },
-            events: {
-                least: "Least diverse event",
-                most: "Most diverse event"
-            }
-        }
-    },
-    it: {
-        venue: {
-            graph: {
-                title: "Punteggio diversità"
-            },
-            events: {
-                least: "Evento più diverso",
-                most: "Evento meno diverso"
-            }
-        }
-    }
-})
 
 export default class VenueBar extends React.Component {
 

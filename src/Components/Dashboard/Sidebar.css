@@ -1,0 +1,40 @@
+.sidebar {
+    z-index: 10;
+
+    overflow-y: scroll;
+    
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(100% - var(--n-h) - var(--spa));
+    flex-flow: column nowrap;
+
+    position: relative;
+    left: 0;
+    bottom: 0;
+
+    padding: calc(var(--spa) / 2);
+
+    width: 320px;
+    max-height: calc(100% - var(--n-h) - var(--spa));
+
+    color: var(--c-b);
+    font-weight: 400;
+
+}
+
+.sidebar-content {
+    padding: calc(var(--spa) / 2);
+
+    background-color: var(--c-d);
+    border-radius: 6px;
+    box-shadow: var(--sha);
+    border: 1px solid var(--border)
+}
+
+.sidebar-section {
+    margin-bottom: calc(var(--spa) / 2);
+}
+
+.sidebar.event-info {
+
+}
