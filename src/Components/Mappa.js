@@ -83,16 +83,17 @@ export default class Mappa extends React.Component {
     // TO-DO: always checks if story id is valid
     openModal = (e) => {
         let s = e.features[0].properties["Neighborhood"]
-        this.props.history.push(`/map/story?s=${s}`)
+        this.setState(prevState => ({
+            modal: {
+                ...prevState.modal,
+                showModal: true,
+                sid: s
+            }
+        }))
+
         setTimeout(() => {
-            this.setState(prevState => ({
-                modal: {
-                    ...prevState.modal,
-                    showModal: true,
-                    sid: s
-                }
-            }))
-        }, 0);
+            this.props.history.push(`/map/story?s=${s}`)
+        }, this.state.modal.transitionTiming);
     }
 
     closeModal = () => {
@@ -389,11 +390,11 @@ export default class Mappa extends React.Component {
             <div className="page" >
 
                 
-                {/* <Route exact path="/map">
+                <Route exact path="/map">
                     <Modal show={this.state.modal.showModal} 
                     onCloseBtn={this.closeModal} 
                     sid={this.state.modal.sid} />
-                </Route>  */}
+                </Route> 
 
                 <Route path="/map/story" >
                     <Modal show={this.state.modal.showModal}
