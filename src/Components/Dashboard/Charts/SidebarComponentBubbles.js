@@ -20,7 +20,7 @@ export default class SidebarComponentBubbles extends React.Component {
 
     render() {
         return (
-            <div className={`sidebar-component bubbles chart ${this.props.show ? 'open' : ''}`}>
+            <div className={`bubbles chart ${this.props.show ? 'open' : ''}`}>
                 <div className="component-field area-info">
                     <div className="component-field current-area">
                         <div className="text-field caption">

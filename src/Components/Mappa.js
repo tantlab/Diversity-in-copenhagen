@@ -12,6 +12,7 @@ import './Mappa.css'
 import Modal from './Modal'
 import Sidebar from './Dashboard/Sidebar'
 import SidebarEventInfo from './Dashboard/SidebarEventInfo'
+import SidebarEventCrowd from './Dashboard/SidebarEventCrowd'
 
 // import MapNavigator from './Dashboard/MapNavigator'
 // import SidebarComponentBubbles from './Dashboard/Charts/SidebarComponentBubbles'
@@ -22,31 +23,31 @@ export default class Mappa extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            lat: 55.675, // coordinates of 
-            lng: 12.57, // Copenhagen's center
-            zoom: 11, // initial zoom level
-            factions: [], // 
-            lastSelectedVenue: null,
-            venueFocus: false, // no selected place on load
-            venueGraphData: {
-                least: [0, 0, 0],
-                most: [0, 0, 0]
-            },
+            lat: 55.675,                // coordinates of 
+            lng: 12.57,                 // Copenhagen's center
+            zoom: 14,                   // initial zoom level
 
-            modal: {
-                el: null, // state for modal element
-                transitionTiming: 750, // timing of modal transition
-                showModal: false, // modal is closed by default
-                sid: null // story id
-            },
-
+            factions: [0, 0, 0],        // red, yellow, blue percentage
             rode: {
                 name: null,
                 diversity: null,
-                hoveredStateId: null, // controls the hover state on rodes layer
+                hoveredStateId: null,   // controls the hover state on rodes layer
             },
-
-            placeHoveredStateId: null // controls the hover state on placess layer 
+            venue: {
+                hoveredStateId: null,   // controls the hover state on places layer 
+                lastSelected: null,
+                isInFocus: false,       // no selected place on load
+                graphData: {
+                    least: [0, 0, 0],
+                    most: [0, 0, 0]
+                }
+            },
+            modal: {
+                el: null,               // state for modal element
+                transitionTiming: 750,  // timing of modal transition
+                showModal: false,       // modal is closed by default
+                sid: null               // story id
+            }
         }
     }
 
@@ -55,7 +56,7 @@ export default class Mappa extends React.Component {
         mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpdmlud2FyZCIsImEiOiJjazI1N2lkbm4xMHg2M25tcWQ1anprM3Y0In0.sxw7MdBqOuUsi3LDjHqhoA'
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/drivinward/ck2rkn9853jak1co95id5hozb/draft',
+            style: 'mapbox://styles/drivinward/ck3ftc4gi0rg61ct3hzbo3g0i/draft',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom,
             minZoom: 11,
@@ -115,6 +116,7 @@ export default class Mappa extends React.Component {
         } else return false
     }
 
+    // calculates factions presence in current viewing area
     getCurrentGroupsDataInView = (data) => {
         if (data.length > 0) {
             let c = [
@@ -242,6 +244,7 @@ export default class Mappa extends React.Component {
                     rode: {
                         ...prevState.rode,
                         name: ids[0].properties["Rode"],
+                        // div score of polygon area
                         diversity: ids[0].properties["DIV SCORE POLY"]
                     }
                 }))
@@ -322,7 +325,7 @@ export default class Mappa extends React.Component {
 
 
     handleVenueEvents = (map) => {
-        // if click on the map (not on place points) we close the info box
+        // if click on the map (not on place points) we close the sidebar
         map.on('click', () => {
             this.setState({
                 venueFocus: false
@@ -335,29 +338,15 @@ export default class Mappa extends React.Component {
         })
         map.on('mouseleave', 'venues', () => {
             map.getCanvas().style.cursor = ''
-
-            // map.setFeatureState({
-            //     source: 'composite',
-            //     sourceLayer: 'placelayer_nov12-dworp9',
-            //     id: this.state.placeHoveredStateId
-            // }, { hover: false })
-
             this.state.mapPopup.remove()
         })
-        // if click on the place points, we open the info box
+        // if click on the place points, we open the sidebar
         // and show info of the place
         map.on('mouseover', 'venues', (e) => {
             map.getCanvas().style.cursor = 'pointer'
 
             let data = e.features[0]
             let venueProps = data.properties
-
-            this.setState({
-                placeHoveredStateId: data.id
-            })
-            this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
-                .setHTML(data.properties["Place"])
-                .addTo(map)
 
             let least = [
                 venueProps["no Red_least"],
@@ -371,13 +360,21 @@ export default class Mappa extends React.Component {
             ]
 
             this.setState({
-                venueFocus: true,
-                lastSelectedVenue: venueProps,
-                venueGraphData: {
-                    least: this.computePlaceGraphData(least),
-                    most: this.computePlaceGraphData(most)
+                venue: {
+                    hoveredStateId: data.id,
+                    lastSelected: venueProps,
+                    isInFocus: true,
+                    graphData: {
+                        least: this.computePlaceGraphData(least),
+                        most: this.computePlaceGraphData(most)
+                    }
                 }
             })
+
+            this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
+                .setHTML(data.properties["Place_Name"])
+                .addTo(map)
+
         })
     }
 
@@ -390,11 +387,10 @@ export default class Mappa extends React.Component {
             <div className="page" >
 
                 <Route exact path="/map">
-                    <Modal show={this.state.modal.showModal} 
-                    onCloseBtn={this.closeModal} 
-                    sid={this.state.modal.sid} />
-                </Route> 
-
+                    <Modal show={this.state.modal.showModal}
+                        onCloseBtn={this.closeModal}
+                        sid={this.state.modal.sid} />
+                </Route>
                 <Route path="/map/story" >
                     <Modal show={this.state.modal.showModal}
                         onCloseBtn={this.closeModal}
@@ -402,37 +398,39 @@ export default class Mappa extends React.Component {
                 </Route>
 
                 <div className="dashboard" >
-                    <div className="sidebar" >
-                        <Sidebar
-                            data={this.state.lastSelectedVenue}
-                            graphData={this.state.venueGraphData} >
+                        <Sidebar show={this.checkZoom()} >
 
-                            <SidebarEventInfo
-                                data={this.state.lastSelectedVenue}
-                                graphData={this.state.venueGraphData} />
+                            {/* Waffle graph here with types of events */}
+                            <SidebarEventInfo data={this.state} />
 
-                            <div className="sidebar-section crowd-info">
-                                ciao1
-                            </div>
-                            <div className="sidebar-section scores">
+                            <SidebarEventCrowd data={this.state} />
+
+                            {/* <div className="sidebar-section scores">
                                 ciao2
                             </div>
                             <div className="sidebar-section time">
                                 ciao3
-                            </div>
-                        </Sidebar>
+                            </div> */}
 
-                        {/* <VenueBar
+                            {/* <VenueBar
                             show={this.state.venueFocus}
                             data={this.state.lastSelectedVenue}
                             graphData={this.state.venueGraphData}
                             componentDidMount={this.scrollTop = this.scrollHeight} /> */}
-                        {/* <SidebarComponentBubbles
+                            {/* <SidebarComponentBubbles
                             zoom={this.state.zoom}
                             factions={this.state.factions}
                             rode={this.state.rode}
                             show={this.checkZoom()} /> */}
-                    </div>
+
+                        {/* <SidebarComponentBubbles
+                            zoom={this.state.zoom}
+                            factions={this.state.factions}
+                            rode={this.state.rode}
+                            show={this.checkZoom()} />
+ */}
+                        </Sidebar>
+
                 </div>
 
                 {/* <MapNavigator lat={lat} lng={lng} zoom={zoom} /> */}

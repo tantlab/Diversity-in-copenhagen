@@ -5,6 +5,8 @@
   "dependencies": {
     "@carto/carto-vl": "^1.4.2",
     "@nivo/line": "^0.59.3",
+    "@nivo/sankey": "^0.59.1",
+    "@nivo/waffle": "^0.59.1",
     "mapbox-gl": "^1.5.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

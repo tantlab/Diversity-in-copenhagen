@@ -1,3 +1,7 @@
+.bubbles.chart {
+    margin-top: calc(var(--spa) / 1);
+}
+
 .chart-component.bubbles {
     width: 100%;
     display: grid;
