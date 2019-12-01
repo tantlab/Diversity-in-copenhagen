@@ -3,6 +3,8 @@ import React from 'react'
 import './BarChart.css'
 
 
+let labels = ["Political crowd", "Non-political crowd"]
+
 export default class BarChartMulti extends React.Component {
 
     colors = this.props.data.length > 3 ? ["#ece9e9", "#f06666", "#fbd679", "#1d62ed", "#45de99"] : ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
@@ -28,7 +30,7 @@ export default class BarChartMulti extends React.Component {
                         {/* <div className="bar-rail"></div> */}
                         {this.props.data.map((entry, index) => (
                             <div key={index}
-                                className="bar-container bar-multi"
+                                className="bar-multi"
                                 style={{ backgroundColor: this.colors[index], width: `${this.props.data[index]}%` }} />
                         ))}
                     </div>

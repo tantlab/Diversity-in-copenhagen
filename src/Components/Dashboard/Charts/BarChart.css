@@ -1,10 +1,6 @@
 .barchart {
     margin-top: calc(var(--spa) / 4);
 }
-.barchart.multi {
-    margin-top: calc(var(--spa) / 2);
-}
-
 .barchart-ticks {
     margin-top: calc(var(--spa) / 4);
 
@@ -53,6 +49,7 @@
     height: var(--b-h);
     border-radius: var(--b-h);
     max-width: 100%;
+    border: var(--border);
 }
 
 .bar-container .bar-component {
@@ -80,7 +77,7 @@
     transition: width var(--tra) ease-out;
 }
 
-.bar-container.bar-multi {
+.bar-multi {
     height: 100%;
     width: 100%;
     position: relative;

@@ -6,11 +6,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 // list of pages
 import Home from './Home'
-import Mappa from './Mappa'
 import Nav from './Globals/Nav'
 
 // import Cursor from './Cursor'
-import './Main.css'
 
 const Main = () => {
     return (
@@ -20,7 +18,7 @@ const Main = () => {
                 <Nav />
                 <Switch >
                     <Route exact path="/" component={Home}></Route>
-                    <Route path="/map" component={Mappa}></Route>
+                    {/* <Route path="/map" component={Mappa}></Route> */}
                 </Switch>
 
             </div>

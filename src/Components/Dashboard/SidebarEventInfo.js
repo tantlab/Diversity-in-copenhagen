@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { ResponsiveWaffle } from '@nivo/waffle'
 
-// import BarChartMulti from './Charts/BarChartMulti'
+import SliderChart from './Charts/SliderChart'
 
 const colors = {
     r: "#f06666",
-    y: "#fbd679",
+    y: "#f7cc5f",
     b: "#1d62ed",
-    d: "#45de99",
+    d: "#39b87f",
     n: "#ece9e9"
 }
 
@@ -32,7 +32,7 @@ export default class SidebarEventInfo extends Component {
         } else return [0, 0, 0]
     }
 
-    backgroundColor(string) {
+    headerColor(string) {
         switch (string) {
             case "RED":
                 return colors.r
@@ -52,15 +52,15 @@ export default class SidebarEventInfo extends Component {
     render() {
 
         let data =
-            this.props.data ? this.props.data : ''
+            (this.props.data ? this.props.data : '')
 
         let venue =
-            data.venue.lastSelected !== null
+            (data.venue.lastSelected !== null
                 ? data.venue.lastSelected
-                : ''
+                : '')
 
-        // let most = "Most Diverse Event"
-        // let least = "Least Diverse Event"
+        let least = "Least Diverse Event"
+        let most = "Most diverse event"
 
         // let r_most = "no Red_most"
         // let y_most = "no Yellow_most"
@@ -87,61 +87,64 @@ export default class SidebarEventInfo extends Component {
 
             <div className="sidebar-section place-info">
 
-                <div className="sidebar-section event-header"
-                    style={{ backgroundColor: this.backgroundColor(venue["Place Type"]) }}>
-                    <div className="place-name">{this.trimString(venue["Place_Name"])}</div>
+                <div className="sidebar-place-name"
+                    style={{ color: this.headerColor(venue["Place Type"]) }}>
+                    {this.trimString(venue["Place_Name"])}
                 </div>
 
-                <div className="event-header spacer"></div>
-
-                <div className="sidebar-section event-number" style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                }}>
-                    <div className="section-label">Number of Events</div>
-                    <div className="section-label">{waffleTotal}</div>
+                <div className="event-data">
+                    <div className="sidebar-event number-of">
+                        <div className="sidebar-label">Number of Events</div>
+                        <div className="sidebar-value numeric">{waffleTotal}</div>
+                    </div>
                 </div>
 
-                <div className="sidebar-section event-types">
-                    <div className="section-label">Types of Events</div>
+                <div className="sidebar-events">
+                    <div className="sidebar-event">
+                        <div className="sidebar-label">Least Diverse Event</div>
+                        <div className="sidebar-value text">{this.trimString(venue[least], 32)}</div>
+                    </div>
+                    <div className="sidebar-event">
+                        <div className="sidebar-label">Most Diverse Event</div>
+                        <div className="sidebar-value text">{this.trimString(venue[most], 32)}</div>
+                    </div>
                 </div>
 
-                {waffleData[0].value !== undefined && waffleTotal !== undefined ? (
-                    <div className="nivo-container" style={{ height: "100px" }}>
-                        <ResponsiveWaffle
-                            data={waffleData}
-                            total={waffleTotal}
-                            rows={6}
-                            columns={16}
-                            padding={0.0}
-                            fillDirection="right"
-                            margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                            colors={[colors.r, colors.y, colors.b, colors.d, colors.n]}
-                            borderWidth={1}
-                            borderColor={{ from: 'color', modifiers: [['brighter', 0.3]] }}
-                            animate={true}
-                            motionStiffness={100}
-                            motionDamping={16}
-                        />
-                    </div>
+                <div className="sidebar-section">
+                    <div className="sidebar-label">Political Charge</div>
+                    <SliderChart data={venue["Political Charge"]} />
+                </div>
 
-                ) : ""}
+                <div className="sidebar-section">
+                    <div className="sidebar-label">Diversity Score</div>
+                    <SliderChart data={venue["DIV SCORE PLACE"]} />
+                </div>
 
-                {/* <div className="event-diversity">
-                    <div className="section-label">{most}</div>
+                <div className="sidebar-section">
+                    <div className="sidebar-label">Types of Events</div>
 
-                    <div className="event-diversity-most">
-                        {this.trimString(venue[most])}
-                    </div>
-                    <BarChartMulti data={this.eventPercentages(no_most)} />
+                    {waffleData[0].value !== undefined && waffleTotal !== undefined ? (
+                        <div className="nivo-container" style={{ height: "108px" }}>
+                            <ResponsiveWaffle
+                                data={waffleData}
+                                total={waffleTotal}
+                                rows={6}
+                                columns={16}
+                                padding={0.0}
+                                fillDirection="right"
+                                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                                colors={[colors.r, colors.y, colors.b, colors.d, colors.n]}
+                                borderWidth={1}
+                                borderColor={{ from: 'color', modifiers: [['brighter', 0.3]] }}
+                                animate={true}
+                                motionStiffness={100}
+                                motionDamping={16}
+                            />
+                        </div>
 
-                    <div className="section-label">{least}</div>
-                    <div className="event-diversity-least">
-                        {this.trimString(venue[least])}
-                    </div>
-                    <BarChartMulti data={this.eventPercentages(no_least)} />
-                </div> */}
+                    ) : ""}
+                </div>
+
 
             </div>
         )

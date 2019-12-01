@@ -56,7 +56,7 @@ export default class Mappa extends React.Component {
         mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpdmlud2FyZCIsImEiOiJjazI1N2lkbm4xMHg2M25tcWQ1anprM3Y0In0.sxw7MdBqOuUsi3LDjHqhoA'
         const map = new mapboxgl.Map({
             container: this.mapContainer,
-            style: 'mapbox://styles/drivinward/ck3ftc4gi0rg61ct3hzbo3g0i/draft',
+            style: 'mapbox://styles/drivinward/ck3iuizoc0ae01cpeweqhc8nc/draft',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom,
             minZoom: 11,
@@ -142,20 +142,6 @@ export default class Mappa extends React.Component {
             })
             return avgs
         } else return [0, 0, 0]
-    }
-
-    computePlaceGraphData(array) {
-        let percentage = (array) => {
-            let tot = 0
-            array.forEach(element => {
-                return tot += element
-            })
-            const percents = array.map(element => {
-                return (element / tot * 100)
-            });
-            return percents
-        }
-        return percentage(array)
     }
 
     updateMapData = (map) => {
@@ -365,8 +351,8 @@ export default class Mappa extends React.Component {
                     lastSelected: venueProps,
                     isInFocus: true,
                     graphData: {
-                        least: this.computePlaceGraphData(least),
-                        most: this.computePlaceGraphData(most)
+                        least: computePlaceGraphData(least),
+                        most: computePlaceGraphData(most)
                     }
                 }
             })
@@ -374,6 +360,20 @@ export default class Mappa extends React.Component {
             this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
                 .setHTML(data.properties["Place_Name"])
                 .addTo(map)
+
+            function computePlaceGraphData(array) {
+                let percentage = (array) => {
+                    let tot = 0
+                    array.forEach(element => {
+                        return tot += element
+                    })
+                    const percents = array.map(element => {
+                        return (element / tot * 100)
+                    });
+                    return percents
+                }
+                return percentage(array)
+            }
 
         })
     }
@@ -384,8 +384,7 @@ export default class Mappa extends React.Component {
         // let zoom = parseInt(this.state.zoom)
 
         return (
-            <div className="page" >
-
+            <div className="map-section" >
                 <Route exact path="/map">
                     <Modal show={this.state.modal.showModal}
                         onCloseBtn={this.closeModal}
@@ -398,38 +397,11 @@ export default class Mappa extends React.Component {
                 </Route>
 
                 <div className="dashboard" >
-                        <Sidebar show={this.checkZoom()} >
 
-                            {/* Waffle graph here with types of events */}
-                            <SidebarEventInfo data={this.state} />
-
-                            <SidebarEventCrowd data={this.state} />
-
-                            {/* <div className="sidebar-section scores">
-                                ciao2
-                            </div>
-                            <div className="sidebar-section time">
-                                ciao3
-                            </div> */}
-
-                            {/* <VenueBar
-                            show={this.state.venueFocus}
-                            data={this.state.lastSelectedVenue}
-                            graphData={this.state.venueGraphData}
-                            componentDidMount={this.scrollTop = this.scrollHeight} /> */}
-                            {/* <SidebarComponentBubbles
-                            zoom={this.state.zoom}
-                            factions={this.state.factions}
-                            rode={this.state.rode}
-                            show={this.checkZoom()} /> */}
-
-                        {/* <SidebarComponentBubbles
-                            zoom={this.state.zoom}
-                            factions={this.state.factions}
-                            rode={this.state.rode}
-                            show={this.checkZoom()} />
- */}
-                        </Sidebar>
+                    <Sidebar show={this.checkZoom()} >
+                        <SidebarEventInfo data={this.state} />
+                        <SidebarEventCrowd data={this.state} />
+                    </Sidebar>
 
                 </div>
 

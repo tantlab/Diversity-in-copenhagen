@@ -20,7 +20,7 @@
     min-height: 1px;
     min-width: 1px;
 
-    border: 1px solid var(--c-b);
+    border: var(--border);
     
     transform-origin: center;
     transition: width var(--tra) var(--crv), height var(--tra) var(--crv);

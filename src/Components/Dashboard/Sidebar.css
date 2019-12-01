@@ -2,64 +2,98 @@
     z-index: 10;
 
     overflow-y: scroll;
-    
+
     display: flex;
     flex-direction: column;
-    flex-basis: calc(100% - var(--n-h) - var(--spa));
-    flex-flow: column nowrap;
 
     position: relative;
     left: 0;
     bottom: 0;
 
-    padding: calc(var(--spa) / 2);
+    padding-right: calc(var(--spa) / 2);
 
     width: 320px;
-    max-height: calc(100% - var(--n-h) - var(--spa));
+    height: 100%;
 
     color: var(--c-b);
     font-weight: 400;
 
-    transform: translateX(-92%);
-    transition: transform var(--tra) var(--crv);
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: transform var(--tra) var(--crv), opacity var(--tra) var(--crv);
 }
+
 .sidebar.open {
     cursor: default;
+    opacity: 1;
     transform: translateX(0%);
-    transition: transform var(--tra) var(--crv);
+    transition: transform var(--tra) var(--crv), opacity var(--tra) var(--crv);
 }
 
 .sidebar-content {
-    position: relative;
+    overflow: scroll;
 
     pointer-events: all;
-
+    position: relative;
     padding: calc(var(--spa) / 2);
 
     background-color: var(--c-d);
-    border-radius: 6px;
-    box-shadow: var(--sha);
-    border: 1px solid var(--border)
+
+    border-top: var(--border);
+    border-bottom: var(--border);
+}
+
+.sidebar-place-name {
+    font-size: 1.25em;
+    font-weight: bolder;
+    margin-bottom: calc(var(--spa) / 2);
 }
 
 .sidebar-section {
+    margin-bottom: calc(var(--spa) / 1);
+}
+
+.sidebar-section:last-child {
+    /* margin-bottom: 0; */
+}
+
+.sidebar-section.event-data {
+    position: relative;
+}
+
+.sidebar-events {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: calc(var(--spa) / 2);
+    height: 6em;
+}
+
+.sidebar-event {
+    position: relative;
     margin-bottom: calc(var(--spa) / 2);
 }
 
-.sidebar-section.event-header {
-    border-radius: 4px 4px 0px 0px;
-    position: absolute;
-
-    left: 0; top: 0;
-    width: calc(100% - var(--spa));
-
-    padding: calc(var(--spa) / 2);
+.sidebar-event.number-of {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: calc(var(--spa) / 2);
+    align-items: baseline;
 }
 
-.event-header.spacer {
-    height: 48px;
+.sidebar-label {
+    text-transform: uppercase;
+    font-size: .75em;
+    opacity: .75;
+    margin-bottom: 0;
 }
 
 .nivo-container {
+    border: var(--border);
     margin-bottom: calc(var(--spa) / 2);
+    color: initial;
+    box-sizing: content-box;
+}
+
+.nivo-container svg {
+    transform: translateY(0px);
 }

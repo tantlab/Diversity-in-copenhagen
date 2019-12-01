@@ -6,14 +6,15 @@
 
   --c-1: var(--c-d);
   --c-2: var(--g);
-  --c-b: #282c34;
-  --c-d: white;
-  --border: #000000aa;
+  --c-b: #2d2d2d;
+  --c-d: #f0f0f0;
+  
+  --border: 1px solid #000000aa;
 
-  --r: #E63462;
-  --y: #EACB00;
-  --b: #00B1D9;
-  --g: #00FFAA;
+  --r: #f06666;
+  --y: #f7cc5f;
+  --b: #1d62ed;
+  --g: #39b87f;
 
   --fs-x: 1.75em;
   --fs-l: 1.35em;
@@ -25,19 +26,30 @@
   --sha: 0px 6px 8px -4px rgba(0, 0, 0, 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
+@font-face {
+  font-family: "DIN";
+  src: url('./static/din_regular.otf');
+  font-weight: regular;
+}
+@font-face {
+  font-family: "DIN";
+  src: url('./static/din_light.otf');
+  font-weight: lighter;
+}
+
+/* @media (prefers-color-scheme: dark) {
   :root {
     --c-1: #282c34;
     --c-2: #08c787;
-    --c-b: white;
-    --c-d: #282c34;
-    --border: #ffffff15;
+    --c-b: #2d2d2d;
+    --c-d: #f0f0f0;
+    --border-color: #ffffff15;
   }
-}
+} */
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: "DIN", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -46,14 +58,8 @@ body {
 
   box-sizing: border-box;
 
-  font-size: 16px;
+  font-size: 1rem;
 }
-
-/* @media (max-width: 1024px) {
-  body {
-    font-size: 14px;
-  }
-} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -69,4 +75,13 @@ code {
 
   pointer-events: none;
   overflow: hidden;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75rem;
+}
+
+.page {
+  padding-top: var(--n-h);
 }
