@@ -1,6 +1,6 @@
 .map-section {
     position: relative;
-    height: calc(100vh - var(--n-h) - (var(--spa) * 2));
+    height: calc(100vh - var(--n-h) - (var(--spa) * 1));
     width: auto;
 
     display: flex;
@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
 
-    padding: calc(var(--spa) / 1);
+    padding: calc(var(--spa) / 2);
 }
 
 .dashboard {

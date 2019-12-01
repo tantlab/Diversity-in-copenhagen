@@ -17,7 +17,7 @@
 .barchart-labels {
     display: flex;
     flex-direction: row;
-    margin-bottom: calc(var(--spa) / 4);
+    margin-bottom: calc(var(--spa) / 8);
 }
 
 .barchart-label {

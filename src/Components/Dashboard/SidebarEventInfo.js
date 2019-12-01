@@ -110,14 +110,15 @@ export default class SidebarEventInfo extends Component {
                     </div>
                 </div>
 
-                <div className="sidebar-section">
-                    <div className="sidebar-label">Political Charge</div>
-                    <SliderChart data={venue["Political Charge"]} />
-                </div>
-
-                <div className="sidebar-section">
-                    <div className="sidebar-label">Diversity Score</div>
-                    <SliderChart data={venue["DIV SCORE PLACE"]} />
+                <div className="sidebar-poldiv">
+                    <div className="sidebar-section">
+                        <div className="sidebar-label">Political Charge</div>
+                        <SliderChart data={venue["Political Charge"]} />
+                    </div>
+                    <div className="sidebar-section">
+                        <div className="sidebar-label">Diversity Score</div>
+                        <SliderChart data={venue["DIV SCORE PLACE"]} />
+                    </div>
                 </div>
 
                 <div className="sidebar-section">

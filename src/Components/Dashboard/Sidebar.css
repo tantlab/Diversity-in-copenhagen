@@ -53,8 +53,10 @@
     margin-bottom: calc(var(--spa) / 1);
 }
 
-.sidebar-section:last-child {
-    /* margin-bottom: 0; */
+.sidebar-poldiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: calc(var(--spa) / 2);
 }
 
 .sidebar-section.event-data {
