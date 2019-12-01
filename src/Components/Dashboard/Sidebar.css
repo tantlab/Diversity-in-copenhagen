@@ -1,4 +1,17 @@
+.dashboard {
+    pointer-events: none;
+    position: relative;
+    height: 100%;
+    min-width: 320px;
+
+    padding-right: calc(var(--spa) / 2);
+
+}
+
 .sidebar {
+    z-index: 0;
+    pointer-events: none;
+
     z-index: 10;
 
     overflow-y: scroll;
@@ -6,14 +19,10 @@
     display: flex;
     flex-direction: column;
 
-    position: relative;
-    left: 0;
-    bottom: 0;
+    position: absolute;
 
-    padding-right: calc(var(--spa) / 2);
-
-    width: 320px;
     height: 100%;
+    width: 320px;
 
     color: var(--c-b);
     font-weight: 400;
@@ -24,6 +33,8 @@
 }
 
 .sidebar.open {
+    z-index: 100;
+    pointer-events: all;
     cursor: default;
     opacity: 1;
     transform: translateX(0%);
@@ -43,7 +54,15 @@
     border-bottom: var(--border);
 }
 
-.sidebar-place-name {
+
+
+.sidebar-sided {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: calc(var(--spa) / 2);
+}
+
+.sidebar-header-label {
     font-size: 1.25em;
     font-weight: bolder;
     margin-bottom: calc(var(--spa) / 2);
@@ -63,16 +82,19 @@
     position: relative;
 }
 
-.sidebar-events {
+.sidebar-sublevel-data {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: calc(var(--spa) / 2);
     height: 6em;
 }
 
-.sidebar-event {
+.sidebar-sublevel-unit {
     position: relative;
     margin-bottom: calc(var(--spa) / 2);
+}
+.sidebar-value.numeric {
+    font-size: 1.5em;
 }
 
 .sidebar-event.number-of {
@@ -85,15 +107,21 @@
 .sidebar-label {
     text-transform: uppercase;
     font-size: .75em;
-    opacity: .75;
-    margin-bottom: 0;
+    opacity: .5;
+    margin-bottom: calc(var(--spa) / 6);
 }
 
 .nivo-container {
     border: var(--border);
-    margin-bottom: calc(var(--spa) / 2);
+    margin: calc(var(--spa) / 2) 0;
     color: initial;
     box-sizing: content-box;
+}
+
+.nivo-lines {
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
 }
 
 .nivo-container svg {

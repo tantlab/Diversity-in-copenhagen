@@ -17,8 +17,8 @@ export default class BarChartMulti extends React.Component {
                         <div key={index}
                             className="barchart-label"
                             style={{
-                                minWidth: this.props.data[index] !== 0 ? `${this.props.data[index]}%` : 0,
-                                opacity: this.props.data[index] !== 0 ? 1 : 0,
+                                minWidth: Math.round(this.props.data[index]) !== 0 ? `${Math.round(this.props.data[index])}%` : 0,
+                                opacity: Math.round(this.props.data[index]) > 0 ? 1 : 0,
                                 // padding: this.props.data[1] <= 10 ? "0px calc(var(--spa) / 8)" : 0
                             }}>
                             {Math.round(this.props.data[index])}%

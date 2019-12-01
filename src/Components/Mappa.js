@@ -1,18 +1,16 @@
 import React from 'react'
-import { Route } from 'react-router'
+// import { Route } from 'react-router'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/src/css/mapbox-gl.css'
 
-// try build the timeline with this
-// import { ResponsiveLine } from '@nivo/line'
-
 import './Mappa.css'
 
-import Modal from './Modal'
+// import Modal from './Modal'
 import Sidebar from './Dashboard/Sidebar'
-import SidebarEventInfo from './Dashboard/SidebarEventInfo'
-import SidebarEventCrowd from './Dashboard/SidebarEventCrowd'
+import SidebarRode from './Dashboard/SidebarRode'
+import SidebarPlaceInfo from './Dashboard/SidebarPlaceInfo'
+import SidebarPlaceCrowd from './Dashboard/SidebarPlaceCrowd'
 
 // import MapNavigator from './Dashboard/MapNavigator'
 // import SidebarComponentBubbles from './Dashboard/Charts/SidebarComponentBubbles'
@@ -25,13 +23,13 @@ export default class Mappa extends React.Component {
         this.state = {
             lat: 55.675,                // coordinates of 
             lng: 12.57,                 // Copenhagen's center
-            zoom: 14,                   // initial zoom level
+            zoom: 11,                   // initial zoom level
 
             factions: [0, 0, 0],        // red, yellow, blue percentage
             rode: {
-                name: null,
-                diversity: null,
                 hoveredStateId: null,   // controls the hover state on rodes layer
+                lastSelected: null,
+                isInFocus: false,
             },
             venue: {
                 hoveredStateId: null,   // controls the hover state on places layer 
@@ -144,6 +142,7 @@ export default class Mappa extends React.Component {
         } else return [0, 0, 0]
     }
 
+    // update features in view during map move
     updateMapData = (map) => {
         // update average values of bubblechart
         if (this.checkZoom()) {
@@ -160,10 +159,9 @@ export default class Mappa extends React.Component {
 
     handleMapEvents = (map) => {
         // first update of rendered layers
-        // it renders the graphs' data the first time
-        map.on('load', () => {
-            this.updateMapData(map)
-        })
+        // map.on('load', () => {
+        //     this.updateMapData(map)
+        // })
 
         map.on('move', () => {
             this.setState({
@@ -171,142 +169,158 @@ export default class Mappa extends React.Component {
                 lat: map.getCenter().lat.toFixed(4),
                 zoom: map.getZoom(),
             })
-            // if we zoom out, close also place info box
-            if (this.checkZoom() === false) {
-                this.setState({
-                    venueFocus: false
-                })
+
+            // handle events for place layer
+            // if we zoom out, close place sidebar
+            if (!this.checkZoom() && this.state.venue.isInFocus === true) {
+                this.setState(prevState => ({
+                    venue: {
+                        ...prevState.venue,
+                        isInFocus: false
+                    }
+                }))
+                // if we zoom in and there's one place selected, open place sidebar
+            } else if (this.checkZoom() && this.state.venue.isInFocus === false && this.state.venue.lastSelected !== null) {
+                this.setState(prevState => ({
+                    venue: {
+                        ...prevState.venue,
+                        isInFocus: true
+                    }
+                }))
             }
 
+            // handle events for rode layer
+            // if we zoom out and a rode is selected
+            if (!this.checkZoom() && this.state.rode.lastSelected !== null) {
+                this.setState(prevState => ({
+                    rode: {
+                        ...prevState.rode,
+                        isInFocus: true
+                    }
+                }))
+                // if we zoom in, close rode sidebar
+            } else if (this.checkZoom() && this.state.rode.isInFocus === true && this.state.rode.lastSelected !== null) {
+                this.setState(prevState => ({
+                    rode: {
+                        ...prevState.rode,
+                        isInFocus: false
+                    }
+                }))
+            }
         })
 
-        // TO-DO: write function to handle events on zoom levels
-        map.on('moveend', () => {
-            this.updateMapData(map)
-        })
+        // map.on('moveend', () => {
+        //     this.updateMapData(map)
+        // })
     }
 
-
-
-
     handleRodeEvents = (map) => {
+
+        // click to open story
         map.on('click', 'rodes', (e) => {
             if (!this.checkZoom()) {
                 this.openModal(e)
             }
         })
 
-        map.on('moveend', 'rodes', (e) => {
-
-            // calculating which area we are in
-            function inside(point, vs) {
-                // ray-casting algorithm based on
-                // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-
-                var x = point[0],
-                    y = point[1];
-
-                var inside = false;
-                for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-                    var xi = vs[i][0],
-                        yi = vs[i][1];
-                    var xj = vs[j][0],
-                        yj = vs[j][1];
-
-                    var intersect = ((yi > y) !== (yj > y)) &&
-                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-                    if (intersect) inside = !inside;
-                }
-
-                return inside;
-            };
-
-            let ids = e.features.filter(f => {
-                return (inside(map.getCenter().toArray(), f.geometry.coordinates[0]) === true)
-            })
-
-            if (ids[0] !== undefined) {
-                this.setState(prevState => ({
-                    rode: {
-                        ...prevState.rode,
-                        name: ids[0].properties["Rode"],
-                        // div score of polygon area
-                        diversity: ids[0].properties["DIV SCORE POLY"]
-                    }
-                }))
-                // console.log(ids[0].properties["Rode"], ids[0].properties["DIV SCORE POLY"]);
-            } else return
+        map.on('mousemove', 'rodes-violet', (e) => {
+            this.handleRodeHover(map, e)
         })
 
-        map.on('mousemove', 'rodes', (e) => {
-            if (e.features.length > 0) {
-                // if (this.state.rode.hoveredStateId) {
-                //     map.setFeatureState({
-                //         source: 'composite',
-                //         sourceLayer: 'Rode_layer_nov12-462huj',
-                //         id: this.state.rode.hoveredStateId
-                //     }, { hover: false });
-                // }
-
-                // setting hoveredState id state
-                this.setState(prevState => ({
-                    rode: {
-                        ...prevState.rode,
-                        hoveredStateId: e.features[0].id
-                    }
-                }))
-
-                if (!this.checkZoom()) {
-                    map.getCanvas().style.cursor = 'pointer'
-
-                    let popupCoords =
-                        e.features[0].geometry.coordinates[0][0].length > 2 ?
-                            e.features[0].geometry.coordinates[0][0][0] :
-                            e.features[0].geometry.coordinates[0][0]
-
-                    // console.log(this.state.rode.hoveredStateId, popupCoords);
-
-                    this.state.mapPopup.setLngLat(popupCoords)
-                        .setHTML(`
-                        ${e.features[0].properties["Rode"]}</br>
-                        ${e.features[0].properties["Neighborhood"]}
-                    `)
-                        .addTo(map)
-
-                    map.setFeatureState({
-                        source: 'composite',
-                        sourceLayer: 'Rode_layer_nov12-462huj',
-                        id: this.state.rode.hoveredStateId
-                    }, {
-                        hover: true
-                    });
-                }
-
-            }
+        map.on('mousemove', 'rodes-green', (e) => {
+            this.handleRodeHover(map, e)
         })
 
-        map.on('mouseleave', 'rodes', () => {
+        map.on('mouseleave', 'rodes-violet', () => {
             map.getCanvas().style.cursor = ''
+            this.state.mapPopup.remove()
+        })
+        map.on('mouseleave', 'rodes-green', () => {
+            map.getCanvas().style.cursor = ''
+            this.state.mapPopup.remove()
+        })
 
-            if (this.state.rode.hoveredStateId) {
-                map.setFeatureState({
-                    source: 'composite',
-                    sourceLayer: 'Rode_layer_nov12-462huj',
-                    id: this.state.rode.hoveredStateId
-                }, {
-                    hover: false
-                });
-            }
+        // map.on('moveend', 'rodes', (e) => {
+
+        //     // calculating which area we are in
+        //     function inside(point, vs) {
+        //         // ray-casting algorithm based on
+        //         // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+        //         var x = point[0],
+        //             y = point[1];
+
+        //         var inside = false;
+        //         for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        //             var xi = vs[i][0],
+        //                 yi = vs[i][1];
+        //             var xj = vs[j][0],
+        //                 yj = vs[j][1];
+
+        //             var intersect = ((yi > y) !== (yj > y)) &&
+        //                 (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        //             if (intersect) inside = !inside;
+        //         }
+
+        //         return inside;
+        //     };
+
+        //     let ids = e.features.filter(f => {
+        //         return (inside(map.getCenter().toArray(), f.geometry.coordinates[0]) === true)
+        //     })
+
+        //     if (ids[0] !== undefined) {
+        //         this.setState(prevState => ({
+        //             rode: {
+        //                 ...prevState.rode,
+        //                 name: ids[0].properties["Rode"],
+        //                 // div score of polygon area
+        //                 diversity: ids[0].properties["DIV SCORE POLY"]
+        //             }
+        //         }))
+        //         // console.log(ids[0].properties["Rode"], ids[0].properties["DIV SCORE POLY"]);
+        //     } else return
+        // })
+    }
+    // helper function used for rodes-green and rodes-violet
+    handleRodeHover = (map, e) => {
+        map.getCanvas().style.cursor = 'pointer'
+
+        if (e.features.length > 0 && !this.checkZoom()) {
+            map.getCanvas().style.cursor = 'pointer'
+
             this.setState(prevState => ({
                 rode: {
                     ...prevState.rode,
-                    hoveredStateId: null
+                    hoveredStateId: e.features[0].id,
+                    lastSelected: e.features[0],
+                    isInFocus: true
                 }
             }))
-            this.state.mapPopup.remove()
-        })
-    }
 
+            let popupCoords =
+                e.features[0].geometry.coordinates[0][0].length > 2 ?
+                    e.features[0].geometry.coordinates[0][0][0] :
+                    e.features[0].geometry.coordinates[0][0]
+
+            this.state.mapPopup.setLngLat(popupCoords)
+                .setHTML(`
+                        ${e.features[0].properties["Rode"]}</br>
+                        ${e.features[0].properties["Neighborhood"]}
+                    `)
+                .addTo(map)
+
+            // set hover state for polygons
+            // map.setFeatureState({
+            //     source: 'composite',
+            //     sourceLayer: 'rode_layer-Rode-7dz4s4',
+            //     id: this.state.rode.hoveredStateId
+            // }, {
+            //     hover: true
+            // });
+            
+        }
+    }
 
 
 
@@ -328,7 +342,7 @@ export default class Mappa extends React.Component {
         })
         // if click on the place points, we open the sidebar
         // and show info of the place
-        map.on('mouseover', 'venues', (e) => {
+        map.on('mousemove', 'venues', (e) => {
             map.getCanvas().style.cursor = 'pointer'
 
             let data = e.features[0]
@@ -345,17 +359,19 @@ export default class Mappa extends React.Component {
                 venueProps["no Blue_most"]
             ]
 
-            this.setState({
-                venue: {
-                    hoveredStateId: data.id,
-                    lastSelected: venueProps,
-                    isInFocus: true,
-                    graphData: {
-                        least: computePlaceGraphData(least),
-                        most: computePlaceGraphData(most)
+            if (this.checkZoom()) {
+                this.setState({
+                    venue: {
+                        hoveredStateId: data.id,
+                        lastSelected: venueProps,
+                        isInFocus: true,
+                        graphData: {
+                            least: computePlaceGraphData(least),
+                            most: computePlaceGraphData(most)
+                        }
                     }
-                }
-            })
+                })
+            }
 
             this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
                 .setHTML(data.properties["Place_Name"])
@@ -378,6 +394,8 @@ export default class Mappa extends React.Component {
         })
     }
 
+
+
     render() {
         // let lat = this.state.lat.toString().split('.')
         // let lng = this.state.lng.toString().split('.')
@@ -385,7 +403,7 @@ export default class Mappa extends React.Component {
 
         return (
             <div className="map-section" >
-                <Route exact path="/map">
+                {/* <Route exact path="/map">
                     <Modal show={this.state.modal.showModal}
                         onCloseBtn={this.closeModal}
                         sid={this.state.modal.sid} />
@@ -394,13 +412,18 @@ export default class Mappa extends React.Component {
                     <Modal show={this.state.modal.showModal}
                         onCloseBtn={this.closeModal}
                         sid={this.state.modal.sid} />
-                </Route>
+                </Route> */}
 
                 <div className="dashboard" >
 
-                    <Sidebar show={this.checkZoom()} >
-                        <SidebarEventInfo data={this.state} />
-                        <SidebarEventCrowd data={this.state} />
+                    <Sidebar show={this.state.rode.isInFocus} >
+                        <SidebarRode data={this.state} />
+                    </Sidebar>
+
+                    {/* venue sidebar */}
+                    <Sidebar show={this.state.venue.isInFocus} >
+                        <SidebarPlaceInfo data={this.state} />
+                        <SidebarPlaceCrowd data={this.state} />
                     </Sidebar>
 
                 </div>

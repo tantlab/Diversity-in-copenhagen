@@ -53,9 +53,11 @@
 }
 
 .slider-chart-label {
+    position: absolute;
     text-align: center;
     font-size: .8em;
     transition: width 500ms ease-out,;
+    transform: translateY(-50%);
 }
 
 .slider-chart-axis-range {

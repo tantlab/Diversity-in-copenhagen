@@ -10,18 +10,27 @@ import Nav from './Globals/Nav'
 
 // import Cursor from './Cursor'
 
+const ColorTheme = React.createContext({
+    r: "#f06666",
+    y: "#f7cc5f",
+    b: "#1d62ed",
+    g: "#39b87f",
+})
+
 const Main = () => {
     return (
         <BrowserRouter>
-            <div className="App">
+            <ColorTheme.Provider>
+                <div className="App">
 
-                <Nav />
-                <Switch >
-                    <Route exact path="/" component={Home}></Route>
-                    {/* <Route path="/map" component={Mappa}></Route> */}
-                </Switch>
+                    <Nav />
+                    <Switch >
+                        <Route exact path="/" component={Home}></Route>
+                        {/* <Route path="/map" component={Mappa}></Route> */}
+                    </Switch>
 
-            </div>
+                </div>
+            </ColorTheme.Provider>
         </BrowserRouter>
     )
 }

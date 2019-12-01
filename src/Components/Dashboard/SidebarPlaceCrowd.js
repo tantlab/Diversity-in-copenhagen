@@ -2,13 +2,7 @@ import React, { Component } from 'react'
 
 import BarChartMulti from './Charts/BarChartMulti'
 
-export default class SidebarEventCrowd extends Component {
-
-    trimString(str, length = 24) {
-        if (str) {
-            return str.length > length ? str.slice(0, length) + "..." : str
-        } else return
-    }
+export default class SidebarPlaceCrowd extends Component {
 
     // total crowd
     eventPercentages(array) {

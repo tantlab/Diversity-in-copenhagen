@@ -12,7 +12,7 @@ const SliderChart = (props) => {
             </div>
             <div className="slider-chart-axis-range">
                 <div className="slider-chart-range-label min"
-                    style={{ opacity: props.data <= 10 ? 0 : .5 }}>0</div>
+                    style={{ opacity: props.data <= 12 ? 0 : .5 }}>0</div>
                 <div className="slider-chart-range-label max"
                     style={{ opacity: props.data >= 75 ? 0 : .5 }}>100</div>
             </div>

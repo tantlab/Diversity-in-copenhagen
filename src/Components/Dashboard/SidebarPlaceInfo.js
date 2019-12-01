@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ResponsiveWaffle } from '@nivo/waffle'
 
+import trimString from '../helpers'
 import SliderChart from './Charts/SliderChart'
 
 const colors = {
@@ -11,7 +12,7 @@ const colors = {
     n: "#ece9e9"
 }
 
-export default class SidebarEventInfo extends Component {
+export default class SidebarPlaceInfo extends Component {
 
     trimString(str, length = 24) {
         if (str) {
@@ -87,10 +88,12 @@ export default class SidebarEventInfo extends Component {
 
             <div className="sidebar-section place-info">
 
-                <div className="sidebar-place-name"
-                    style={{ color: this.headerColor(venue["Place Type"]) }}>
-                    {this.trimString(venue["Place_Name"])}
-                </div>
+                <a href={venue["Maps Link"]} target="blank" >
+                    <div className="sidebar-header-label"
+                        style={{ color: this.headerColor(venue["Place Type"]) }}>
+                        {trimString(venue["Place_Name"])}↗
+                    </div>
+                </a>
 
                 <div className="event-data">
                     <div className="sidebar-event number-of">
@@ -99,14 +102,14 @@ export default class SidebarEventInfo extends Component {
                     </div>
                 </div>
 
-                <div className="sidebar-events">
-                    <div className="sidebar-event">
+                <div className="sidebar-sublevel-data">
+                    <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">Least Diverse Event</div>
-                        <div className="sidebar-value text">{this.trimString(venue[least], 32)}</div>
+                        <div className="sidebar-value text">{trimString(venue[least], 32)}</div>
                     </div>
-                    <div className="sidebar-event">
+                    <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">Most Diverse Event</div>
-                        <div className="sidebar-value text">{this.trimString(venue[most], 32)}</div>
+                        <div className="sidebar-value text">{trimString(venue[most], 32)}</div>
                     </div>
                 </div>
 
@@ -142,7 +145,6 @@ export default class SidebarEventInfo extends Component {
                                 motionDamping={16}
                             />
                         </div>
-
                     ) : ""}
                 </div>
 
