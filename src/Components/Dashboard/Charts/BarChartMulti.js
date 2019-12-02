@@ -7,7 +7,7 @@ let labels = ["Political crowd", "Non-political crowd"]
 
 export default class BarChartMulti extends React.Component {
 
-    colors = this.props.data.length > 3 ? ["#ece9e9", "#f06666", "#fbd679", "#1d62ed", "#45de99"] : ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
+    colors = this.props.data.length > 3 ? ["#f06666", "#fbd679", "#1d62ed", "#ece9e9"] : ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
 
     render() {
         return (
@@ -18,7 +18,7 @@ export default class BarChartMulti extends React.Component {
                             className="barchart-label"
                             style={{
                                 minWidth: Math.round(this.props.data[index]) !== 0 ? `${Math.round(this.props.data[index])}%` : 0,
-                                opacity: Math.round(this.props.data[index]) > 0 ? 1 : 0,
+                                opacity: Math.round(this.props.data[index]) > 2 ? 1 : 0,
                                 // padding: this.props.data[1] <= 10 ? "0px calc(var(--spa) / 8)" : 0
                             }}>
                             {Math.round(this.props.data[index])}%

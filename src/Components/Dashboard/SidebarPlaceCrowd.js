@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import BarChartMulti from './Charts/BarChartMulti'
+import strings from '../../_localization.js'
 
 export default class SidebarPlaceCrowd extends Component {
 
@@ -29,7 +30,7 @@ export default class SidebarPlaceCrowd extends Component {
                 : ''
 
         let totalPercents = [
-            venue["Total crowd"], venue["Total Red"], venue["Total Yellow"], venue["Total Blue"]
+            venue["Total Red"], venue["Total Yellow"], venue["Total Blue"], venue["Total crowd"]
         ]
 
         let percents = [
@@ -40,11 +41,11 @@ export default class SidebarPlaceCrowd extends Component {
             <div className="sidebar-section crowd-info">
 
                 <div className="sidebar-section">
-                    <div className="sidebar-label">Overall Crowd</div>
+                    <div className="sidebar-label">{strings.map.sidebar.venue.graphs.overall}</div>
                     <BarChartMulti data={this.eventPercentages(totalPercents)} />
                 </div>
                 <div className="sidebar-section">
-                    <div className="sidebar-label">Political Crowd</div>
+                    <div className="sidebar-label">{strings.map.sidebar.venue.graphs.political}</div>
                     <BarChartMulti data={percents} />
                 </div>
 

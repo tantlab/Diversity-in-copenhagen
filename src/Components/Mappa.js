@@ -23,7 +23,7 @@ export default class Mappa extends React.Component {
         this.state = {
             lat: 55.675,                // coordinates of 
             lng: 12.57,                 // Copenhagen's center
-            zoom: 11,                   // initial zoom level
+            zoom: 14,                   // initial zoom level
 
             factions: [0, 0, 0],        // red, yellow, blue percentage
             rode: {
@@ -66,19 +66,30 @@ export default class Mappa extends React.Component {
 
         const popup = new mapboxgl.Popup({ closeButton: false })
 
-        // let modal = document.querySelector('.modal .reader')
         // initializing state for important elements
         this.setState({
             mapPopup: popup,
-            // readerModal: modal
         })
 
         this.handleMapEvents(map)
         this.handleRodeEvents(map)
         this.handleVenueEvents(map)
+        this.handleStoryEvents(map)
 
     }
 
+    // start from here to build modal
+    handleStoryEvents = (map) => {
+        map.on('click', 'rodes-story', (e) => {
+            console.log(e.features[0]);
+        //     map.flyTo({
+        //         bearing: -10,
+        //         center: e.lngLat,
+        //         zoom: 14,
+        //         pitch: 36
+        //     })
+        })
+    }
 
     // TO-DO: always checks if story id is valid
     openModal = (e) => {
@@ -156,12 +167,39 @@ export default class Mappa extends React.Component {
         } else return false
     }
 
+    // f is the frame id
+    pulsateLayerStory = (map, f) => {
+
+        // let animStep = 0
+        // setInterval(() => {
+        //     let s = 4
+        //     let t = animStep % s / s
+        //     map.setPaintProperty('rodes-story', 'fill-opacity', t)
+
+        //     console.log(t);
+        //     animStep >= s ? animStep = 0 : animStep++
+
+        // }, 1000);
+
+        // setInterval(() => {
+        //     map.getPaintProperty('rodes-story', 'fill-opacity') === 0
+        //     ? map.setPaintProperty('rodes-story', 'fill-opacity', 1)
+        //     : map.setPaintProperty('rodes-story', 'fill-opacity', 0)
+        // }, 1000);
+
+        // map.setPaintProperty('rodes-story', 'fill-opacity', Math.abs(Math.sin(f / 1000).toFixed(1)))
+        // window.requestAnimationFrame((f) => { this.pulsateLayerStory(map, f) })
+    }
 
     handleMapEvents = (map) => {
         // first update of rendered layers
         // map.on('load', () => {
         //     this.updateMapData(map)
         // })
+
+        map.on('load', () => {
+            this.pulsateLayerStory(map)
+        })
 
         map.on('move', () => {
             this.setState({
@@ -318,7 +356,7 @@ export default class Mappa extends React.Component {
             // }, {
             //     hover: true
             // });
-            
+
         }
     }
 

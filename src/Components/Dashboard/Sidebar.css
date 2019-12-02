@@ -42,7 +42,7 @@
 }
 
 .sidebar-content {
-    overflow: scroll;
+    overflow-y: scroll;
 
     pointer-events: all;
     position: relative;
@@ -63,6 +63,7 @@
 }
 
 .sidebar-header-label {
+    display: inline-block;
     font-size: 1.25em;
     font-weight: bolder;
     margin-bottom: calc(var(--spa) / 2);
@@ -102,6 +103,7 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: calc(var(--spa) / 2);
     align-items: baseline;
+    margin-bottom: calc(var(--spa) / 2);
 }
 
 .sidebar-label {

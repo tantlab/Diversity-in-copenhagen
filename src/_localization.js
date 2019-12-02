@@ -6,28 +6,36 @@ let strings = new LocalizedStrings({
             about: "About",
             map: "Explore the Map"
         },
+        home: {
+
+        },
         map: {
             sidebar: {
-                venue: {
-                    graph: {
-                        title: "Diversity Score"
-                    },
-                    events: {
-                        least: "Least diverse event",
-                        most: "Most diverse event"
+                rode: {
+                    place: {
+                        least: "Least diverse place",
+                        most: "Most diverse place",
+                        diversity: "Average diversity",
+                        charge: "Average political charge",
+                        graphLegend: {
+                            crowd: "Political Crowd",
+                            score: "Diversity Score"
+                        }
                     }
-                },        
-                events: {
-                    title: "Types of events",
-                    most: "Most diverse event",
-                    least: "Least diverse event"
                 },
-                area: "Area",
-                diversity: "Avg diversity",
-                colors: {
-                    r: "Red",
-                    y: "Yellow",
-                    b: "Blue"
+                venue: {
+                    place: {
+                        eventNumber: "Number of Events",
+                        least: "Least Diverse Event",
+                        most: "Most Diverse Event",
+                    },
+                    graphs: {
+                        charge: "Political Charge",
+                        score: "Diversity Score",
+                        types: "Types of Events",
+                        overall: "Overall Crowd",
+                        political: "Political Crowd"
+                    }
                 }
             }
         },
@@ -37,28 +45,36 @@ let strings = new LocalizedStrings({
             about: "Sul progetto",
             map: "Esplora la mappa"
         },
+        home: {
+
+        },
         map: {
             sidebar: {
-                venue: {
-                    graph: {
-                        title: "Punteggio diversità"
-                    },
-                    events: {
-                        least: "Evento più diverso",
-                        most: "Evento meno diverso"
+                rode: {
+                    place: {
+                        least: "Posto meno diverso",
+                        most: "Posto più diverso",
+                        diversity: "Media diversità",
+                        charge: "Media carica politica",
+                        graphLegend: {
+                            crowd: "Folla politica",
+                            score: "Punteggio diversità"
+                        }
                     }
-                },        
-                events: {
-                    title: "Tipi di eventi",
-                    most: "Eventi più diversi",
-                    least: "Eventi meno diversi"
                 },
-                area: "Zona",
-                diversity: "Diversità",
-                colors: {
-                    r: "Rosso",
-                    y: "Giallo",
-                    b: "Blu"
+                venue: {
+                    place: {
+                        eventNumber: "Numero di eventi",
+                        least: "Evento meno diverso",
+                        most: "Evento più diverso",
+                    },
+                    graphs: {
+                        charge: "Carica politica",
+                        score: "Punteggio diversità",
+                        types: "Tipi di eventi",
+                        overall: "Folla totale",
+                        political: "Folla politica"
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ import { ResponsiveWaffle } from '@nivo/waffle'
 
 import trimString from '../helpers'
 import SliderChart from './Charts/SliderChart'
+import strings from '../../_localization.js'
 
 const colors = {
     r: "#f06666",
@@ -79,7 +80,7 @@ export default class SidebarPlaceInfo extends Component {
             { id: "Yellow events", value: venue["Yellow events"], label: "Yellow events", color: colors.y },
             { id: "Blue events", value: venue["Blue events"], label: "Blue events", color: colors.b },
             { id: "Diverse events", value: venue["Diverse events"], label: "Diverse events", color: colors.d },
-            { id: "Gray events", value: venue["Gray events"], label: "Gray events", color: colors.n },
+            { id: "Gray events", value: venue["Gray events"], label: "Non-political events", color: colors.n },
         ]
 
         // console.log(venue);
@@ -97,35 +98,35 @@ export default class SidebarPlaceInfo extends Component {
 
                 <div className="event-data">
                     <div className="sidebar-event number-of">
-                        <div className="sidebar-label">Number of Events</div>
+                        <div className="sidebar-label">{strings.map.sidebar.venue.place.eventNumber}</div>
                         <div className="sidebar-value numeric">{waffleTotal}</div>
                     </div>
                 </div>
 
                 <div className="sidebar-sublevel-data">
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Least Diverse Event</div>
-                        <div className="sidebar-value text">{trimString(venue[least], 32)}</div>
+                        <div className="sidebar-label">{strings.map.sidebar.venue.place.least}</div>
+                        <div className="sidebar-value text">{trimString(venue[least], 30)}</div>
                     </div>
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Most Diverse Event</div>
-                        <div className="sidebar-value text">{trimString(venue[most], 32)}</div>
+                        <div className="sidebar-label">{strings.map.sidebar.venue.place.most}</div>
+                        <div className="sidebar-value text">{trimString(venue[most], 30)}</div>
                     </div>
                 </div>
 
                 <div className="sidebar-poldiv">
                     <div className="sidebar-section">
-                        <div className="sidebar-label">Political Charge</div>
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.charge}</div>
                         <SliderChart data={venue["Political Charge"]} />
                     </div>
                     <div className="sidebar-section">
-                        <div className="sidebar-label">Diversity Score</div>
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.score}</div>
                         <SliderChart data={venue["DIV SCORE PLACE"]} />
                     </div>
                 </div>
 
                 <div className="sidebar-section">
-                    <div className="sidebar-label">Types of Events</div>
+                    <div className="sidebar-label">{strings.map.sidebar.venue.graphs.types}</div>
 
                     {waffleData[0].value !== undefined && waffleTotal !== undefined ? (
                         <div className="nivo-container" style={{ height: "108px" }}>
@@ -135,7 +136,7 @@ export default class SidebarPlaceInfo extends Component {
                                 rows={6}
                                 columns={16}
                                 padding={0.0}
-                                fillDirection="right"
+                                fillDirection="left"
                                 margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                                 colors={[colors.r, colors.y, colors.b, colors.d, colors.n]}
                                 borderWidth={1}

@@ -5,6 +5,7 @@ import React from "react"
 
 import Mappa from "./Mappa"
 import "./Home.css"
+
 // import { ReactComponent as SVGMap } from '../static/cph.svg'
 
 // const RedCircle = Keyframes.Spring({
@@ -32,6 +33,7 @@ import "./Home.css"
 //     ]
 // })
 
+
 export default class Home extends React.Component {
     state = { data: 0 }
 
@@ -46,6 +48,7 @@ export default class Home extends React.Component {
     }
 
     render() {
+
         return (
             <div className="page">
 

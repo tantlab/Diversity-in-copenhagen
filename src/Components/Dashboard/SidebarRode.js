@@ -3,12 +3,12 @@ import React from 'react'
 // try build the timeline with this
 import { ResponsiveLine } from '@nivo/line'
 
+import strings from '../../_localization.js'
 import trimString from '../helpers'
 
 export default class SidebarRode extends React.Component {
 
     render() {
-
         // console.log(this.props.data.rode);
 
         let data = this.props.data ? this.props.data.rode : null
@@ -36,7 +36,7 @@ export default class SidebarRode extends React.Component {
 
         let graphData = [
             {
-                id: "Diversity Score",
+                id: strings.map.sidebar.rode.place.graphLegend.score,
                 data: (active !== null
                     ? [
                         { x: "2013", y: validateData(active["DIV 2013"]) },
@@ -49,7 +49,7 @@ export default class SidebarRode extends React.Component {
                     : null)
             },
             {
-                id: "Political Crowd",
+                id: strings.map.sidebar.rode.place.graphLegend.crowd,
                 data: (active !== null
                     ? [
                         { x: "2013", y: validateData(active["PC 2013"]) },
@@ -72,22 +72,22 @@ export default class SidebarRode extends React.Component {
 
                 <div className="sidebar-sublevel">
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Least Diverse Place</div>
+                        <div className="sidebar-label">{strings.map.sidebar.rode.place.least}</div>
                         <div className="sidebar-value text">{trimString(least, 32)}</div>
                     </div>
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Most Diverse Place</div>
+                        <div className="sidebar-label">{strings.map.sidebar.rode.place.most}</div>
                         <div className="sidebar-value text">{trimString(most, 32)}</div>
                     </div>
                 </div>
 
                 <div className="sidebar-sided">
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Average Diversity</div>
+                        <div className="sidebar-label">{strings.map.sidebar.rode.place.diversity}</div>
                         <div className="sidebar-value numeric">{divScore}</div>
                     </div>
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">Average&nbsp;Political&nbsp;Charge</div>
+                        <div className="sidebar-label">{strings.map.sidebar.rode.place.charge}</div>
                         <div className="sidebar-value numeric">{polCharge}</div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export default class SidebarRode extends React.Component {
                             data={graphData}
                             margin={{ top: 40, right: 12, bottom: 20, left: 12 }}
                             xScale={{ type: 'point' }}
-                            yScale={{ type: 'linear', stacked: true, min: 'auto', max: 'auto' }}
+                            yScale={{ type: 'linear', stacked: false, min: 0, max: 'auto' }}
                             curve="basis"
                             axisTop={null}
                             axisRight={null}
@@ -131,7 +131,7 @@ export default class SidebarRode extends React.Component {
                             enablePointLabel={true}
                             pointLabel="y"
                             pointLabelYOffset={-12}
-                            enableArea={false}
+                            enableArea={true}
                             areaBaselineValue={0}
                             areaOpacity={0.15}
                             isInteractive={false}

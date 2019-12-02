@@ -1,26 +1,33 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-// try using Pose library
-
-
 // list of pages
 import Home from './Home'
 import Nav from './Globals/Nav'
 
+import strings from '../_localization.js'
+import { Provider } from 'react-globally'
 // import Cursor from './Cursor'
 
-const ColorTheme = React.createContext({
-    r: "#f06666",
-    y: "#f7cc5f",
-    b: "#1d62ed",
-    g: "#39b87f",
-})
-
 const Main = () => {
+
+    let languagePreference
+
+    if (localStorage.languagePreference === undefined) {
+        // remembering language preferences
+        languagePreference = navigator.language.split('-')[0]
+        console.log('no preference, setting...', languagePreference);
+        localStorage.setItem('languagePreference', languagePreference)
+    } else {
+        // setting retrieved language preferences
+        languagePreference = localStorage.getItem('languagePreference')
+        console.log('preference found!', languagePreference);
+        strings.setLanguage(languagePreference)
+    }
+
     return (
-        <BrowserRouter>
-            <ColorTheme.Provider>
+        <Provider globalState={strings}>
+            <BrowserRouter>
                 <div className="App">
 
                     <Nav />
@@ -30,8 +37,8 @@ const Main = () => {
                     </Switch>
 
                 </div>
-            </ColorTheme.Provider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Provider>
     )
 }
 

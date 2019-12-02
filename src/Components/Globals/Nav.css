@@ -37,6 +37,9 @@
     flex-direction: row;
     justify-content: space-around;
 }
+.nav-el:last-child {
+    padding-right: 0;
+}
 
 .left {
     padding: 0px 0px 0px 32px;
