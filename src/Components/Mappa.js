@@ -455,7 +455,7 @@ export default class Mappa extends React.Component {
         // let zoom = parseInt(this.state.zoom)
 
         return (
-            <div className="map-section" >
+            <div className={`map-section ${this.props.active ? "active" : ""}`} >
                 {/* <Route exact path="/">
                     <Modal show={this.state.modal.show}
                         onCloseBtn={this.closeModal}
@@ -468,17 +468,17 @@ export default class Mappa extends React.Component {
                 </Route> */}
 
                 <div className="dashboard" >
+                    <div className="sidebar-container">
+                        <Sidebar show={this.state.rode.isInFocus} >
+                            <SidebarRode data={this.state} />
+                        </Sidebar>
 
-                    <Sidebar show={this.state.rode.isInFocus} >
-                        <SidebarRode data={this.state} />
-                    </Sidebar>
-
-                    {/* venue sidebar */}
-                    <Sidebar show={this.state.venue.isInFocus} >
-                        <SidebarPlaceInfo data={this.state} />
-                        <SidebarPlaceCrowd data={this.state} />
-                    </Sidebar>
-
+                        {/* venue sidebar */}
+                        <Sidebar show={this.state.venue.isInFocus} >
+                            <SidebarPlaceInfo data={this.state} />
+                            <SidebarPlaceCrowd data={this.state} />
+                        </Sidebar>
+                    </div>
                 </div>
 
                 <Modal show={this.state.modal.show}

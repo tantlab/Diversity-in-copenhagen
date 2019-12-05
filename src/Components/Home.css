@@ -1,3 +1,7 @@
+.scrolly-intro .title, .hero .hero-content {
+    z-index: 99;
+}
+
 .link {
     margin: 24px;
 }

@@ -1,7 +1,7 @@
 import React from "react"
 // import { Link } from "react-router-dom"
 // import { Keyframes } from 'react-spring/renderprops'
-// import { Scrollama, Step } from 'react-scrollama'
+import { Scrollama, Step } from 'react-scrollama'
 
 import Mappa from "./Mappa"
 import "./Home.css"
@@ -39,12 +39,14 @@ export default class Home extends React.Component {
 
     onStepEnter = ({ element, data, direction }) => {
         this.setState({ data: data })
+        console.log(this.state.data);
     }
 
     onStepExit = ({ element, data, direction }) => {
         if (data === 1 && direction === "up") {
             this.setState({ data: 0 })
         } else return
+        console.log(this.state.data);
     }
 
     render() {
@@ -52,7 +54,10 @@ export default class Home extends React.Component {
         return (
             <div className="page">
 
-                {/* <div className="hero">
+                {/* RESIZE CANVAS ON CSS TRANSITION END */}
+                <Mappa active={this.state.data >= 6} />
+
+                <div className="hero">
                     <div className="hero-content">
                         <div className="title">Do you live in a bubble?</div>
                         <div className="subtitle">A datascape of political diversity in Copenhagen</div>
@@ -65,7 +70,6 @@ export default class Home extends React.Component {
                                 <div className="intro-section">
                                     <div className="title">We often spend time with people we&nbsp;agree&nbsp;with. We move in political bubbles and risk of amplifying them in our political discussions.</div>
                                 </div>
-
                             </Step>
                             <Step data={2}>
                                 <div className="intro-section">
@@ -87,10 +91,13 @@ export default class Home extends React.Component {
                                     <div className="title">C-c-c-check it out!</div>
                                 </div>
                             </Step>
+                            <Step data={6}>
+                                <div style={{ height: "100vh" }}></div>
+                            </Step>
                         </Scrollama>
                     </div>
 
-                    <div className="intro-anim">
+                    {/* <div className="intro-anim">
                         <div className="follower">
                             <div className="circle-holder">
                                 <RedCircle state={this.state.data}>
@@ -111,12 +118,10 @@ export default class Home extends React.Component {
                                 <SVGMap width="100%" height="auto" />
                             </div>
                         </div>
-                    </div>
-                </div> */}
+                    </div> */}
+                </div>
 
-                <Mappa />
-
-            </div>
+            </div >
         )
     }
 }
