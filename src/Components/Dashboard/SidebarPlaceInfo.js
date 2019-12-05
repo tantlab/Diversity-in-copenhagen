@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { ResponsiveWaffle } from '@nivo/waffle'
 
 import trimString from '../helpers'
-import SliderChart from './Charts/SliderChart'
 import strings from '../../_localization.js'
 
 const colors = {
@@ -10,16 +9,11 @@ const colors = {
     y: "#f7cc5f",
     b: "#1d62ed",
     d: "#39b87f",
-    n: "#ece9e9"
+    n: "#ece9e9",
+    n1: "#a1a1a1"
 }
 
 export default class SidebarPlaceInfo extends Component {
-
-    trimString(str, length = 24) {
-        if (str) {
-            return str.length > length ? str.slice(0, length) + "..." : str
-        } else return
-    }
 
     eventPercentages(array) {
         if (array.length > 0) {
@@ -45,7 +39,7 @@ export default class SidebarPlaceInfo extends Component {
             case "DIVERSE":
                 return colors.d
             case "GRAY":
-                return colors.n
+                return colors.n1
             default:
                 break
         }
@@ -61,8 +55,8 @@ export default class SidebarPlaceInfo extends Component {
                 ? data.venue.lastSelected
                 : '')
 
-        let least = "Least Diverse Event"
-        let most = "Most diverse event"
+        let least = "Least diverse event"
+        let most = "Most Diverse Event"
 
         // let r_most = "no Red_most"
         // let y_most = "no Yellow_most"
@@ -87,12 +81,12 @@ export default class SidebarPlaceInfo extends Component {
 
         return (
 
-            <div className="sidebar-section place-info">
+            <div className="place-info">
 
                 <a href={venue["Maps Link"]} target="blank" >
                     <div className="sidebar-header-label"
                         style={{ color: this.headerColor(venue["Place Type"]) }}>
-                        {trimString(venue["Place_Name"])}↗
+                        {trimString(venue["place_name"], 20)}↗
                     </div>
                 </a>
 
@@ -111,17 +105,6 @@ export default class SidebarPlaceInfo extends Component {
                     <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.venue.place.most}</div>
                         <div className="sidebar-value text">{trimString(venue[most], 30)}</div>
-                    </div>
-                </div>
-
-                <div className="sidebar-poldiv">
-                    <div className="sidebar-section">
-                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.charge}</div>
-                        <SliderChart data={venue["Political Charge"]} />
-                    </div>
-                    <div className="sidebar-section">
-                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.score}</div>
-                        <SliderChart data={venue["DIV SCORE PLACE"]} />
                     </div>
                 </div>
 
@@ -148,7 +131,6 @@ export default class SidebarPlaceInfo extends Component {
                         </div>
                     ) : ""}
                 </div>
-
 
             </div>
         )

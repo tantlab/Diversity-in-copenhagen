@@ -6,7 +6,7 @@ import 'mapbox-gl/src/css/mapbox-gl.css'
 
 import './Mappa.css'
 
-// import Modal from './Modal'
+import Modal from './Modal'
 import Sidebar from './Dashboard/Sidebar'
 import SidebarRode from './Dashboard/SidebarRode'
 import SidebarPlaceInfo from './Dashboard/SidebarPlaceInfo'
@@ -43,7 +43,7 @@ export default class Mappa extends React.Component {
             modal: {
                 el: null,               // state for modal element
                 transitionTiming: 750,  // timing of modal transition
-                showModal: false,       // modal is closed by default
+                show: false,       // modal is closed by default
                 sid: null               // story id
             }
         }
@@ -82,13 +82,28 @@ export default class Mappa extends React.Component {
     handleStoryEvents = (map) => {
         map.on('click', 'rodes-story', (e) => {
             console.log(e.features[0]);
-        //     map.flyTo({
-        //         bearing: -10,
-        //         center: e.lngLat,
-        //         zoom: 14,
-        //         pitch: 36
-        //     })
+            this.setState(prevState => ({
+                modal: {
+                    ...prevState.modal,
+                    show: true
+                }
+            }))
+            //     map.flyTo({
+            //         bearing: -10,
+            //         center: e.lngLat,
+            //         zoom: 14,
+            //         pitch: 36
+            //     })
         })
+    }
+
+    handleModalCloseBtn = () => {
+        this.setState(prevState => ({
+            modal: {
+                ...prevState.modal,
+                show: false
+            }
+        }))
     }
 
     // TO-DO: always checks if story id is valid
@@ -97,12 +112,12 @@ export default class Mappa extends React.Component {
         this.setState(prevState => ({
             modal: {
                 ...prevState.modal,
-                showModal: true,
+                show: true,
                 sid: s
             }
         }))
         setTimeout(() => {
-            this.props.history.push(`/map/story?s=${s}`)
+            this.props.history.push(`/story?s=${s}`)
         }, this.state.modal.transitionTiming);
     }
 
@@ -110,11 +125,11 @@ export default class Mappa extends React.Component {
         this.setState(prevState => ({
             modal: {
                 ...prevState.modal,
-                showModal: false,
+                show: false,
             }
         }))
         setTimeout(() => {
-            this.props.history.push(`/map`)
+            this.props.history.push(`/`)
         }, this.state.modal.transitionTiming);
     }
 
@@ -386,16 +401,16 @@ export default class Mappa extends React.Component {
             let data = e.features[0]
             let venueProps = data.properties
 
-            let least = [
-                venueProps["no Red_least"],
-                venueProps["no Yellow_least"],
-                venueProps["no Blue_least"]
-            ]
-            let most = [
-                venueProps["no Red_most"],
-                venueProps["no Yellow_most"],
-                venueProps["no Blue_most"]
-            ]
+            // let least = [
+            //     venueProps["no Red_least"],
+            //     venueProps["no Yellow_least"],
+            //     venueProps["no Blue_least"]
+            // ]
+            // let most = [
+            //     venueProps["no Red_most"],
+            //     venueProps["no Yellow_most"],
+            //     venueProps["no Blue_most"]
+            // ]
 
             if (this.checkZoom()) {
                 this.setState({
@@ -403,31 +418,31 @@ export default class Mappa extends React.Component {
                         hoveredStateId: data.id,
                         lastSelected: venueProps,
                         isInFocus: true,
-                        graphData: {
-                            least: computePlaceGraphData(least),
-                            most: computePlaceGraphData(most)
-                        }
+                        // graphData: {
+                        //     least: computePlaceGraphData(least),
+                        //     most: computePlaceGraphData(most)
+                        // }
                     }
                 })
             }
 
             this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
-                .setHTML(data.properties["Place_Name"])
+                .setHTML(data.properties["place_name"])
                 .addTo(map)
 
-            function computePlaceGraphData(array) {
-                let percentage = (array) => {
-                    let tot = 0
-                    array.forEach(element => {
-                        return tot += element
-                    })
-                    const percents = array.map(element => {
-                        return (element / tot * 100)
-                    });
-                    return percents
-                }
-                return percentage(array)
-            }
+            // function computePlaceGraphData(array) {
+            //     let percentage = (array) => {
+            //         let tot = 0
+            //         array.forEach(element => {
+            //             return tot += element
+            //         })
+            //         const percents = array.map(element => {
+            //             return (element / tot * 100)
+            //         });
+            //         return percents
+            //     }
+            //     return percentage(array)
+            // }
 
         })
     }
@@ -441,13 +456,13 @@ export default class Mappa extends React.Component {
 
         return (
             <div className="map-section" >
-                {/* <Route exact path="/map">
-                    <Modal show={this.state.modal.showModal}
+                {/* <Route exact path="/">
+                    <Modal show={this.state.modal.show}
                         onCloseBtn={this.closeModal}
                         sid={this.state.modal.sid} />
                 </Route>
-                <Route path="/map/story" >
-                    <Modal show={this.state.modal.showModal}
+                <Route path="/story" >
+                    <Modal show={this.state.modal.show}
                         onCloseBtn={this.closeModal}
                         sid={this.state.modal.sid} />
                 </Route> */}
@@ -466,7 +481,20 @@ export default class Mappa extends React.Component {
 
                 </div>
 
-                {/* <MapNavigator lat={lat} lng={lng} zoom={zoom} /> */}
+                <Modal show={this.state.modal.show}
+                    title={"A story about"}
+                    onCloseBtn={this.handleModalCloseBtn}>
+                    <p>Its sometimes her behaviour are contented. Do listening am eagerness oh objection collected. Together gay feelings continue juvenile had off one. Unknown may service subject her letters one bed. Child years noise ye in forty. Loud in this in both hold. My entrance me is disposal bachelor remember relation.</p>
+                    <p>Behaviour we improving at something to. Evil true high lady roof men had open. To projection considered it precaution an melancholy or. Wound young you thing worse along being ham. Dissimilar of favourable solicitude if sympathize middletons at. Forfeited up if disposing perfectly in an eagerness perceived necessary. Belonging sir curiosity discovery extremity yet forfeited prevailed own off. Travelling by introduced of mr terminated. Knew as miss my high hope quit. In curiosity shameless dependent knowledge up.</p>
+                    <p>Ask especially collecting terminated may son expression. Extremely eagerness principle estimable own was man. Men received far his dashwood subjects new. My sufficient surrounded an companions dispatched in on. Connection too unaffected expression led son possession. New smiling friends and her another. Leaf she does none love high yet. Snug love will up bore as be. Pursuit man son musical general pointed. It surprise informed mr advanced do outweigh.</p>
+                    <p>In entirely be to at settling felicity. Fruit two match men you seven share. Needed as or is enough points. Miles at smart ﻿no marry whole linen mr. Income joy nor can wisdom summer. Extremely depending he gentleman improving intention rapturous as.</p>
+                    <p>Add you viewing ten equally believe put. Separate families my on drawings do oh offended strictly elegance. Perceive jointure be mistress by jennings properly. An admiration at he discovered difficulty continuing. We in building removing possible suitable friendly on. Nay middleton him admitting consulted and behaviour son household. Recurred advanced he oh together entrance speedily suitable. Ready tried gay state fat could boy its among shall.</p>
+                    <p>In on announcing if of comparison pianoforte projection. Maids hoped gay yet bed asked blind dried point. On abroad danger likely regret twenty edward do. Too horrible consider followed may differed age. An rest if more five mr of. Age just her rank met down way. Attended required so in cheerful an. Domestic replying she resolved him for did. Rather in lasted no within no.</p>
+                    <p>Affronting discretion as do is announcing. Now months esteem oppose nearer enable too six. She numerous unlocked you perceive speedily. Affixed offence spirits or ye of offices between. Real on shot it were four an as. Absolute bachelor rendered six nay you juvenile. Vanity entire an chatty to.</p>
+                    <p>Mr do raising article general norland my hastily. Its companions say uncommonly pianoforte favourable. Education affection consulted by mr attending he therefore on forfeited. High way more far feet kind evil play led. Sometimes furnished collected add for resources attention. Norland an by minuter enquire it general on towards forming. Adapted mrs totally company two yet conduct men.</p>
+                    <p>However venture pursuit he am mr cordial. Forming musical am hearing studied be luckily. Ourselves for determine attending how led gentleman sincerity. Valley afford uneasy joy she thrown though bed set. In me forming general prudent on country carried. Behaved an or suppose justice. Seemed whence how son rather easily and change missed. Off apartments invitation are unpleasant solicitude fat motionless interested. Hardly suffer wisdom wishes valley as an. As friendship advantages resolution it alteration stimulated he or increasing.</p>
+                    <p>To shewing another demands to. Marianne property cheerful informed at striking at. Clothes parlors however by cottage on. In views it or meant drift to. Be concern parlors settled or do shyness address. Remainder northward performed out for moonlight. Yet late add name was rent park from rich. He always do do former he highly.</p>
+                </Modal>
 
                 <div ref={el => this.mapContainer = el} className="mapContainer" > </div>
             </div>

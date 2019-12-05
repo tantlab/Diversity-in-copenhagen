@@ -29,7 +29,7 @@
 @font-face {
   font-family: "DIN";
   src: url('./static/din_regular.otf');
-  font-weight: regular;
+  font-weight: normal;
 }
 @font-face {
   font-family: "DIN";

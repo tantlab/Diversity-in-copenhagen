@@ -36,7 +36,7 @@
     position: relative;
     height: 100%;
     transform: translate(0%, 50%);
-    transition: transform var(--tra) ease-out;
+    transition: transform var(--tra) ease-in-out 50ms;
 }
 
 .slider-chart-bubble {
@@ -56,7 +56,7 @@
     position: absolute;
     text-align: center;
     font-size: .8em;
-    transition: width 500ms ease-out,;
+    transition: width 500ms ease-in-out 50ms;
     transform: translateY(-50%);
 }
 

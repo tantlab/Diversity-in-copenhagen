@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import BarChartMulti from './Charts/BarChartMulti'
+import SliderChart from './Charts/SliderChart'
 import strings from '../../_localization.js'
 
 export default class SidebarPlaceCrowd extends Component {
@@ -30,15 +31,18 @@ export default class SidebarPlaceCrowd extends Component {
                 : ''
 
         let totalPercents = [
-            venue["Total Red"], venue["Total Yellow"], venue["Total Blue"], venue["Total crowd"]
+            venue["Red crowd"], venue["Yellow crowd"], venue["Blue crowd"], venue["Total crowd"]
         ]
 
         let percents = [
             venue["Red percent"], venue["Yellow percent"], venue["Blue percent"]
         ]
 
+        let charge = !isNaN(Math.round(venue["Political Charge"])) ? Math.round(venue["Political Charge"]) : 0
+        let score = !isNaN(Math.round(venue["DIV SCORE PLACE"])) ? Math.round(venue["DIV SCORE PLACE"]) : 0
+
         return (
-            <div className="sidebar-section crowd-info">
+            <div className="crowd-info">
 
                 <div className="sidebar-section">
                     <div className="sidebar-label">{strings.map.sidebar.venue.graphs.overall}</div>
@@ -47,6 +51,17 @@ export default class SidebarPlaceCrowd extends Component {
                 <div className="sidebar-section">
                     <div className="sidebar-label">{strings.map.sidebar.venue.graphs.political}</div>
                     <BarChartMulti data={percents} />
+                </div>
+
+                <div className="sidebar-poldiv">
+                    <div className="sidebar-section">
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.charge}</div>
+                        <SliderChart data={charge} />
+                    </div>
+                    <div className="sidebar-section">
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.score}</div>
+                        <SliderChart data={score} />
+                    </div>
                 </div>
 
             </div>

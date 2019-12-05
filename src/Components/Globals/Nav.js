@@ -25,8 +25,8 @@ class Nav extends React.Component {
                         }}>EN</div>
                         <div>|</div>
                         <div className="language-sel lang" style={{ cursor: "pointer" }} onClick={() => {
-                            // strings.setLanguage('da')
-                            // this.forceUpdate()
+                            localStorage.setItem('languagePreference', 'da')
+                            window.location.reload(false)
                         }}>DA</div>
                         <div>|</div>
                         <div className="language-sel lang" style={{ cursor: "pointer" }} onClick={() => {

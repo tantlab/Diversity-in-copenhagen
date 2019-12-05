@@ -16,7 +16,7 @@
 }
 
 .overlay {
-    z-index: 99;
+    z-index: 499;
     position: absolute;
 
     left: 0; right: 0;
@@ -24,37 +24,70 @@
     width: 100%;
     height: 100%;
 
-    background-color: rgba(0, 0, 0, .5);
+    background-color: var(--c-d);
 
     opacity: 0;
-    transition: opacity var(--tra) var(--crv);
+    transition: opacity var(--tra) var(--crv) 800ms;
 }
 
 .modal.show .overlay {
     opacity: 1;
-    transition: opacity var(--tra) var(--crv);
+    transition: opacity var(--tra) var(--crv) 0ms;
 }
 
 .reader {
+    z-index: 500;
     position: relative;
     overflow: hidden;
-    z-index: 100;
     height: 100%;
-    max-width: 640px; max-height: 640px;
+    width: 100%;
+    /* max-width: 640px; max-height: 640px; */
     min-height: 320px;
     background-color: var(--c-d);
 
-    transform: translateY(200%);
-    transition: transform 750ms var(--crv);
+    transform: translateY(120%);
+    transition: transform 750ms var(--crv) 250ms;
 }
 
 .modal.show .reader {
     transform: translateY(0%);
-    transition: transform 750ms var(--crv);
+    transition: transform 750ms var(--crv) 350ms;
+}
+
+.reader-content-area {
+    position: relative;
+    overflow: scroll;
+    max-width: 840px;
+    height: 100%;
+    /* height: calc(100% - (var(--n-h) / 1.5) - var(--spa)); */
+    margin: auto;
+    padding: 0 var(--spa);
+    line-height: 1.5;
+}
+
+.reader-story-title > h1 {
+    font-weight: lighter;
+    font-size: 4em;
+}
+
+.reader-content {
+    margin-left: calc(var(--spa) * 2);
+    max-width: 640px;
+    margin: 0 auto;
+
+    font-size: 1.15em;
+    line-height: 1.65;
+    margin-bottom: 32px;
 }
 
 .reader-toolbar {
     padding: 0 calc(var(--spa) / 2);
+    max-width: 840px;
+    margin: auto;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    background-color: var(--c-d);
     height: calc(var(--n-h) / 1.5);
     display: flex;
     flex-direction: row;
@@ -71,7 +104,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transform: rotate(0deg);
+    transition: transform var(--tra) var(--crv);
 }
+.reader-toolbar .close:hover {
+    transform: rotate(90deg);
+    transition: transform var(--tra) var(--crv);
+}
+
 .reader-toolbar .close .line {
     position: absolute;
     width: 24px; height: 2px;
@@ -84,12 +124,4 @@
 }
 .reader-toolbar .close .line:nth-child(2) {
     transform: rotate(-45deg);
-}
-
-.reader-content-area {
-    position: relative;
-    overflow: scroll;
-    height: calc(100% - (var(--n-h) / 1.5) - var(--spa));
-    margin: 0 var(--spa) var(--spa) var(--spa);
-    line-height: 1.5;
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import './BarChart.css'
 
 
-let labels = ["Political crowd", "Non-political crowd"]
+// let labels = ["Political crowd", "Non-political crowd"]
 
 export default class BarChartMulti extends React.Component {
 
