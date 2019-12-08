@@ -172,7 +172,7 @@ export default class Mappa extends React.Component {
 
     handleMapTransition = () => {
         // setTimeout(() => {
-            this.state.mapEl.resize()            
+        this.state.mapEl.resize()
         // }, 500);
     }
 
@@ -188,6 +188,17 @@ export default class Mappa extends React.Component {
                 }
             }))
             document.documentElement.style.overflow = 'hidden'
+        })
+
+        map.on('mousemove', 'rodes-story', (e) => {
+            let popupCoords =
+                e.features[0].geometry.coordinates[0][0].length > 2 ?
+                    e.features[0].geometry.coordinates[0][0][0] :
+                    e.features[0].geometry.coordinates[0][0]
+
+            this.state.mapPopup.setLngLat(popupCoords)
+                .setHTML(`A story about ${e.features[0].properties["Neighborhood"]}`)
+                .addTo(map)
         })
     }
 
@@ -255,8 +266,8 @@ export default class Mappa extends React.Component {
         //     : map.setPaintProperty('rodes-story', 'fill-opacity', 0)
         // }, 1000);
 
-        // map.setPaintProperty('rodes-story', 'fill-opacity', Math.abs(Math.sin(f / 1000).toFixed(1)))
-        // window.requestAnimationFrame((f) => { this.pulsateLayerStory(map, f) })
+        map.setPaintProperty('rodes-story', 'fill-opacity', Math.abs(Math.sin(f / 1000)))
+        window.requestAnimationFrame((f) => { this.pulsateLayerStory(map, f) })
     }
 
     handleMapEvents = (map) => {
@@ -361,17 +372,17 @@ export default class Mappa extends React.Component {
                 }
             }))
 
-            let popupCoords =
-                e.features[0].geometry.coordinates[0][0].length > 2 ?
-                    e.features[0].geometry.coordinates[0][0][0] :
-                    e.features[0].geometry.coordinates[0][0]
+            // let popupCoords =
+            //     e.features[0].geometry.coordinates[0][0].length > 2 ?
+            //         e.features[0].geometry.coordinates[0][0][0] :
+            //         e.features[0].geometry.coordinates[0][0]
 
-            this.state.mapPopup.setLngLat(popupCoords)
-                .setHTML(`
-                        ${e.features[0].properties["Rode"]}</br>
-                        ${e.features[0].properties["Neighborhood"]}
-                    `)
-                .addTo(map)
+            // this.state.mapPopup.setLngLat(popupCoords)
+            //     .setHTML(`
+            //             ${e.features[0].properties["Rode"]}</br>
+            //             ${e.features[0].properties["Neighborhood"]}
+            //         `)
+            //     .addTo(map)
         }
     }
 
