@@ -39,14 +39,13 @@ export default class Home extends React.Component {
 
     onStepEnter = ({ element, data, direction }) => {
         this.setState({ data: data })
-        console.log(this.state.data);
     }
 
     onStepExit = ({ element, data, direction }) => {
         if (data === 1 && direction === "up") {
             this.setState({ data: 0 })
         } else return
-        console.log(this.state.data);
+        // console.log(this.state.data);
     }
 
     render() {
@@ -54,8 +53,13 @@ export default class Home extends React.Component {
         return (
             <div className="page">
 
-                {/* RESIZE CANVAS ON CSS TRANSITION END */}
-                <Mappa active={this.state.data >= 6} />
+                <Mappa active={this.state.data >= 7} flyTo={this.state.data} />
+
+                <div className={`home-overlay 
+                    ${this.state.data === 0 ? 'full' : ''} 
+                    ${this.state.data >= 1 && this.state.data < 7 ? 'half' : ''} 
+                    ${this.state.data >= 7 ? 'none' : ''}`}>
+                </div>
 
                 <div className="hero">
                     <div className="hero-content">
@@ -68,30 +72,36 @@ export default class Home extends React.Component {
                         <Scrollama offset={0.33} debug={false} onStepEnter={this.onStepEnter} onStepExit={this.onStepExit}>
                             <Step data={1}>
                                 <div className="intro-section">
-                                    <div className="title">We often spend time with people we&nbsp;agree&nbsp;with. We move in political bubbles and risk of amplifying them in our political discussions.</div>
+                                    <div className="title">We tend to spend time with people like ourselves. This is why our political discussions often take place in bubble where we rarely encounter opinions that conflict with our own.</div>
                                 </div>
                             </Step>
                             <Step data={2}>
                                 <div className="intro-section">
-                                    <div className="title">Urban spaces have the potential to break that pattern. They are not work. They are not home. They offer the possibility of chance encounters between opposites.</div>
+                                    <div className="title">Urban life and urban space can either strengthen or break such bubbles. This is a space where people in neither at work nor at home. It is a space with possibilities for chance encounters with different people.</div>
                                 </div>
                             </Step>
                             <Step data={3}>
                                 <div className="intro-section">
-                                    <div className="title">But where does a city like Copenhagen break the bubble?</div>
+                                    <div className="title">But which parts of the city succeeds in breaking political bubbles?</div>
                                 </div>
                             </Step>
                             <Step data={4}>
                                 <div className="intro-section">
-                                    <div className="title">And where does it amplify political polarization?</div>
+                                    <div className="title">And which parts come to serve as home for a very specific political crowd?</div>
                                 </div>
                             </Step>
                             <Step data={5}>
                                 <div className="intro-section">
-                                    <div className="title">C-c-c-check it out!</div>
+                                    <div className="title">And is there something about the programming of the urban that make some places more and less diverse than others?</div>
                                 </div>
                             </Step>
                             <Step data={6}>
+                                <div className="intro-section">
+                                    <div className="title">Explore the map and see how diverse your favorite place are or dive into the qualitative stories about Nørrebro and Kongens Nytorv</div>
+                                </div>
+                            </Step>
+                            {/* This steps hosts the map and sidebar in the end */}
+                            <Step data={7}>
                                 <div style={{ height: "100vh" }}></div>
                             </Step>
                         </Scrollama>

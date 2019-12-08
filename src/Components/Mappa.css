@@ -6,34 +6,33 @@
 
     height: calc(100vh - var(--n-h));
     width: 100%;
-    
+
     /* display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center; */
-    
-    display: flex;
-    
-    transition: all var(--tra) var(--crv);
-}
-
-.map-section.active {
-    width: 100%;
 
     display: flex;
-    
-    /* padding: calc(var(--spa) / 2); */
-
-    transition: all var(--tra) var(--crv);
 }
 
 .mapContainer {
     /* position: absolute; */
     /* top: var(--n-h); */
-    width: 100%;
+    width: 50%;
     height: 100%;
 
+    transform: translateX(100%);
+
     border: var(--border);
+    transition: all var(--tra) var(--crv),
+        transform var(--tra) var(--crv) 1s;
+}
+
+.map-section.active .mapContainer {
+    width: 100%;
+    transform: translateX(0%);
+    transition: all var(--tra) var(--crv),
+        transform var(--tra) var(--crv) 500ms;
 }
 
 .map-section.active canvas.mapboxgl-canvas {

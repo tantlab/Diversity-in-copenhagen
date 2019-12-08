@@ -83,6 +83,47 @@ export default class SidebarPlaceInfo extends Component {
 
             <div className="place-info">
 
+                <div className="sidebar-legend-container">
+                    <div className="legend-title">Legend</div>
+                    <div className="legend-map">
+                        <div className="legend-map-places-polcharge">
+                            <div className="legend-map-places-circles">
+                                <div className="legend-map-circle small"></div>
+                                <div className="legend-map-circle mid"></div>
+                                <div className="legend-map-circle big"></div>
+                            </div>
+                            Political Charge
+                        </div>
+                        <div className="legend-map-places-factions">
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--r)" }}></div>
+                                <div className="legend-map-faction-label">Red</div>
+                            </div>
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--y)" }}></div>
+                                <div className="legend-map-faction-label">Yellow</div>
+                            </div>
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--b)" }}></div>
+                                <div className="legend-map-faction-label">Blue</div>
+                            </div>
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--g)" }}></div>
+                                <div className="legend-map-faction-label">Diverse</div>
+                            </div>
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--n)" }}></div>
+                                <div className="legend-map-faction-label">Neutral</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <a href={venue["Maps Link"]} target="blank" >
                     <div className="sidebar-header-label"
                         style={{ color: this.headerColor(venue["Place Type"]) }}>

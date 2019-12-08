@@ -15,6 +15,7 @@
   --y: #f7cc5f;
   --b: #1d62ed;
   --g: #39b87f;
+  --u: #7d3894;
 
   --fs-x: 1.75em;
   --fs-l: 1.35em;
@@ -29,6 +30,11 @@
 @font-face {
   font-family: "DIN";
   src: url('./static/din_regular.otf');
+  font-weight: normal;
+}
+@font-face {
+  font-family: "DIN Italic";
+  src: url('./static/din_regular_italic.otf');
   font-weight: normal;
 }
 @font-face {

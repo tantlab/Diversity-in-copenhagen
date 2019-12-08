@@ -23,9 +23,9 @@ export default class Mappa extends React.Component {
         this.state = {
             lat: 55.675,                // coordinates of 
             lng: 12.57,                 // Copenhagen's center
-            zoom: 14,                   // initial zoom level
+            zoom: 12,                   // initial zoom level
+            fly: this.props.flyTo,
 
-            factions: [0, 0, 0],        // red, yellow, blue percentage
             rode: {
                 hoveredStateId: null,   // controls the hover state on rodes layer
                 lastSelected: null,
@@ -35,10 +35,6 @@ export default class Mappa extends React.Component {
                 hoveredStateId: null,   // controls the hover state on places layer 
                 lastSelected: null,
                 isInFocus: false,       // no selected place on load
-                graphData: {
-                    least: [0, 0, 0],
-                    most: [0, 0, 0]
-                }
             },
             modal: {
                 el: null,               // state for modal element
@@ -49,6 +45,15 @@ export default class Mappa extends React.Component {
         }
     }
 
+    componentWillReceiveProps(props) {
+        this.setState(prevState => ({
+            ...prevState,
+            fly: props.flyTo
+        }))
+
+        this.handleIntroFlight(props.flyTo)
+    }
+
     componentDidMount() {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoiZHJpdmlud2FyZCIsImEiOiJjazI1N2lkbm4xMHg2M25tcWQ1anprM3Y0In0.sxw7MdBqOuUsi3LDjHqhoA'
@@ -57,6 +62,7 @@ export default class Mappa extends React.Component {
             style: 'mapbox://styles/drivinward/ck3iuizoc0ae01cpeweqhc8nc/draft',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom,
+            pitch: 60,
             minZoom: 11,
             maxBounds: [12.3, 55.55, 12.85, 55.8]
         })
@@ -68,6 +74,7 @@ export default class Mappa extends React.Component {
 
         // initializing state for important elements
         this.setState({
+            mapEl: map,
             mapPopup: popup,
         })
 
@@ -75,25 +82,112 @@ export default class Mappa extends React.Component {
         this.handleRodeEvents(map)
         this.handleVenueEvents(map)
         this.handleStoryEvents(map)
+    }
 
+    handleIntroFlight = (integer) => {
+        console.log(integer);
+
+        let map = this.state.mapEl
+        let fly = integer
+        let curve = 0.75
+
+        if (fly <= 6) {
+            this.setState(prevState => ({
+                rode: {
+                    ...prevState.rode,
+                    isInFocus: false
+                },
+                venue: {
+                    ...prevState.venue,
+                    isInFocus: false
+                }
+            }))
+        }
+
+        if (fly === 1) {
+            map.flyTo({
+                bearing: 0,
+                center: map.getCenter(),
+                zoom: 11,
+                pitch: 0,
+                speed: 0.25,
+                curve: curve,
+            })
+        } else if (fly === 2) {
+            map.flyTo({
+                bearing: 60,
+                center: map.getCenter(),
+                zoom: 17,
+                pitch: 75,
+                speed: 0.75,
+                curve: curve
+            })
+        } else if (fly === 3) {
+            map.flyTo({
+                bearing: 30,
+                center: map.getCenter(),
+                zoom: 13,
+                pitch: 60,
+                speed: 0.75,
+                curve: curve
+            })
+        } else if (fly === 4) {
+            map.flyTo({
+                bearing: 0,
+                center: map.getCenter(),
+                zoom: 11,
+                pitch: 0,
+                speed: 0.75,
+                curve: curve
+            })
+        } else if (fly === 5) {
+            map.flyTo({
+                bearing: 0,
+                center: map.getCenter(),
+                zoom: 14,
+                pitch: 0,
+                speed: 0.75,
+                curve: curve
+            })
+        } else if (fly === 6) {
+            map.flyTo({
+                bearing: 30,
+                center: map.getCenter(),
+                zoom: 12,
+                pitch: 60,
+                speed: 0.75,
+                curve: curve
+            })
+        } else if (fly >= 7) {
+            map.flyTo({
+                bearing: 0,
+                center: map.getCenter(),
+                zoom: 11,
+                pitch: 0,
+                speed: 1,
+                curve: 1
+            })
+        }
+    }
+
+    handleMapTransition = () => {
+        // setTimeout(() => {
+            this.state.mapEl.resize()            
+        // }, 500);
     }
 
     // start from here to build modal
     handleStoryEvents = (map) => {
         map.on('click', 'rodes-story', (e) => {
-            console.log(e.features[0]);
+            // console.log(e.features[0]);
             this.setState(prevState => ({
                 modal: {
                     ...prevState.modal,
-                    show: true
+                    show: true,
+                    sid: e.features[0].properties["Neighborhood"]
                 }
             }))
-            //     map.flyTo({
-            //         bearing: -10,
-            //         center: e.lngLat,
-            //         zoom: 14,
-            //         pitch: 36
-            //     })
+            document.documentElement.style.overflow = 'hidden'
         })
     }
 
@@ -104,6 +198,7 @@ export default class Mappa extends React.Component {
                 show: false
             }
         }))
+        document.documentElement.style.overflow = 'scroll'
     }
 
     // TO-DO: always checks if story id is valid
@@ -137,48 +232,6 @@ export default class Mappa extends React.Component {
     checkZoom = () => {
         if (this.state.zoom >= 13) {
             return true
-        } else return false
-    }
-
-    // calculates factions presence in current viewing area
-    getCurrentGroupsDataInView = (data) => {
-        if (data.length > 0) {
-            let c = [
-                [],
-                [],
-                []
-            ]
-            let tot = []
-            data.forEach(place => {
-                c[0].push(place.properties['Total Red']);
-                c[1].push(place.properties['Total Yellow']);
-                c[2].push(place.properties['Total Blue']);
-                tot.push(place.properties['Total Political Crowd'])
-            });
-
-            let avgs = c.map((faction) => {
-                let aggregates = 0
-                let tots = 0
-                tot.map((placeTot, t) => {
-                    return [aggregates += ( /* placeTot *  */ faction[t]), tots += placeTot]
-                })
-                return aggregates / tots * 100
-            })
-            return avgs
-        } else return [0, 0, 0]
-    }
-
-    // update features in view during map move
-    updateMapData = (map) => {
-        // update average values of bubblechart
-        if (this.checkZoom()) {
-            const viewportData = map.queryRenderedFeatures({
-                layers: ['venues']
-            })
-            this.setState({
-                factions: this.getCurrentGroupsDataInView(viewportData)
-            })
-            return viewportData
         } else return false
     }
 
@@ -293,52 +346,9 @@ export default class Mappa extends React.Component {
             this.state.mapPopup.remove()
         })
 
-        // map.on('moveend', 'rodes', (e) => {
-
-        //     // calculating which area we are in
-        //     function inside(point, vs) {
-        //         // ray-casting algorithm based on
-        //         // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-
-        //         var x = point[0],
-        //             y = point[1];
-
-        //         var inside = false;
-        //         for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-        //             var xi = vs[i][0],
-        //                 yi = vs[i][1];
-        //             var xj = vs[j][0],
-        //                 yj = vs[j][1];
-
-        //             var intersect = ((yi > y) !== (yj > y)) &&
-        //                 (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-        //             if (intersect) inside = !inside;
-        //         }
-
-        //         return inside;
-        //     };
-
-        //     let ids = e.features.filter(f => {
-        //         return (inside(map.getCenter().toArray(), f.geometry.coordinates[0]) === true)
-        //     })
-
-        //     if (ids[0] !== undefined) {
-        //         this.setState(prevState => ({
-        //             rode: {
-        //                 ...prevState.rode,
-        //                 name: ids[0].properties["Rode"],
-        //                 // div score of polygon area
-        //                 diversity: ids[0].properties["DIV SCORE POLY"]
-        //             }
-        //         }))
-        //         // console.log(ids[0].properties["Rode"], ids[0].properties["DIV SCORE POLY"]);
-        //     } else return
-        // })
     }
     // helper function used for rodes-green and rodes-violet
     handleRodeHover = (map, e) => {
-        map.getCanvas().style.cursor = 'pointer'
-
         if (e.features.length > 0 && !this.checkZoom()) {
             map.getCanvas().style.cursor = 'pointer'
 
@@ -362,16 +372,6 @@ export default class Mappa extends React.Component {
                         ${e.features[0].properties["Neighborhood"]}
                     `)
                 .addTo(map)
-
-            // set hover state for polygons
-            // map.setFeatureState({
-            //     source: 'composite',
-            //     sourceLayer: 'rode_layer-Rode-7dz4s4',
-            //     id: this.state.rode.hoveredStateId
-            // }, {
-            //     hover: true
-            // });
-
         }
     }
 
@@ -396,54 +396,24 @@ export default class Mappa extends React.Component {
         // if click on the place points, we open the sidebar
         // and show info of the place
         map.on('mousemove', 'venues', (e) => {
-            map.getCanvas().style.cursor = 'pointer'
-
-            let data = e.features[0]
-            let venueProps = data.properties
-
-            // let least = [
-            //     venueProps["no Red_least"],
-            //     venueProps["no Yellow_least"],
-            //     venueProps["no Blue_least"]
-            // ]
-            // let most = [
-            //     venueProps["no Red_most"],
-            //     venueProps["no Yellow_most"],
-            //     venueProps["no Blue_most"]
-            // ]
-
             if (this.checkZoom()) {
+                map.getCanvas().style.cursor = 'pointer'
+
+                let data = e.features[0]
+                let venueProps = data.properties
+
                 this.setState({
                     venue: {
                         hoveredStateId: data.id,
                         lastSelected: venueProps,
                         isInFocus: true,
-                        // graphData: {
-                        //     least: computePlaceGraphData(least),
-                        //     most: computePlaceGraphData(most)
-                        // }
                     }
                 })
+
+                this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
+                    .setHTML(data.properties["place_name"])
+                    .addTo(map)
             }
-
-            this.state.mapPopup.setLngLat(data.geometry.coordinates.slice())
-                .setHTML(data.properties["place_name"])
-                .addTo(map)
-
-            // function computePlaceGraphData(array) {
-            //     let percentage = (array) => {
-            //         let tot = 0
-            //         array.forEach(element => {
-            //             return tot += element
-            //         })
-            //         const percents = array.map(element => {
-            //             return (element / tot * 100)
-            //         });
-            //         return percents
-            //     }
-            //     return percentage(array)
-            // }
-
         })
     }
 
@@ -455,7 +425,11 @@ export default class Mappa extends React.Component {
         // let zoom = parseInt(this.state.zoom)
 
         return (
-            <div className={`map-section ${this.props.active ? "active" : ""}`} >
+            <div className={`map-section ${this.props.active ? "active" : ""}`}
+                // resize mapbox canvas when transition ends after intro
+                // onTransitionStart={this.handleMapTransition}
+                onTransitionEnd={this.handleMapTransition}>
+
                 {/* <Route exact path="/">
                     <Modal show={this.state.modal.show}
                         onCloseBtn={this.closeModal}
@@ -483,7 +457,8 @@ export default class Mappa extends React.Component {
 
                 <Modal show={this.state.modal.show}
                     title={"A story about"}
-                    onCloseBtn={this.handleModalCloseBtn}>
+                    onCloseBtn={this.handleModalCloseBtn}
+                    sid={this.state.modal.sid}>
                     <p>Its sometimes her behaviour are contented. Do listening am eagerness oh objection collected. Together gay feelings continue juvenile had off one. Unknown may service subject her letters one bed. Child years noise ye in forty. Loud in this in both hold. My entrance me is disposal bachelor remember relation.</p>
                     <p>Behaviour we improving at something to. Evil true high lady roof men had open. To projection considered it precaution an melancholy or. Wound young you thing worse along being ham. Dissimilar of favourable solicitude if sympathize middletons at. Forfeited up if disposing perfectly in an eagerness perceived necessary. Belonging sir curiosity discovery extremity yet forfeited prevailed own off. Travelling by introduced of mr terminated. Knew as miss my high hope quit. In curiosity shameless dependent knowledge up.</p>
                     <p>Ask especially collecting terminated may son expression. Extremely eagerness principle estimable own was man. Men received far his dashwood subjects new. My sufficient surrounded an companions dispatched in on. Connection too unaffected expression led son possession. New smiling friends and her another. Leaf she does none love high yet. Snug love will up bore as be. Pursuit man son musical general pointed. It surprise informed mr advanced do outweigh.</p>
@@ -496,7 +471,9 @@ export default class Mappa extends React.Component {
                     <p>To shewing another demands to. Marianne property cheerful informed at striking at. Clothes parlors however by cottage on. In views it or meant drift to. Be concern parlors settled or do shyness address. Remainder northward performed out for moonlight. Yet late add name was rent park from rich. He always do do former he highly.</p>
                 </Modal>
 
-                <div ref={el => this.mapContainer = el} className="mapContainer" > </div>
+                {/* map container */}
+                <div ref={el => this.mapContainer = el} className="mapContainer"> </div>
+
             </div>
         )
     }

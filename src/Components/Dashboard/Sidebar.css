@@ -4,13 +4,13 @@
     height: 100%;
     width: 0px;
     transform: translateX(-100%);
-    
+
     transition: all var(--tra) var(--crv);
 }
+
 .map-section.active .dashboard {
     width: 320px;
     transform: translateX(0%);
-
     transition: all var(--tra) var(--crv);
 }
 
@@ -19,6 +19,7 @@
     height: 100%;
     transition: all var(--tra) var(--crv);
 }
+
 .map-section.active .sidebar-container {
     width: 320px;
     transition: all var(--tra) var(--crv);
@@ -59,6 +60,7 @@
 
 .sidebar-content {
     overflow-y: scroll;
+    overflow-x: hidden;
 
     pointer-events: all;
     position: relative;
@@ -91,7 +93,7 @@
 
 .sidebar-poldiv {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: calc(var(--spa) / 2);
 }
 
@@ -145,4 +147,114 @@
 
 .nivo-container svg {
     transform: translateY(0px);
+}
+
+.sidebar-legend-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: calc(var(--spa) / 2);
+
+    border-bottom: 1px solid var(--c-b);
+}
+
+.legend-title {
+    margin-bottom: calc(var(--spa) / 2);
+}
+
+.legend-map {
+    margin-bottom: calc(var(--spa) / 1.5);
+}
+
+.legend-map-rodes-labels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: .65em;
+    opacity: .5;
+    text-transform: uppercase;
+}
+
+.legend-map-rodes-chart {
+    width: 100%;
+    height: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.legend-map-rodes-chart-component {
+    width: 100%;
+    height: 100%;
+}
+
+.legend-map-places-polcharge {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: calc(var(--spa) / 1);
+}
+
+.legend-map-places-circles {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: calc(var(--spa)/1);
+}
+
+.legend-map-circle {
+    border-radius: 100%;
+    background-color: var(--c-d);
+    border: 1px solid black;
+}
+
+.legend-map-circle.small {
+    width: 4px;
+    height: 4px;
+}
+
+.legend-map-circle.mid {
+    width: 12px;
+    height: 12px;
+}
+
+.legend-map-circle.big {
+    width: 24px;
+    height: 24px;
+}
+
+.legend-map-places-factions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.legend-map-faction {
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.legend-map-faction-circle {
+    height: 16px;
+    width: 16px;
+    border-radius: 100%;
+    margin-bottom: calc(var(--spa) / 2);
+}
+
+.legend-map-faction-label {
+    font-size: .85em;
 }

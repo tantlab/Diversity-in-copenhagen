@@ -66,6 +66,22 @@ export default class SidebarRode extends React.Component {
         return (
             <div className="sidebar-rode">
 
+                <div className="sidebar-legend-container">
+                    <div className="legend-title">Legend</div>
+                    <div className="legend-map">
+                        <div className="legend-map-rodes-labels">
+                            <div>Less diverse</div>
+                            <div>More diverse</div>
+                        </div>
+                        <div className="legend-map-rodes-chart">
+                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "var(--u)"}}></div>
+                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "#dabfe3"}}></div>
+                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "#b3e5ce"}}></div>
+                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "var(--g)"}}></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="sidebar-header-label">
                     {name}
                 </div>
@@ -99,7 +115,7 @@ export default class SidebarRode extends React.Component {
                             margin={{ top: 40, right: 12, bottom: 20, left: 12 }}
                             xScale={{ type: 'point' }}
                             yScale={{ type: 'linear', stacked: false, min: 0, max: 'auto' }}
-                            curve="basis"
+                            curve="monotoneX"
                             axisTop={null}
                             axisRight={null}
                             axisBottom={{

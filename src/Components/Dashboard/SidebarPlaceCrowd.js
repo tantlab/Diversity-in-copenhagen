@@ -38,7 +38,7 @@ export default class SidebarPlaceCrowd extends Component {
             venue["Red percent"], venue["Yellow percent"], venue["Blue percent"]
         ]
 
-        let charge = !isNaN(Math.round(venue["Political Charge"])) ? Math.round(venue["Political Charge"]) : 0
+        // let charge = !isNaN(Math.round(venue["Political Charge"])) ? Math.round(venue["Political Charge"]) : 0
         let score = !isNaN(Math.round(venue["DIV SCORE PLACE"])) ? Math.round(venue["DIV SCORE PLACE"]) : 0
 
         return (
@@ -54,10 +54,10 @@ export default class SidebarPlaceCrowd extends Component {
                 </div>
 
                 <div className="sidebar-poldiv">
-                    <div className="sidebar-section">
+                    {/* <div className="sidebar-section">
                         <div className="sidebar-label">{strings.map.sidebar.venue.graphs.charge}</div>
                         <SliderChart data={charge} />
-                    </div>
+                    </div> */}
                     <div className="sidebar-section">
                         <div className="sidebar-label">{strings.map.sidebar.venue.graphs.score}</div>
                         <SliderChart data={score} />
