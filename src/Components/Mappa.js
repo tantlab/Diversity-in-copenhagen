@@ -173,6 +173,7 @@ export default class Mappa extends React.Component {
     handleMapTransition = () => {
         // setTimeout(() => {
         this.state.mapEl.resize()
+        this.state.mapEl.setCenter(this.state.mapEl.getCenter())
         // }, 500);
     }
 

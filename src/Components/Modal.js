@@ -3,6 +3,7 @@ import uuid from 'uuid'
 import { createPortal } from 'react-dom'
 
 import './Modal.css'
+import './Page.css'
 
 import stories from '../_stories.js'
 
@@ -15,6 +16,33 @@ const Overlay = (props) => {
             })
             return content[0] !== undefined ? content[0] : ''
         } else return 'no title'
+    }
+
+    const pageContent = (array) => {
+        return array.map(el => {
+            switch (el.type) {
+                case 'title':
+                    return (<div key={uuid()} className="page-title">{el.copy}</div>)
+                case 'paragraph':
+                    return (<div key={uuid()} className="page-paragraph">{el.copy}</div>)
+                case 'quote':
+                    return (<div key={uuid()} className="page-quote">{el.copy}</div>)
+                case 'images':
+                    return (
+                        <div key={uuid()} className="page-images">
+                            {el.source.map(source => {
+                                return (
+                                    <div key={uuid()} className="page-image-container">
+                                        <img key={uuid()} className="page-image" src={source} alt="some kind of thing" />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )
+                default:
+                    break
+            }
+        })
     }
 
     return createPortal(
@@ -40,30 +68,7 @@ const Overlay = (props) => {
                             whichStory(props.sid).sections.map(section => {
                                 return (
                                     <div key={uuid()} className="story-section">
-                                        {section.map(el => {
-                                            switch (el.type) {
-                                                case 'title':
-                                                    return (<div key={uuid()} className="story-title">{el.copy}</div>)
-                                                case 'paragraph':
-                                                    return (<div key={uuid()} className="story-paragraph">{el.copy}</div>)
-                                                case 'quote':
-                                                    return (<div key={uuid()} className="story-quote">{el.copy}</div>)
-                                                case 'images':
-                                                    return (
-                                                        <div key={uuid()} className="story-images">
-                                                            {el.source.map(source => {
-                                                                return (
-                                                                    <div key={uuid()} className="story-image-container">
-                                                                        <img key={uuid()} className="story-image" src={source} alt="some kind of thing" />
-                                                                    </div>
-                                                                )
-                                                            })}
-                                                        </div>
-                                                    )
-                                                default:
-                                                    break
-                                            }
-                                        })}
+                                        {pageContent(section)}
                                         {/* <div key={uuid()} className="story-title">{section.title}</div> */}
                                         {/* <div key={uuid()} className="story-paragraph">{section.copy}</div> */}
                                     </div>

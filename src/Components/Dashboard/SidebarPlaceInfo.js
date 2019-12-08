@@ -92,33 +92,33 @@ export default class SidebarPlaceInfo extends Component {
                                 <div className="legend-map-circle mid"></div>
                                 <div className="legend-map-circle big"></div>
                             </div>
-                            Political Charge
+                            {strings.map.sidebar.venue.legend.charge}
                         </div>
                         <div className="legend-map-places-factions">
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
                                     style={{ backgroundColor: "var(--r)" }}></div>
-                                <div className="legend-map-faction-label">Red</div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.r}</div>
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
                                     style={{ backgroundColor: "var(--y)" }}></div>
-                                <div className="legend-map-faction-label">Yellow</div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.y}</div>
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
                                     style={{ backgroundColor: "var(--b)" }}></div>
-                                <div className="legend-map-faction-label">Blue</div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.b}</div>
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
                                     style={{ backgroundColor: "var(--g)" }}></div>
-                                <div className="legend-map-faction-label">Diverse</div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.d}</div>
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
                                     style={{ backgroundColor: "var(--n)" }}></div>
-                                <div className="legend-map-faction-label">Neutral</div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.n}</div>
                             </div>
                         </div>
                     </div>

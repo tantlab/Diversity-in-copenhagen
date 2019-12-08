@@ -7,7 +7,7 @@
 }
 
 .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: lighter;
     margin-bottom: 1.5rem;
 }
@@ -21,7 +21,8 @@
     top: 0; left: 0;
     height: 100%;
     background-color: var(--c-d);
-    box-shadow: 48px 0px 48px 0px var(--c-d);
+    border-right: 1px solid black;
+    /* box-shadow: 48px 0px 48px 0px var(--c-d); */
     transition: width 750ms var(--crv);
 }
 
@@ -56,6 +57,11 @@
     height: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+}
+.intro-texts {
+    margin: 0 1vw 0 2vw;
+    box-sizing: border-box;
 }
 
 .intro {
@@ -66,8 +72,6 @@
 .intro-section {
     width: 100%;
     height: 100vh;
-
-    margin-left: 4vw;
 
     display: flex;
     flex-direction: column;

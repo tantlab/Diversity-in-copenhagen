@@ -3,6 +3,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 // list of pages
 import Home from './Home'
+import About from './About'
+import Data from './Data'
 import Nav from './Globals/Nav'
 
 import strings from '../_localization.js'
@@ -33,6 +35,8 @@ const Main = () => {
                     <Nav />
                     <Switch >
                         <Route exact path="/" component={Home}></Route>
+                        <Route exact path="/about" component={About}></Route>
+                        <Route exact path="/data" component={Data}></Route>
                         {/* <Route path="/map" component={Mappa}></Route> */}
                     </Switch>
 

@@ -13,10 +13,13 @@ class Nav extends React.Component {
         return (
             <div id="nav">
                 <div className="nav-contents">
+
+                    <NavLink to="/" className="nav-el">Home</NavLink>
                     <NavLink to="/about" className="nav-el">{strings.nav.about}</NavLink>
-                    <Route exact path="/">
-                        <NavLink to="/map" className="nav-el">{strings.nav.map}</NavLink>
-                    </Route>
+                    <NavLink to="/data" className="nav-el">{strings.nav.data}</NavLink>
+
+                    {/* Should scroll down to map */}
+                    <NavLink to="/map" className="nav-el">{strings.nav.map}</NavLink>
 
                     <div className="nav-el language-sel">
                         <div className="language-sel lang" style={{ cursor: "pointer" }} onClick={() => {
@@ -28,11 +31,11 @@ class Nav extends React.Component {
                             localStorage.setItem('languagePreference', 'da')
                             window.location.reload(false)
                         }}>DA</div>
-                        <div>|</div>
+                        {/* <div>|</div>
                         <div className="language-sel lang" style={{ cursor: "pointer" }} onClick={() => {
                             localStorage.setItem('languagePreference', 'it')
                             window.location.reload(false)
-                        }}>_IT</div>
+                        }}>_IT</div> */}
 
                     </div>
                 </div>

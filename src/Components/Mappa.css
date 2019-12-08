@@ -22,10 +22,12 @@
     height: 100%;
 
     transform: translateX(100%);
-
+    
     border: var(--border);
+    box-sizing: border-box;
+    
     transition: all var(--tra) var(--crv),
-        transform var(--tra) var(--crv) 1s;
+    transform var(--tra) var(--crv) 1s;
 }
 
 .map-section.active .mapContainer {

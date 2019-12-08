@@ -67,11 +67,11 @@ export default class SidebarRode extends React.Component {
             <div className="sidebar-rode">
 
                 <div className="sidebar-legend-container">
-                    <div className="legend-title">Legend</div>
+                    <div className="legend-title">{strings.map.sidebar.rode.legend.title}</div>
                     <div className="legend-map">
                         <div className="legend-map-rodes-labels">
-                            <div>Less diverse</div>
-                            <div>More diverse</div>
+                            <div>{strings.map.sidebar.rode.legend.less}</div>
+                            <div>{strings.map.sidebar.rode.legend.more}</div>
                         </div>
                         <div className="legend-map-rodes-chart">
                             <div className="legend-map-rodes-chart-component" style={{backgroundColor: "var(--u)"}}></div>
