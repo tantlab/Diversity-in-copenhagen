@@ -74,7 +74,7 @@ let strings = new LocalizedStrings({
                 [
                     {
                         type: 'paragraph',
-                        copy: 'Kortet over København bygger på data fra projektet ’Det Danske Facebookatlas’, der har indsamlet aktivitet fra 69.000 danske Facebooksider i perioden 2012-2018. Alle disse sider er oprettet som offentlige sider og der er således ikke indsamlet data fra personlige profiler eller grupper. Ligeledes er databasen anonymiseret og GDPR registreret, så brugernes navne og demografi er slettet. I Danmark findes ca 3,3 millioner Facebookbrugere hvoraf 2,4 millioner er aktive dagligt'
+                        copy: 'Kortet over København bygger på data fra projektet ’Det Danske Facebook atlas’, der har indsamlet aktivitet fra 69.000 danske Facebooksider i perioden 2012-2018. Alle disse sider er oprettet som offentlige sider og der er således ikke indsamlet data fra personlige profiler eller grupper. Ligeledes er databasen anonymiseret og GDPR registreret, så brugernes navne og demografi er slettet. I Danmark findes ca 3,3 millioner Facebookbrugere hvoraf 2,4 millioner er aktive dagligt'
                     },
                     {
                         type: 'paragraph',
@@ -345,7 +345,7 @@ let strings = new LocalizedStrings({
                 [
                     {
                         type: 'paragraph',
-                        copy: 'Kortet over København bygger på data fra projektet ’Det Danske Facebookatlas’, der har indsamlet aktivitet fra 69.000 danske Facebooksider i perioden 2012-2018. Alle disse sider er oprettet som offentlige sider og der er således ikke indsamlet data fra personlige profiler eller grupper. Ligeledes er databasen anonymiseret og GDPR registreret, så brugernes navne og demografi er slettet. I Danmark findes ca 3,3 millioner Facebookbrugere hvoraf 2,4 millioner er aktive dagligt'
+                        copy: 'Kortet over København bygger på data fra projektet ’Det Danske Facebook atlas’, der har indsamlet aktivitet fra 69.000 danske Facebooksider i perioden 2012-2018. Alle disse sider er oprettet som offentlige sider og der er således ikke indsamlet data fra personlige profiler eller grupper. Ligeledes er databasen anonymiseret og GDPR registreret, så brugernes navne og demografi er slettet. I Danmark findes ca 3,3 millioner Facebookbrugere hvoraf 2,4 millioner er aktive dagligt'
                     },
                     {
                         type: 'paragraph',

@@ -87,10 +87,10 @@ export default class SidebarRode extends React.Component {
                 </div>
 
                 <div className="sidebar-sublevel">
-                    <div className="sidebar-sublevel-unit">
+                    {/* <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.rode.place.least}</div>
                         <div className="sidebar-value text">{trimString(least, 32)}</div>
-                    </div>
+                    </div> */}
                     <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.rode.place.most}</div>
                         <div className="sidebar-value text">{trimString(most, 32)}</div>

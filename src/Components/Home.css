@@ -24,6 +24,7 @@
     border-right: 1px solid black;
     /* box-shadow: 48px 0px 48px 0px var(--c-d); */
     transition: width 750ms var(--crv);
+    pointer-events: none;
 }
 
 .home-overlay.full {
@@ -33,7 +34,8 @@
     width: 50%;
 }
 .home-overlay.none {
-    width: 0%;
+    width: 320px;
+    opacity: 0;
 }
 
 .hero {
