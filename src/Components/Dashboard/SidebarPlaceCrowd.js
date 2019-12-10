@@ -30,8 +30,16 @@ export default class SidebarPlaceCrowd extends Component {
                 ? data.venue.lastSelected
                 : ''
 
+        let proportioned = (percent) => {
+            return venue["Block Crowd"] * percent / 100
+        }
+
         let totalPercents = [
-            venue["Red crowd"], venue["Yellow crowd"], venue["Blue crowd"], venue["Total crowd"]
+            proportioned(venue["Red percent"]), proportioned(venue["Yellow percent"]), proportioned(venue["Blue percent"]), venue["Total crowd"]
+        ]
+
+        let crowdTypes = [
+            venue["Block Crowd"], venue["Total crowd"]-venue["Block Crowd"]
         ]
 
         let percents = [
@@ -41,7 +49,10 @@ export default class SidebarPlaceCrowd extends Component {
         // let charge = !isNaN(Math.round(venue["Political Charge"])) ? Math.round(venue["Political Charge"]) : 0
         let score = !isNaN(Math.round(venue["DIV SCORE PLACE"])) ? Math.round(venue["DIV SCORE PLACE"]) : 0
 
+        console.log(this.eventPercentages(crowdTypes))
+
         return (
+
             <div className="crowd-info">
 
                 <div className="sidebar-section">

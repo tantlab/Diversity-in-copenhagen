@@ -30,8 +30,8 @@ export default class Home extends React.Component {
                 <Mappa active={this.state.data >= 7} flyTo={this.state.data} />
 
                 <div className={`home-overlay 
-                    ${this.state.data === 0 ? 'full' : ''} 
-                    ${this.state.data >= 1 && this.state.data < 7 ? 'half' : ''} 
+                    ${this.state.data <= 1 ? 'full' : ''} 
+                    ${this.state.data >= 2 && this.state.data < 7 ? 'half' : ''} 
                     ${this.state.data >= 7 ? 'none' : ''}`}>
                 </div>
 

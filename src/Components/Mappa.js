@@ -88,10 +88,9 @@ export default class Mappa extends React.Component {
         console.log(integer);
 
         let map = this.state.mapEl
-        let fly = integer
         let curve = 0.75
 
-        if (fly <= 6) {
+        if (integer <= 6) {
             this.setState(prevState => ({
                 rode: {
                     ...prevState.rode,
@@ -104,16 +103,17 @@ export default class Mappa extends React.Component {
             }))
         }
 
-        if (fly === 1) {
-            map.flyTo({
-                bearing: 0,
-                center: map.getCenter(),
-                zoom: 11,
-                pitch: 0,
-                speed: 0.25,
-                curve: curve,
-            })
-        } else if (fly === 2) {
+        // if (integer === 1) {
+        //     map.flyTo({
+        //         bearing: 0,
+        //         center: map.getCenter(),
+        //         zoom: 11,
+        //         pitch: 0,
+        //         speed: 0.25,
+        //         curve: curve,
+        //     })
+        // } else 
+        if (integer === 2) {
             map.flyTo({
                 bearing: 60,
                 center: map.getCenter(),
@@ -122,7 +122,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (fly === 3) {
+        } else if (integer === 3) {
             map.flyTo({
                 bearing: 30,
                 center: map.getCenter(),
@@ -131,7 +131,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (fly === 4) {
+        } else if (integer === 4) {
             map.flyTo({
                 bearing: 0,
                 center: map.getCenter(),
@@ -140,7 +140,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (fly === 5) {
+        } else if (integer === 5) {
             map.flyTo({
                 bearing: 0,
                 center: map.getCenter(),
@@ -149,7 +149,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (fly === 6) {
+        } else if (integer === 6) {
             map.flyTo({
                 bearing: 30,
                 center: map.getCenter(),
@@ -158,7 +158,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (fly >= 7) {
+        } else if (integer >= 7) {
             map.flyTo({
                 bearing: 0,
                 center: map.getCenter(),
@@ -172,8 +172,8 @@ export default class Mappa extends React.Component {
 
     handleMapTransition = () => {
         // setTimeout(() => {
-        this.state.mapEl.resize()
         this.state.mapEl.setCenter(this.state.mapEl.getCenter())
+        this.state.mapEl.resize()
         // }, 500);
     }
 
@@ -267,8 +267,8 @@ export default class Mappa extends React.Component {
         //     : map.setPaintProperty('rodes-story', 'fill-opacity', 0)
         // }, 1000);
 
-        map.setPaintProperty('rodes-story', 'fill-opacity', Math.abs(Math.sin(f / 1000)))
-        window.requestAnimationFrame((f) => { this.pulsateLayerStory(map, f) })
+        // map.setPaintProperty('rodes-story', 'fill-opacity', Math.abs(Math.sin(f / 1000)))
+        // window.requestAnimationFrame((f) => { this.pulsateLayerStory(map, f) })
     }
 
     handleMapEvents = (map) => {

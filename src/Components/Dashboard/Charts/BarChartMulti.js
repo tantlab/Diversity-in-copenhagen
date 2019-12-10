@@ -7,7 +7,26 @@ import './BarChart.css'
 
 export default class BarChartMulti extends React.Component {
 
-    colors = this.props.data.length > 3 ? ["#f06666", "#fbd679", "#1d62ed", "#ece9e9"] : ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
+    colors_ = this.props.data.length > 3 ? ["#f06666", "#fbd679", "#1d62ed", "#ece9e9"] : ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
+
+    colors = () => {
+        switch(this.props.data.length) {
+            case 1:
+                break
+            case 2:
+                console.log('2')
+                return ["#39B87F", "ece9e9"]
+            case 3:
+                console.log('3')
+                return ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
+            case 4:
+                console.log('4')
+                return ["#f06666", "#fbd679", "#1d62ed", "#ece9e9"]
+            default:
+                console.log('broken');
+                break
+        }
+    }
 
     render() {
         return (
@@ -31,7 +50,7 @@ export default class BarChartMulti extends React.Component {
                         {this.props.data.map((entry, index) => (
                             <div key={index}
                                 className="bar-multi"
-                                style={{ backgroundColor: this.colors[index], width: `${this.props.data[index]}%` }} />
+                                style={{ backgroundColor: this.colors()[index], width: `${this.props.data[index]}%` }} />
                         ))}
                     </div>
                 </div>

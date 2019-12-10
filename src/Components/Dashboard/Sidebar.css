@@ -103,9 +103,9 @@
 
 .sidebar-sublevel-data {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
     grid-gap: calc(var(--spa) / 2);
-    height: 6em;
+    height: auto;
 }
 
 .sidebar-sublevel-unit {

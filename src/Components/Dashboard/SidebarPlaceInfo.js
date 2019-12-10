@@ -117,7 +117,7 @@ export default class SidebarPlaceInfo extends Component {
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
-                                    style={{ backgroundColor: "var(--n)" }}></div>
+                                    style={{ backgroundColor: "var(--n)", border: "1px solid black", boxSizing: "border-box" }}></div>
                                 <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.n}</div>
                             </div>
                         </div>
@@ -139,10 +139,10 @@ export default class SidebarPlaceInfo extends Component {
                 </div>
 
                 <div className="sidebar-sublevel-data">
-                    <div className="sidebar-sublevel-unit">
+                    {/* <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.venue.place.least}</div>
                         <div className="sidebar-value text">{trimString(venue[least], 30)}</div>
-                    </div>
+                    </div> */}
                     <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.venue.place.most}</div>
                         <div className="sidebar-value text">{trimString(venue[most], 30)}</div>

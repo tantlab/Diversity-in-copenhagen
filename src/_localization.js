@@ -6,7 +6,7 @@ let strings = new LocalizedStrings({
     en: {
         nav: {
             about: "About",
-            data: "Data",
+            data: "Method",
             map: "Explore the Map"
         },
         home: {
@@ -277,7 +277,7 @@ let strings = new LocalizedStrings({
     da: {
         nav: {
             about: "Om projektet",
-            data: "Data",
+            data: "Metode",
             map: "Udforsk kortet"
         },
         home: {

@@ -15,11 +15,11 @@ export default class SidebarRode extends React.Component {
         let active = data.lastSelected !== null ? data.lastSelected.properties : null
 
         let dataLabels = {
-            name: "Rode",
-            least: "Least Diverse Place",
-            most: "Most Diverse Place",
-            divScore: "DIV SCORE POLY OVERALL",
-            charge: "DIV 2018"
+            name: "rode",
+            least: "least_diverse_place",
+            most: "most_diverse_place",
+            divScore: "div_score_poly_overall",
+            charge: "div_2018"
         }
 
         let name = active !== null ? active[dataLabels.name] : null
@@ -39,12 +39,12 @@ export default class SidebarRode extends React.Component {
                 id: strings.map.sidebar.rode.place.graphLegend.score,
                 data: (active !== null
                     ? [
-                        { x: "2013", y: validateData(active["DIV 2013"]) },
-                        { x: "2014", y: validateData(active["DIV 2014"]) },
-                        { x: "2015", y: validateData(active["DIV 2015"]) },
-                        { x: "2016", y: validateData(active["DIV 2016"]) },
-                        { x: "2017", y: validateData(active["DIV 2017"]) },
-                        { x: "2018", y: validateData(active["DIV 2018"]) }
+                        { x: "2013", y: validateData(active["div_2013"]) },
+                        { x: "2014", y: validateData(active["div_2014"]) },
+                        { x: "2015", y: validateData(active["div_2015"]) },
+                        { x: "2016", y: validateData(active["div_2016"]) },
+                        { x: "2017", y: validateData(active["div_2017"]) },
+                        { x: "2018", y: validateData(active["div_2018"]) }
                     ]
                     : null)
             },
@@ -52,12 +52,12 @@ export default class SidebarRode extends React.Component {
                 id: strings.map.sidebar.rode.place.graphLegend.crowd,
                 data: (active !== null
                     ? [
-                        { x: "2013", y: validateData(active["PC 2013"]) },
-                        { x: "2014", y: validateData(active["PC 2014"]) },
-                        { x: "2015", y: validateData(active["PC 2015"]) },
-                        { x: "2016", y: validateData(active["PC 2016"]) },
-                        { x: "2017", y: validateData(active["PC 2017"]) },
-                        { x: "2018", y: validateData(active["PC 2018"]) }
+                        { x: "2013", y: validateData(active["pc_2013"]) },
+                        { x: "2014", y: validateData(active["pc_2014"]) },
+                        { x: "2015", y: validateData(active["pc_2015"]) },
+                        { x: "2016", y: validateData(active["pc_2016"]) },
+                        { x: "2017", y: validateData(active["pc_2017"]) },
+                        { x: "2018", y: validateData(active["pc_2018"]) }
                     ]
                     : null)
             },
@@ -87,10 +87,10 @@ export default class SidebarRode extends React.Component {
                 </div>
 
                 <div className="sidebar-sublevel">
-                    {/* <div className="sidebar-sublevel-unit">
+                    <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.rode.place.least}</div>
                         <div className="sidebar-value text">{trimString(least, 32)}</div>
-                    </div> */}
+                    </div>
                     <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.rode.place.most}</div>
                         <div className="sidebar-value text">{trimString(most, 32)}</div>
