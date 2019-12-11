@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/diversity-in-copenhagen/static/css/main.e2f1db6e.chunk.css",
+    "main.js": "/diversity-in-copenhagen/static/js/main.d93d8d8a.chunk.js",
+    "main.js.map": "/diversity-in-copenhagen/static/js/main.d93d8d8a.chunk.js.map",
+    "runtime-main.js": "/diversity-in-copenhagen/static/js/runtime-main.c7754fa0.js",
+    "runtime-main.js.map": "/diversity-in-copenhagen/static/js/runtime-main.c7754fa0.js.map",
+    "static/css/2.e3daf8d4.chunk.css": "/diversity-in-copenhagen/static/css/2.e3daf8d4.chunk.css",
+    "static/js/2.03d14036.chunk.js": "/diversity-in-copenhagen/static/js/2.03d14036.chunk.js",
+    "static/js/2.03d14036.chunk.js.map": "/diversity-in-copenhagen/static/js/2.03d14036.chunk.js.map",
+    "index.html": "/diversity-in-copenhagen/index.html",
+    "precache-manifest.6c8dc774f01cb69aa2bfa9c5243feeb1.js": "/diversity-in-copenhagen/precache-manifest.6c8dc774f01cb69aa2bfa9c5243feeb1.js",
+    "service-worker.js": "/diversity-in-copenhagen/service-worker.js",
+    "static/css/2.e3daf8d4.chunk.css.map": "/diversity-in-copenhagen/static/css/2.e3daf8d4.chunk.css.map",
+    "static/css/main.e2f1db6e.chunk.css.map": "/diversity-in-copenhagen/static/css/main.e2f1db6e.chunk.css.map",
+    "static/media/index.css": "/diversity-in-copenhagen/static/media/din_regular_italic.0e225597.otf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c7754fa0.js",
+    "static/css/2.e3daf8d4.chunk.css",
+    "static/js/2.03d14036.chunk.js",
+    "static/css/main.e2f1db6e.chunk.css",
+    "static/js/main.d93d8d8a.chunk.js"
+  ]
+}
