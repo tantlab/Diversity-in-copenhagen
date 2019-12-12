@@ -2,27 +2,42 @@
     pointer-events: none;
     position: relative;
     height: 100%;
+    
+    opacity: 0;
     width: 0px;
-    transform: translateX(-100%);
+    transform: translateX(0%);
 
-    transition: all var(--tra) var(--crv);
+    transition:
+        opacity 500ms ease-in-out,
+        transform 500ms ease-in-out,
+        width 500ms ease-in-out;
+}
+
+.map-section.half .dashboard {
+    opacity: 0;
+    width: 100%;
+    transform: translateX(0%);
+    transition:
+        opacity 500ms ease-in-out,
+        transform 500ms ease-in-out,
+        width 500ms ease-in-out;
 }
 
 .map-section.active .dashboard {
+    opacity: 1;
     width: 320px;
     transform: translateX(0%);
-    transition: all var(--tra) var(--crv);
+    transition:
+        opacity 500ms ease-in-out,
+        transform 500ms ease-in-out,
+        width 500ms ease-in-out;
 }
 
 .sidebar-container {
-    width: 0px;
-    height: 100%;
-    transition: all var(--tra) var(--crv);
-}
-
-.map-section.active .sidebar-container {
     width: 320px;
-    transition: all var(--tra) var(--crv);
+    /* height: 100%;
+    transition:
+        all 500ms ease-in-out; */
 }
 
 .sidebar {
@@ -37,6 +52,7 @@
     flex-direction: column;
 
     position: absolute;
+    left: 0;
 
     height: 100%;
     width: 320px;
@@ -81,9 +97,15 @@
 }
 
 .sidebar-header-label {
-    display: inline-block;
+    display: block;
     font-size: 1.25em;
     font-weight: bolder;
+    margin-bottom: calc(var(--spa) / 8);
+}
+.sidebar-header-sublabel {
+    display: block;
+    font-size: 1em;
+    font-weight: normal;
     margin-bottom: calc(var(--spa) / 2);
 }
 

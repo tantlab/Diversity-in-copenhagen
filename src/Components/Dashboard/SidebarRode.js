@@ -74,10 +74,10 @@ export default class SidebarRode extends React.Component {
                             <div>{strings.map.sidebar.rode.legend.more}</div>
                         </div>
                         <div className="legend-map-rodes-chart">
-                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "var(--u)"}}></div>
-                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "#dabfe3"}}></div>
-                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "#b3e5ce"}}></div>
-                            <div className="legend-map-rodes-chart-component" style={{backgroundColor: "var(--g)"}}></div>
+                            <div className="legend-map-rodes-chart-component" style={{ backgroundColor: "var(--u)" }}></div>
+                            <div className="legend-map-rodes-chart-component" style={{ backgroundColor: "#dabfe3" }}></div>
+                            <div className="legend-map-rodes-chart-component" style={{ backgroundColor: "#e0ebe5" }}></div>
+                            <div className="legend-map-rodes-chart-component" style={{ backgroundColor: "var(--g)" }}></div>
                         </div>
                     </div>
                 </div>
@@ -88,12 +88,12 @@ export default class SidebarRode extends React.Component {
 
                 <div className="sidebar-sublevel">
                     <div className="sidebar-sublevel-unit">
-                        <div className="sidebar-label">{strings.map.sidebar.rode.place.least}</div>
-                        <div className="sidebar-value text">{trimString(least, 32)}</div>
-                    </div>
-                    <div className="sidebar-sublevel-unit">
                         <div className="sidebar-label">{strings.map.sidebar.rode.place.most}</div>
                         <div className="sidebar-value text">{trimString(most, 32)}</div>
+                    </div>
+                    <div className="sidebar-sublevel-unit">
+                        <div className="sidebar-label">{strings.map.sidebar.rode.place.least}</div>
+                        <div className="sidebar-value text">{trimString(least, 32)}</div>
                     </div>
                 </div>
 

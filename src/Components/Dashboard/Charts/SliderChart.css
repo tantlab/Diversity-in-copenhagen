@@ -1,6 +1,6 @@
 .slider-chart {
     position: relative;
-    margin: calc(var(--spa) / 2) 0;
+    margin: calc(var(--spa) / 4) 0 calc(var(--spa) / 4) 0;
 }
 
 .slider-chart-axis {
