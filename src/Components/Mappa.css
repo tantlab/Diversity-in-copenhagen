@@ -5,14 +5,35 @@
     position: fixed;
 
     height: calc(100vh - var(--n-h));
-    width: 100%;
+    width: 0%;
 
-    /* display: flex;
-    flex-direction: row;
+    transform: translateX(100vw);
+
+    display: flex;
+    /* flex-direction: row;
     justify-content: flex-start;
     align-items: center; */
 
-    display: flex;
+    /* transform-origin: 100% 50%; */
+    transition:
+        width 500ms ease-in-out 1s,
+        transform 500ms ease-in-out;
+}
+
+.map-section.half {
+    width: 100%;
+    transform: translateX(0%);
+    transition:
+        width 500ms ease-in-out,
+        transform 500ms ease-in-out 1s;
+}
+
+.map-section.active {
+    width: 100%;
+    transform: translateX(0%);
+    transition:
+        width 500ms ease-in-out,
+        transform 500ms ease-in-out 1s;
 }
 
 .mapContainer {
@@ -21,17 +42,17 @@
     width: 50%;
     height: 100%;
 
-    transform: translateX(100%);
-    
-    border: var(--border);
+    /* transform: translateX(100%); */
+
     box-sizing: border-box;
-    
+
     transition: all var(--tra) var(--crv),
-    transform var(--tra) var(--crv) 1s;
+        transform var(--tra) var(--crv) 500ms;
 }
 
-.map-section.active .mapContainer {
+.map-section.half .mapContainer, .map-section.active .mapContainer {
     width: 100%;
+    border: var(--border);
     transform: translateX(0%);
     transition: all var(--tra) var(--crv),
         transform var(--tra) var(--crv) 500ms;

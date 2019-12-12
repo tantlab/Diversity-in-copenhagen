@@ -14,16 +14,12 @@ export default class BarChartMulti extends React.Component {
             case 1:
                 break
             case 2:
-                console.log('2')
                 return ["#39B87F", "ece9e9"]
             case 3:
-                console.log('3')
                 return ["#f06666", "#fbd679", "#1d62ed", "#45de99"]
             case 4:
-                console.log('4')
                 return ["#f06666", "#fbd679", "#1d62ed", "#ece9e9"]
             default:
-                console.log('broken');
                 break
         }
     }

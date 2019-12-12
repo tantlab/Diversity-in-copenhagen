@@ -1,7 +1,7 @@
 import React from "react"
 import uuid from "uuid"
 
-import strings from "../_localization"
+import data_strings from "../_data_strings"
 
 import "./Page.css"
 
@@ -47,11 +47,11 @@ const Data = () => {
 
             <div className="page-hero">
                 <div className="page-hero-title">
-                    {strings.data.title}
+                    {data_strings.title}
                 </div>
             </div>
 
-            {pageContent(strings.data.content)}
+            {pageContent(data_strings.content)}
 
             <div className="page-conclusion">
                 Vi håber at du nu har et fundament fro at forstå hvad du ser på det Københavnske diversitetskort. Hvis du har spørgsmål til metoden er du velkomment il at skrive til Anders Koed Madsen på <a href="mailto:akma@hum.aau.dk">akma@hum.aau.dk</a>.

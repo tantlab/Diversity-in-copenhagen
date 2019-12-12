@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { ResponsiveWaffle } from '@nivo/waffle'
 
+import SliderChart from './Charts/SliderChart'
+
 import trimString from '../helpers'
 import strings from '../../_localization.js'
 
@@ -9,7 +11,7 @@ const colors = {
     y: "#f7cc5f",
     b: "#1d62ed",
     d: "#39b87f",
-    n: "#ece9e9",
+    n: "#565463",
     n1: "#a1a1a1"
 }
 
@@ -55,7 +57,7 @@ export default class SidebarPlaceInfo extends Component {
                 ? data.venue.lastSelected
                 : '')
 
-        let least = "Least diverse event"
+        // let least = "Least diverse event"
         let most = "Most Diverse Event"
 
         // let r_most = "no Red_most"
@@ -77,7 +79,10 @@ export default class SidebarPlaceInfo extends Component {
             { id: "Gray events", value: venue["Gray events"], label: "Non-political events", color: colors.n },
         ]
 
+        let score = !isNaN(Math.round(venue["DIV SCORE PLACE"])) ? Math.round(venue["DIV SCORE PLACE"]) : 0
+
         // console.log(venue);
+        // console.log(waffleTotal, waffleData);
 
         return (
 
@@ -86,14 +91,14 @@ export default class SidebarPlaceInfo extends Component {
                 <div className="sidebar-legend-container">
                     <div className="legend-title">Legend</div>
                     <div className="legend-map">
-                        <div className="legend-map-places-polcharge">
+                        {/* <div className="legend-map-places-polcharge">
                             <div className="legend-map-places-circles">
                                 <div className="legend-map-circle small"></div>
                                 <div className="legend-map-circle mid"></div>
                                 <div className="legend-map-circle big"></div>
                             </div>
-                            {strings.map.sidebar.venue.legend.charge}
-                        </div>
+                            {strings.map.sidebar.venue.legend.value}
+                        </div> */}
                         <div className="legend-map-places-factions">
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
@@ -117,8 +122,13 @@ export default class SidebarPlaceInfo extends Component {
                             </div>
                             <div className="legend-map-faction">
                                 <div className="legend-map-faction-circle"
-                                    style={{ backgroundColor: "var(--n)", border: "1px solid black", boxSizing: "border-box" }}></div>
+                                    style={{ backgroundColor: "var(--n)" }}></div>
                                 <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.n}</div>
+                            </div>
+                            <div className="legend-map-faction">
+                                <div className="legend-map-faction-circle"
+                                    style={{ backgroundColor: "var(--a)", border: "1px solid black", boxSizing: "border-box" }}></div>
+                                <div className="legend-map-faction-label">{strings.map.sidebar.venue.legend.colors.a}</div>
                             </div>
                         </div>
                     </div>
@@ -127,9 +137,25 @@ export default class SidebarPlaceInfo extends Component {
                 <a href={venue["Maps Link"]} target="blank" >
                     <div className="sidebar-header-label"
                         style={{ color: this.headerColor(venue["Place Type"]) }}>
-                        {trimString(venue["place_name"], 20)}↗
+                        {trimString(venue["place_name"], 20)}
+                    </div>
+                    <div className="sidebar-header-sublabel">
+                        {trimString(venue["Neighborhood"], 20)}
                     </div>
                 </a>
+
+                <div className="sidebar-poldiv">
+                    {/* <div className="sidebar-section">
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.charge}</div>
+                        <SliderChart data={charge} />
+                    </div> */}
+                    <div className="sidebar-section">
+                        <div className="sidebar-label">{strings.map.sidebar.venue.graphs.political}</div>
+                        <SliderChart data={score} />
+                    </div>
+                </div>
+
+
 
                 <div className="event-data">
                     <div className="sidebar-event number-of">
@@ -152,7 +178,8 @@ export default class SidebarPlaceInfo extends Component {
                 <div className="sidebar-section">
                     <div className="sidebar-label">{strings.map.sidebar.venue.graphs.types}</div>
 
-                    {waffleData[0].value !== undefined && waffleTotal !== undefined ? (
+                    {/* {waffleData[0].value !== undefined && waffleTotal !== undefined ? (console.log(waffleData)) : ""} */}
+                    {waffleData[0].value !== undefined && waffleTotal !== undefined && venue["place_name"] !== "Anonymiseret" ? (
                         <div className="nivo-container" style={{ height: "108px" }}>
                             <ResponsiveWaffle
                                 data={waffleData}

@@ -51,6 +51,7 @@ let strings = new LocalizedStrings({
                             b: "Blue",
                             d: "Diverse",
                             n: "Neutral",
+                            a: "Anonymized",
                         }
                     },
                     place: {
@@ -322,6 +323,7 @@ let strings = new LocalizedStrings({
                             b: "Blue",
                             d: "Diverse",
                             n: "Neutral",
+                            a: "Anonymiseret",
                         }
                     },
                     place: {

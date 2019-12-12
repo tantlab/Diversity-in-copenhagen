@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, NavLink } from 'react-router-dom'
+import { Link } from 'react-scroll'
 
 import './Nav.css'
 
@@ -16,14 +17,20 @@ class Nav extends React.Component {
 
                     <NavLink to="/" className="nav-el">Home</NavLink>
                     <NavLink to="/about" className="nav-el">{strings.nav.about}</NavLink>
-                    <NavLink to="/data" className="nav-el">{strings.nav.data}</NavLink>
+                    <NavLink to="/method" className="nav-el">{strings.nav.data}</NavLink>
 
-                    {/* Should scroll down to map */}
-                    <NavLink to="/map" className="nav-el">{strings.nav.map}</NavLink>
+                    <Route exact path="/">
+                        {/* Should scroll down to map */}
+                        <div style={{ cursor: "pointer" }} className="nav-el">
+                            <Link activeClass="scrolling" to="mapScrollTarget" spy={true} smooth={true} offset={50} duration={1500}>
+                                {strings.nav.map}
+                            </Link>
+                        </div>
+                    </Route>
 
                     <div className="nav-el language-sel">
                         <div className="language-sel lang" style={{ cursor: "pointer" }} onClick={() => {
-                            localStorage.setItem('languagePreference', 'en')
+                            // localStorage.setItem('languagePreference', 'en')
                             window.location.reload(false)
                         }}>EN</div>
                         <div>|</div>

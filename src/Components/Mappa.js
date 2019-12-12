@@ -23,7 +23,7 @@ export default class Mappa extends React.Component {
         this.state = {
             lat: 55.675,                // coordinates of 
             lng: 12.57,                 // Copenhagen's center
-            zoom: 12,                   // initial zoom level
+            zoom: 15,                   // initial zoom level
             fly: this.props.flyTo,
 
             rode: {
@@ -62,7 +62,8 @@ export default class Mappa extends React.Component {
             style: 'mapbox://styles/drivinward/ck3iuizoc0ae01cpeweqhc8nc/draft',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom,
-            pitch: 60,
+            pitch: 0,
+            bearing: 0,
             minZoom: 11,
             maxBounds: [12.3, 55.55, 12.85, 55.8]
         })
@@ -85,8 +86,6 @@ export default class Mappa extends React.Component {
     }
 
     handleIntroFlight = (integer) => {
-        console.log(integer);
-
         let map = this.state.mapEl
         let curve = 0.75
 
@@ -158,7 +157,7 @@ export default class Mappa extends React.Component {
                 speed: 0.75,
                 curve: curve
             })
-        } else if (integer >= 7) {
+        } else if (integer > 6) {
             map.flyTo({
                 bearing: 0,
                 center: map.getCenter(),
@@ -242,7 +241,7 @@ export default class Mappa extends React.Component {
 
 
     checkZoom = () => {
-        if (this.state.zoom >= 13) {
+        if (this.state.zoom >= 14) {
             return true
         } else return false
     }
@@ -325,6 +324,10 @@ export default class Mappa extends React.Component {
                     }
                 }))
             }
+        })
+
+        map.on('zoomend', (e) => {
+            if (e.originalEvent === undefined) { this.handleMapTransition() } else return false
         })
 
         // map.on('moveend', () => {
@@ -437,11 +440,10 @@ export default class Mappa extends React.Component {
         // let zoom = parseInt(this.state.zoom)
 
         return (
-            <div className={`map-section ${this.props.active ? "active" : ""}`}
-                // resize mapbox canvas when transition ends after intro
-                // onTransitionStart={this.handleMapTransition}
-                onTransitionEnd={this.handleMapTransition}>
-
+            <div className={`map-section 
+                ${this.props.active >= 2 && this.props.active <= 6 ? "half" : ""}
+                ${this.props.active > 6 ? "active" : ""}
+            `}>
                 {/* <Route exact path="/">
                     <Modal show={this.state.modal.show}
                         onCloseBtn={this.closeModal}
@@ -459,7 +461,6 @@ export default class Mappa extends React.Component {
                             <SidebarRode data={this.state} />
                         </Sidebar>
 
-                        {/* venue sidebar */}
                         <Sidebar show={this.state.venue.isInFocus} >
                             <SidebarPlaceInfo data={this.state} />
                             <SidebarPlaceCrowd data={this.state} />
